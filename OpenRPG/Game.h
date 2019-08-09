@@ -1,15 +1,8 @@
 #pragma once
 #ifndef GAME_H
 #define GAME_H
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
 
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Network.hpp"
-#include "SFML/Audio.hpp"
+#include "GameState.h"
 
 class Game
 {
@@ -21,19 +14,29 @@ private:
 	sf::Clock dtClock;
 	float dt;
 
+	std::stack<State*> states; // 게임state, 메인메뉴state 등등..
+
 	//초기화
 	void initWindow();
+	void initState();
 
 public:
 	//생성자 및 소멸자
 	Game();
 	virtual ~Game();
 
-	//함수
+	//Regular
+	void endApplication();
+
+	//Update
 	void updateDt();
 	void updateSFMLEvents();
 	void update();
+
+	//Render
 	void render();
+
+	//Core
 	void run();
 };
 #endif
