@@ -1,4 +1,6 @@
 ﻿  Game.cpp
+  GameState.cpp
+  State.cpp
   main.cpp
   코드를 생성하고 있습니다...
   OpenRPG.vcxproj -> D:\Develop\OpenRPG\Debug\OpenRPG.exe

@@ -1,26 +1,17 @@
 #ifndef STATE_H
 #define STATE_H
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <map>
 
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Network.hpp"
-#include "SFML/Audio.hpp"
+#include "Entity.h"
 
 class State
 {
 private:
+
+protected:
 	sf::RenderWindow* window;
 	std::vector<sf::Texture> textures;
 	bool quit;
+
 public:
 	State(sf::RenderWindow* window);
 	virtual ~State();
@@ -32,6 +23,6 @@ public:
 	virtual void endState() = 0;
 	virtual void updateKeybinds(const float& dt) = 0;
 	virtual void update(const float& dt) = 0;
-	virtual void render(sf::RenderTarget* target = nullptr) = 0;
+	virtual void render(sf::RenderTarget* target = NULL) = 0;
 };
 #endif
