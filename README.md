@@ -37,3 +37,4 @@
   
 - SFML, ImGUI, Visual Studio 2017, Windows10
 - 윈도우환경에서만 테스트해봤습니다. 
+- SFML라이브러리 추가방법 https://www.sfml-dev.org/tutorials/2.5/start-vc.php
