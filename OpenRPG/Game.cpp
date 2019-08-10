@@ -8,9 +8,9 @@ void Game::initWindow()
 {
 	//SFML 윈도우창 생성 Todo : window.ini파일로 초기화할예정(완료)
 	std::ifstream ifs("Config/window.ini");
-	
+
 	std::string title = "None";
-	sf::VideoMode window_bounds(800,600);
+	sf::VideoMode window_bounds(800, 600);
 	unsigned framerate_limit = 120;
 	bool vertical_sync_enable = false;
 
@@ -28,15 +28,41 @@ void Game::initWindow()
 	this->window->setVerticalSyncEnabled(vertical_sync_enable);
 }
 
+void Game::initKeys()
+{
+	std::ifstream ifs("Config/supported_keys.ini");
+
+	if (ifs.is_open())
+	{
+		std::string key = "";
+		int key_value = 0;
+		while (ifs >> key >> key_value)
+		{
+			this->supportedKeys[key] = key_value;
+		}
+	}
+	ifs.close();
+	this->supportedKeys["Escape"] = sf::Keyboard::Key::Escape;
+	this->supportedKeys["A"] = sf::Keyboard::Key::A;
+	this->supportedKeys["D"] = sf::Keyboard::Key::D;
+	this->supportedKeys["W"] = sf::Keyboard::Key::W;
+	this->supportedKeys["S"] = sf::Keyboard::Key::S;
+
+	//확인용 삭제예정코드
+	for (auto i : this->supportedKeys)
+		std::cout << i.first << " " << i.second << std::endl;
+}
+
 void Game::initState()
 {
-	this->states.push(new GameState(this->window));
+	this->states.push(new GameState(this->window, &this->supportedKeys));
 }
 
 //생성 및 소멸함수
 Game::Game()
 {
 	this->initWindow();
+	this->initKeys();
 	this->initState();
 }
 
@@ -44,7 +70,7 @@ Game::~Game()
 {
 	delete this->window;
 
-	while (!this->states.empty()) 
+	while (!this->states.empty())
 	{
 		delete this->states.top();
 		this->states.pop();

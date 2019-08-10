@@ -16,10 +16,12 @@ private:
 
 	std::stack<State*> states; // 게임state, 메인메뉴state 등등..
 
+	std::map<std::string, int> supportedKeys;
+
 	//초기화
 	void initWindow();
+	void initKeys();
 	void initState();
-
 public:
 	//생성자 및 소멸자
 	Game();
