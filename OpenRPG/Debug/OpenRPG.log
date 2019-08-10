@@ -1,2 +1,13 @@
-﻿  GameState.cpp
+﻿  Game.cpp
+  MainMenuState.cpp
+d:\develop\openrpg\openrpg\mainmenustate.cpp(31): warning C4244: '인수': 'T'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  코드를 생성하고 있습니다...
   OpenRPG.vcxproj -> D:\Develop\OpenRPG\Debug\OpenRPG.exe
