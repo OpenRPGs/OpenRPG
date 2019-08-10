@@ -1,17 +1,24 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
-#include "State.h"
+#include "GameState.h"
+#include "Button.h"
+
 class MainMenuState :
 	public State
 {
 private:
-	Entity player;
 	//변수
 	sf::RectangleShape background;
+	sf::Font font;
+
+	Button* gamestate_btn;
+
 
 	//함수
+	void initFonts();
 	void initKeybinds();
+
 public:
 	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
 	virtual ~MainMenuState();
