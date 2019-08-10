@@ -1,0 +1,11 @@
+﻿  Entity.cpp
+c:\users\kiseo\openrpg\openrpg\entity.h(13): fatal error C1083: 포함 파일을 열 수 없습니다. 'SFML/Graphics.hpp': No such file or directory
+  Game.cpp
+c:\users\kiseo\openrpg\openrpg\entity.h(13): fatal error C1083: 포함 파일을 열 수 없습니다. 'SFML/Graphics.hpp': No such file or directory
+  GameState.cpp
+c:\users\kiseo\openrpg\openrpg\entity.h(13): fatal error C1083: 포함 파일을 열 수 없습니다. 'SFML/Graphics.hpp': No such file or directory
+  main.cpp
+c:\users\kiseo\openrpg\openrpg\entity.h(13): fatal error C1083: 포함 파일을 열 수 없습니다. 'SFML/Graphics.hpp': No such file or directory
+  State.cpp
+c:\users\kiseo\openrpg\openrpg\entity.h(13): fatal error C1083: 포함 파일을 열 수 없습니다. 'SFML/Graphics.hpp': No such file or directory
+  코드를 생성하고 있습니다...

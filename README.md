@@ -1,3 +1,5 @@
+﻿![license](https://img.shields.io/crates/l/crate)
+![commit](https://img.shields.io/github/last-commit/OpenRPGs/OpenRPG)
 <center><img src="./Image/head.PNG" width="600" height="300"></center> 
 
 ## OpenRPG 
