@@ -8,22 +8,33 @@ void Game::initWindow()
 {
 	//SFML 윈도우창 생성 Todo : window.ini파일로 초기화할예정(완료)
 	std::ifstream ifs("Config/window.ini");
+	this->videoModes = sf::VideoMode::getFullscreenModes();
 
 	std::string title = "None";
-	sf::VideoMode window_bounds(800, 600);
+	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
+	bool fullscreen = false;
 	unsigned framerate_limit = 120;
 	bool vertical_sync_enable = false;
+	unsigned antialiasing_level = 0;
 
 	if (ifs.is_open())
 	{
 		std::getline(ifs, title);
 		ifs >> window_bounds.width >> window_bounds.height;
+		ifs >> fullscreen;
 		ifs >> framerate_limit;
 		ifs >> vertical_sync_enable;
+		ifs >> antialiasing_level;
 	}
 	ifs.close();
 
-	this->window = new sf::RenderWindow(window_bounds, title);
+	this->fullscreen = fullscreen;
+	this->windowSettings.antialiasingLevel = antialiasing_level;
+	if (this->fullscreen)
+		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, windowSettings);
+	else
+		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+
 	this->window->setFramerateLimit(framerate_limit);
 	this->window->setVerticalSyncEnabled(vertical_sync_enable);
 }
