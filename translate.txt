@@ -1,0 +1,14 @@
+﻿변수	variable
+함수	function
+함수들	functions
+접근자	accessor
+전역함수	global function
+생성 및 소멸함수	constructor & destructor
+초기화	initialize
+초기화 함수	initialize function
+프로그램 종료	program exit
+아이템 그리기	render items
+메인메뉴 폰트로딩 실패	Fail to load fonts for main menu
+한글 기능 추가 완료!	한글 기능 추가 완료!
+SFML 윈도우창 생성 Todo : window.ini파일로 초기화할예정(완료)	Create SFML window and initialize it with window.ini
+확인용 삭제예정코드	verification code (will be removed)
