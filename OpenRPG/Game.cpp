@@ -4,6 +4,13 @@
 
 // 초기화 함수
 
+void Game::initVariables()
+{
+	this->window = NULL;
+	this->fullscreen = 0;
+	this->dt = 0.f;
+}
+
 void Game::initWindow()
 {
 	//SFML 윈도우창 생성 Todo : window.ini파일로 초기화할예정(완료)

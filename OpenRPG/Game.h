@@ -22,6 +22,7 @@ private:
 	std::map<std::string, int> supportedKeys;
 
 	//√ ±‚»≠
+	void initVariables();
 	void initWindow();
 	void initKeys();
 	void initState();
