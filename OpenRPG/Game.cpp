@@ -55,8 +55,8 @@ void Game::initKeys()
 
 void Game::initState()
 {
-//	this->states.push(new MainMenuState(this->window, &this->supportedKeys));
-	this->states.push(new GameState(this->window, &this->supportedKeys));
+	//this->states.push(new GameState(this->window, &this->supportedKeys));
+	this->states.push(new MainMenuState(this->window, &this->supportedKeys, &this->states));
 }
 
 //생성 및 소멸함수

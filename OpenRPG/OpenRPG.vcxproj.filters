@@ -33,14 +33,14 @@
     <ClCompile Include="State.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="MainMenuState.cpp">
       <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,14 +53,14 @@
     <ClInclude Include="GameState.h">
       <Filter>States</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MainMenuState.h">
       <Filter>States</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
