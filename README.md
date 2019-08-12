@@ -5,41 +5,41 @@
 ## OpenRPG 
 
 
-#### OpenRPG Directory
-├─Debug
-├─Examples
-├─External
-│  └─SFML
-│      ├─include
-│      │  └─SFML
-│      │      ├─Audio
-│      │      ├─Graphics
-│      │      ├─Network
-│      │      ├─System
-│      │      └─Window
-│      └─lib
-│          └─cmake
-│              └─SFML
-├─Image
-├─OpenRPG
-│  ├─Config
-│  ├─Debug
-│  │  └─OpenRPG.tlog
-│  ├─Fonts
-│  ├─Release
-│  │  └─OpenRPG.tlog
-│  ├─Resources
-│  │  └─image
-│  │      ├─Backgrounds
-│  │      └─Sprites
-│  │          └─Player
-│  │              └─iloveimg-converted
-│  ├─States
-│  └─x64
-│      └─Debug
-│          └─OpenRPG.tlog
-├─Release
-└─UnitTest
+#### OpenRPG Directory 
+    ├─Debug 
+    ├─Examples 
+    ├─External 
+    │  └─SFML 
+    │      ├─include 
+    │      │  └─SFML 
+    │      │      ├─Audio 
+    │      │      ├─Graphics 
+    │      │      ├─Network 
+    │      │      ├─System 
+    │      │      └─Window 
+    │      └─lib 
+    │          └─cmake 
+    │              └─SFML 
+    ├─Image 
+    ├─OpenRPG
+    │  ├─Config
+    │  ├─Debug
+    │  │  └─OpenRPG.tlog
+    │  ├─Fonts
+    │  ├─Release
+    │  │  └─OpenRPG.tlog
+    │  ├─Resources
+    │  │  └─image
+    │  │      ├─Backgrounds
+    │  │      └─Sprites
+    │  │          └─Player
+    │  │              └─iloveimg-converted
+    │  ├─States
+    │  └─x64
+    │      └─Debug
+    │          └─OpenRPG.tlog
+    ├─Release
+    └─UnitTest
     
 ## 👏How to Contribute
  
