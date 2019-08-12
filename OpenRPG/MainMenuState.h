@@ -9,6 +9,7 @@ class MainMenuState :
 {
 private:
 	//변수
+	sf::Texture backgroundTexture;
 	sf::RectangleShape background;
 	sf::Font font;
 
@@ -16,6 +17,8 @@ private:
 
 
 	//함수
+	void initVariables();
+	void initBackground();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();

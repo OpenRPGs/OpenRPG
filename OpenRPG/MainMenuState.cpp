@@ -1,5 +1,28 @@
 #include "MainMenuState.h"
 
+//Initaillizer functions
+void MainMenuState::initVariables()
+{
+
+}
+
+void MainMenuState::initBackground()
+{
+	this->background.setSize(
+		sf::Vector2f
+		(
+			static_cast<float>(this->window->getSize().x),
+			static_cast<float>(this->window->getSize().y)
+		)
+	);
+	if (!this->backgroundTexture.loadFromFile("Resources/image/Backgrounds/bg1.png"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
+}
+
 void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/R2.ttc"))
@@ -33,11 +56,15 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(100, 100, 150, 50,
+	this->buttons["GAME_STATE"] = new Button(100, 500, 250, 70,
 		&this->font, L"새 게임!",
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
 
-	this->buttons["EXIT_STATE"] = new Button(100, 300, 150, 50,
+	this->buttons["SETTING_STATE"] = new Button(100, 650, 250, 70,
+		&this->font, L"게임 설정!",
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+
+	this->buttons["EXIT_STATE"] = new Button(100, 800, 250, 70,
 		&this->font, L"종 료!",
 		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
 
@@ -46,12 +73,12 @@ void MainMenuState::initButtons()
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
 	:State(window, supportedKeys, states)
 {
+	this->initVariables();
+	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
 
-	this->background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	this->background.setFillColor(sf::Color::Magenta);
 }
 
 MainMenuState::~MainMenuState()
@@ -86,7 +113,7 @@ void MainMenuState::updateButtons()
 
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
-		this->states->push(new GameState(this->window, this->supportedKeys, this -> states));
+		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
 	}
 
 	//종료
@@ -121,4 +148,15 @@ void MainMenuState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 	this->renderButtons(target);
+
+	//삭제예정. 디버깅용.
+	sf::Text mouseText;
+	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y-15));
+	mouseText.setFont(this->font);
+	mouseText.setCharacterSize(15);
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y;
+	mouseText.setString(ss.str());
+
+	target->draw(mouseText);
 }
