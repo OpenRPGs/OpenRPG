@@ -19,6 +19,9 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{8f254371-58b8-4d4e-b751-26b3e90561f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{fc54ac76-e223-43a8-b6a4-482fa2290a2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,8 +45,11 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,8 +71,11 @@
     <ClInclude Include="Entity.h">
       <Filter>Entities</Filter>
     </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

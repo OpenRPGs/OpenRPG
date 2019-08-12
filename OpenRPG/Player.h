@@ -13,7 +13,7 @@ private:
 	void initVariables();
 	void initComponents();
 public:
-	Player(float x, float y, sf::Texture* texture);
+	Player(float x, float y, sf::Texture& texture);
 	virtual ~Player();
 
 	//Functions
