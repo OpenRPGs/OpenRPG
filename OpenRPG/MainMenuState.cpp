@@ -57,16 +57,24 @@ void MainMenuState::initKeybinds()
 void MainMenuState::initButtons()
 {
 	this->buttons["GAME_STATE"] = new Button(100, 500, 250, 70,
-		&this->font, L"새 게임!",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+		&this->font, L"새 게임!", 50,
+		sf::Color(255, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20,50),
+		sf::Color(70, 70, 70,0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20,0));
 
-	this->buttons["SETTING_STATE"] = new Button(100, 650, 250, 70,
-		&this->font, L"게임 설정!",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+	this->buttons["SETTING_STATE"] = new Button(100, 600, 250, 70,
+		&this->font, L"게임 설정", 50,
+		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70,0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
-	this->buttons["EXIT_STATE"] = new Button(100, 800, 250, 70,
-		&this->font, L"종 료!",
-		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 255), sf::Color(20, 20, 20, 200));
+	this->buttons["EDITOR_STATE"] = new Button(100, 700, 250, 70,
+		&this->font, L"에디터", 50,
+		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+
+	this->buttons["EXIT_STATE"] = new Button(100, 900, 250, 70,
+		&this->font, L"종 료!", 50,
+		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150,250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 
 }
 

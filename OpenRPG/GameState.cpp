@@ -58,13 +58,13 @@ void GameState::updateInput(const float & dt)
 
 	//사용자 입력 업데이트
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
-		this->player->move(dt, -2.f, 0.f);
+		this->player->move(-2.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-		this->player->move(dt, 2.f, 0.f);
+		this->player->move(2.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-		this->player->move(dt, 0.f, -2.f);
+		this->player->move(0.f, -2.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-		this->player->move(dt, 0.f, 2.f);
+		this->player->move(0.f, 2.f, dt);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
 		this->endState();
