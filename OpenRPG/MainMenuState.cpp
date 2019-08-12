@@ -90,14 +90,8 @@ MainMenuState::~MainMenuState()
 	}
 }
 
-void MainMenuState::endState()
-{
-	std::cout << "Ending MainMenuState! " << std::endl;
-}
-
 void MainMenuState::updateInput(const float & dt)
 {
-	this->checkForQuit();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		this->background.setFillColor(sf::Color::Cyan);
@@ -119,7 +113,7 @@ void MainMenuState::updateButtons()
 	//Á¾·á
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
-		this->quit = true;
+		this -> endState();
 	}
 }
 
