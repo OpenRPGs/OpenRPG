@@ -6,7 +6,6 @@
 
 
 #### OpenRPG Directory 
-    ├─Debug 
     ├─Examples 
     ├─External 
     │  └─SFML 
@@ -23,11 +22,7 @@
     ├─Image 
     ├─OpenRPG
     │  ├─Config
-    │  ├─Debug
-    │  │  └─OpenRPG.tlog
     │  ├─Fonts
-    │  ├─Release
-    │  │  └─OpenRPG.tlog
     │  ├─Resources
     │  │  └─image
     │  │      ├─Backgrounds
@@ -35,10 +30,6 @@
     │  │          └─Player
     │  │              └─iloveimg-converted
     │  ├─States
-    │  └─x64
-    │      └─Debug
-    │          └─OpenRPG.tlog
-    ├─Release
     └─UnitTest
     
 ## 👏How to Contribute
@@ -61,5 +52,12 @@
 <center><img src="./Image/menu.PNG" width="600" height="300"></center> 
 - 메인화면추가, 텍스쳐처리 완료
 
-## 변경사항 
-- 
+## 주요 개발 일지 
+- 19년 8월 1일   프로젝트 개발 계획 수립 
+- 19년 8월 8일   프로젝트폴더구성, 라이브러리 설치, 빌드환경 구성 
+- 19년 8월 9일   OpenRPG github 오픈, 게임엔진개발 시작 
+- 19년 8월 10일 프로젝트에 쉽게 접근할수있도록 속성시트제작 및 Game클래스 설계 
+- 19년 8월 11일 캐릭터 생성 및 이동구현 
+- 19년 8월 12일 메뉴화면 개발 및 Button클래스작성하여 장면이동기능 구현 
+- 19년 8월 13일 텍스쳐기능추가 및 케릭터애니메이션클래스를 제작하여 움직이는 캐릭터 구현 
+
