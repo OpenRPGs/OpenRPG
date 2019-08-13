@@ -1,13 +1,14 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "Entity.h"
+#include "Player.h"
 
 class State
 {
 private:
 	
 protected:
+	std::stack<State*>* states;
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportedKeys;
 	std::map<std::string, int> keybinds;
@@ -18,20 +19,18 @@ protected:
 	sf::Vector2f mousePosView;
 
 	//Resources
-	std::vector<sf::Texture> textures;
+	std::map<std::string,sf::Texture> textures;
 
 	//ÇÔ¼ö
 	virtual void initKeybinds() = 0;
 
 public:
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~State();
 
 	const bool& getQuit() const;
-
-	virtual void checkForQuit();
+	void endState();
 	
-	virtual void endState() = 0;
 	virtual void updateInput(const float& dt) = 0;
 	virtual void updateMousePositions();
 	virtual void update(const float& dt) = 0;
