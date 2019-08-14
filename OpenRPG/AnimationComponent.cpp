@@ -28,7 +28,17 @@ void AnimationComponent::addAnimation(
 
 void AnimationComponent::play(const std::string key, const float & dt)
 {
-
+	//To DO : Coustomizing Animations More Smooth..
+	if (this->lastAnimation != this->animations[key])
+	{
+		if (this->lastAnimation == NULL)
+			this->lastAnimation = this->animations[key];
+		else
+		{
+			this->lastAnimation->reset();
+			this->lastAnimation = this->animations[key];
+		}
+	}
 	this->animations[key]->play(dt);
 }
 
