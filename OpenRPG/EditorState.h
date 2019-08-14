@@ -1,32 +1,27 @@
-#ifndef MAINMENUSTATE_H
-#define MAINMENUSTATE_H
+#ifndef EDITORSTATE_H
+#define EDITORSTATE_H
 
-#include "GameState.h"
-#include "EditorState.h"
+#include "State.h"
 #include "Button.h"
-
-class MainMenuState :
+class EditorState :
 	public State
 {
 private:
 	//변수
-	sf::Texture backgroundTexture;
-	sf::RectangleShape background;
 	sf::Font font;
-
 	std::map<std::string, Button* > buttons;
 
 
 	//함수
 	void initVariables();
-	void initBackground();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initBackground();
 
 public:
-	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
-	virtual ~MainMenuState();
+	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+	virtual ~EditorState();
 
 	//함수
 
@@ -35,5 +30,7 @@ public:
 	void update(const float& dt);
 	void renderButtons(sf::RenderTarget* target = NULL);
 	void render(sf::RenderTarget* target = NULL);
+
 };
-#endif
+
+#endif // !EDITORSTATE_H

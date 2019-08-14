@@ -113,9 +113,18 @@ void MainMenuState::updateButtons()
 		it.second->update(this->mousePosView);
 	}
 
+	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+	}
+
+	//설정
+
+	//에디터
+	if (this->buttons["EDITOR_STATE"]->isPressed())
+	{
+		this->states->push(new EditorState(this->window, this->supportedKeys, this->states));
 	}
 
 	//종료
