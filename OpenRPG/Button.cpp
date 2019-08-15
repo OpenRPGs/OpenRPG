@@ -30,7 +30,7 @@ Button::Button(float x, float y, float width, float height,
 	this->hoverColor = hover_Color;
 	this->activeColor = active_Color;
 
-	
+
 }
 
 
@@ -90,8 +90,8 @@ void Button::update(const sf::Vector2f mousePos)
 	}
 }
 
-void Button::render(sf::RenderTarget * target)
+void Button::render(sf::RenderTarget & target)
 {
-	target->draw(this->shape);
-	target->draw(this->text);
+	target.draw(this->shape);
+	target.draw(this->text);
 }
