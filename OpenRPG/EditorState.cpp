@@ -35,10 +35,10 @@ void EditorState::initKeybinds()
 
 void EditorState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(950, 100, 250, 70,
+	/*this->buttons["GAME_STATE"] = new Button(950, 100, 250, 70,
 		&this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
 		sf::Color(255, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));*/
 }
 
 void EditorState::initBackground()
