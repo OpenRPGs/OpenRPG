@@ -26,7 +26,7 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/image/Sprites/Player/walk_sprite.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/image/Sprites/Player/PLAYER_SHEET.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
 	}

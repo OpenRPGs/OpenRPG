@@ -17,6 +17,12 @@ const sf::Vector2f & MovementComponent::getVelocity() const
 	return this->velocity;
 }
 
+const float & MovementComponent::getMaxVelocity() const
+{
+	return this->maxVelocity;
+	// TODO: 여기에 반환 구문을 삽입합니다.
+}
+
 
 //Functions
 void MovementComponent::move(const float dir_x, const float dir_y, const float& dt)
