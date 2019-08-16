@@ -10,7 +10,7 @@ private:
 	//변수
 	sf::Font font;
 	std::map<std::string, Button* > buttons;
-
+	sf::Texture	tx;
 
 	//함수
 	void initVariables();
