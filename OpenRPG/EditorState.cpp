@@ -4,7 +4,7 @@
 //Initaillizer functions
 void EditorState::initVariables()
 {
-
+	
 }
 
 void EditorState::initFonts()
@@ -28,17 +28,20 @@ void EditorState::initKeybinds()
 		{
 			this->keybinds[key] = this->supportedKeys->at(key2);
 		}
-	} 
+	}
 	ifs.close();
 
 }
 
 void EditorState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(950, 100, 250, 70,
-		&this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
-		sf::Color(255, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
+		throw "btn";
+
+	this->buttons["GAME_STATE"] = new Button(250, 100, 1250, 270,
+		&tx ,&this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
+		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
 void EditorState::initBackground()
@@ -90,7 +93,7 @@ void EditorState::update(const float& dt)
 
 }
 
-void EditorState::renderButtons(sf::RenderTarget * target)
+void EditorState::renderButtons(sf::RenderTarget & target)
 {
 	for (auto &it : this->buttons)
 	{
@@ -102,7 +105,6 @@ void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
-	this->renderButtons(target);
 
 	//삭제예정. 디버깅용.
 	sf::Text mouseText;
@@ -113,5 +115,6 @@ void EditorState::render(sf::RenderTarget* target)
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
 
+	this->renderButtons(*target);
 	target->draw(mouseText);
 }

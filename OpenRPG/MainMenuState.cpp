@@ -15,7 +15,7 @@ void MainMenuState::initBackground()
 			static_cast<float>(this->window->getSize().y)
 		)
 	);
-	if (!this->backgroundTexture.loadFromFile("Resources/image/Backgrounds/bg1.png"))
+	if (!this->backgroundTexture.loadFromFile("Resources/image/Backgrounds/bg3.png"))
 	{
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
@@ -56,25 +56,31 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(100, 500, 250, 70,
-		&this->font, L"새 게임!", 50,
-		sf::Color(255, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20,50),
-		sf::Color(70, 70, 70,0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20,0));
+	
+	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	}
 
-	this->buttons["SETTING_STATE"] = new Button(100, 600, 250, 70,
-		&this->font, L"게임 설정", 50,
+	this->buttons["GAME_STATE"] = new Button(1500, 500, 250, 160,
+		&btnTexure, &this->font, L"새 게임", 40,
+		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20,50),
+		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+
+	this->buttons["SETTING_STATE"] = new Button(1500, 600, 250, 160,
+		&btnTexure, &this->font, L"게임 설정", 40,
 		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70,0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
-	this->buttons["EDITOR_STATE"] = new Button(100, 700, 250, 70,
-		&this->font, L"에디터", 50,
+	this->buttons["EDITOR_STATE"] = new Button(1500, 700, 250, 160,
+		&btnTexure, &this->font, L"에디터", 40,
 		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
-	this->buttons["EXIT_STATE"] = new Button(100, 900, 250, 70,
-		&this->font, L"종 료!", 50,
+	this->buttons["EXIT_STATE"] = new Button(1500, 900, 250, 160,
+		&btnTexure, &this->font, L"종 료", 40,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150,250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 }
 
@@ -144,7 +150,7 @@ void MainMenuState::update(const float& dt)
 
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget * target)
+void MainMenuState::renderButtons(sf::RenderTarget& target)
 {
 	for (auto &it : this->buttons)
 	{
@@ -158,7 +164,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 		target = this->window;
 
 	target->draw(this->background);
-	this->renderButtons(target);
+	this->renderButtons(*target);
 
 	//삭제예정. 디버깅용.
 	sf::Text mouseText;

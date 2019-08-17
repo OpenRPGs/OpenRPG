@@ -22,6 +22,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{fc54ac76-e223-43a8-b6a4-482fa2290a2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tile">
+      <UniqueIdentifier>{7ce417d0-cfb5-4b47-9ed5-3ccf95d4200d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -57,6 +60,12 @@
     <ClCompile Include="EditorState.cpp">
       <Filter>States</Filter>
     </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -88,6 +97,12 @@
     </ClInclude>
     <ClInclude Include="EditorState.h">
       <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Tile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

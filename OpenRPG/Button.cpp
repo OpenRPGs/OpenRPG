@@ -1,7 +1,7 @@
 #include "Button.h"
 
 Button::Button(float x, float y, float width, float height,
-	sf::Font* font, std::wstring text, unsigned character_size,
+	sf::Texture* buttonTexture, sf::Font* font, std::wstring text, unsigned character_size,
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 	sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color)
 {
@@ -10,6 +10,7 @@ Button::Button(float x, float y, float width, float height,
 	this->shape.setPosition(sf::Vector2f(x, y));
 	this->shape.setSize(sf::Vector2f(width, height));
 	this->shape.setFillColor(idle_Color);
+	this->shape.setTexture(buttonTexture);
 
 	this->font = font;
 	this->text.setFont(*this->font);
@@ -18,7 +19,7 @@ Button::Button(float x, float y, float width, float height,
 	this->text.setCharacterSize(character_size);
 	this->text.setPosition(
 		this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-		this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f
+		this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f - 10.f
 	);
 
 	this->textIdleColor = text_idle_color;
@@ -30,7 +31,7 @@ Button::Button(float x, float y, float width, float height,
 	this->hoverColor = hover_Color;
 	this->activeColor = active_Color;
 
-	
+
 }
 
 
@@ -90,8 +91,8 @@ void Button::update(const sf::Vector2f mousePos)
 	}
 }
 
-void Button::render(sf::RenderTarget * target)
+void Button::render(sf::RenderTarget & target)
 {
-	target->draw(this->shape);
-	target->draw(this->text);
+	target.draw(this->shape);
+	target.draw(this->text);
 }

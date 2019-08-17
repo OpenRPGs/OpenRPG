@@ -10,7 +10,7 @@ private:
 	//변수
 	sf::Font font;
 	std::map<std::string, Button* > buttons;
-
+	sf::Texture	tx;
 
 	//함수
 	void initVariables();
@@ -28,7 +28,7 @@ public:
 	void updateInput(const float& dt);
 	void updateButtons();
 	void update(const float& dt);
-	void renderButtons(sf::RenderTarget* target = NULL);
+	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 
 };
