@@ -1,4 +1,4 @@
-#ifndef BUTTON_H
+ï»¿#ifndef BUTTON_H
 #define BUTTON_H
 
 #include <iostream>
@@ -37,10 +37,10 @@ public:
 		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 		sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color);
 	~Button();
-	//Á¢±ÙÀÚ
+	//ì ‘ê·¼ì
 	const bool isPressed() const;
-	//ÇÔ¼ö
-	void update(const sf::Vector2f mousePos);
+	//í•¨ìˆ˜
+	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget& target);
 
 };
