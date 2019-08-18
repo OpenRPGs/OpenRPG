@@ -1,4 +1,4 @@
-#ifndef MAINMENUSTATE_H
+ï»¿#ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 
 #include "GameState.h"
@@ -9,7 +9,7 @@ class MainMenuState :
 	public State
 {
 private:
-	//º¯¼ö
+	//ë³€ìˆ˜
 	sf::Texture backgroundTexture;
 	sf::Texture btnTexure;
 	sf::RectangleShape background;
@@ -17,19 +17,21 @@ private:
 
 	std::map<std::string, Button* > buttons;
 
+	SoundComponent* bgm;
 
-	//ÇÔ¼ö
+	//í•¨ìˆ˜
 	void initVariables();
 	void initBackground();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initMusic();
 
 public:
 	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~MainMenuState();
 
-	//ÇÔ¼ö
+	//í•¨ìˆ˜
 
 	void updateInput(const float& dt);
 	void updateButtons();
