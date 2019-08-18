@@ -1,6 +1,16 @@
+﻿#include "stdafx.h"
 #include "GameState.h"
 
+
 //Initializer functions
+void GameState::initButtons()
+{
+	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	}
+}
+
 void GameState::initKeybinds()
 {
 	std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -32,6 +42,21 @@ void GameState::initTextures()
 	}
 }
 
+void GameState::initFonts()
+{
+	if (!this->font.loadFromFile("Fonts/R2.ttc"))
+	{
+		throw("메인메뉴 폰트로딩 실패");
+	}
+}
+
+void GameState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+
+	this->pmenu->addButton("QUIT",800.f,"Quit",this->btnTexure);
+}
+
 void GameState::initPlayers()
 {
 	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"]);
@@ -41,22 +66,46 @@ void GameState::initPlayers()
 GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
 	:State(window, supportedKeys, states)
 {
+	this->initButtons();
 	this->initKeybinds();
+	this->initFonts();
 	this->initTextures();
+	this->initPauseMenu();
 	this->initPlayers();
 }
 
 GameState::~GameState()
 {
 	delete this->player;
+	delete this->pmenu;
 }
 
 
-//Update functions
 void GameState::updateInput(const float & dt)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
+}
 
-	//����� �Է� ������Ʈ
+
+
+//Update functions
+
+void GameState::updatePauseButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+		this->endState();
+}
+
+void GameState::updatePlayerInput(const float & dt)
+{
+
+	//사용자 입력 업데이트
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 		this->player->move(-2.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
@@ -66,18 +115,28 @@ void GameState::updateInput(const float & dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player->move(0.f, 2.f, dt);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
+
 }
 
 void GameState::update(const float& dt)
 {
-	this->updateMousePositions();
-
+	this->updateMousePositions(); //일시정지든 아니든 마우스는 사용가능해야함
 	this->updateInput(dt);
 
-	this->player->update(dt);
+	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
+	{
+		this->updatePlayerInput(dt);
+
+		this->player->update(dt);
+	}
+	else
+	{
+		this->pmenu->update(this->mousePosView);
+	}
 }
+
+
+//Render
 
 void GameState::render(sf::RenderTarget* target)
 {
@@ -86,4 +145,9 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->player->render(*target);
 
+	if (this->paused)
+	{
+		this->pmenu->render(*target);
+		this->updatePauseButtons();
+	}
 }

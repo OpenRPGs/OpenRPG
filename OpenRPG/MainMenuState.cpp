@@ -1,3 +1,4 @@
+ï»¿#include "stdafx.h"
 #include "MainMenuState.h"
 
 //Initaillizer functions
@@ -27,7 +28,7 @@ void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/R2.ttc"))
 	{
-		throw("¸ÞÀÎ¸Þ´º ÆùÆ®·Îµù ½ÇÆÐ");
+		throw("ë©”ì¸ë©”ë‰´ í°íŠ¸ë¡œë”© ì‹¤íŒ¨");
 	}
 }
 
@@ -63,25 +64,31 @@ void MainMenuState::initButtons()
 	}
 
 	this->buttons["GAME_STATE"] = new Button(1500, 500, 250, 160,
-		&btnTexure, &this->font, L"»õ °ÔÀÓ", 40,
+		&btnTexure, &this->font, L"ìƒˆ ê²Œìž„", 40,
 		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20,50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["SETTING_STATE"] = new Button(1500, 600, 250, 160,
-		&btnTexure, &this->font, L"°ÔÀÓ ¼³Á¤", 40,
+		&btnTexure, &this->font, L"ê²Œìž„ ì„¤ì •", 40,
 		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["EDITOR_STATE"] = new Button(1500, 700, 250, 160,
-		&btnTexure, &this->font, L"¿¡µðÅÍ", 40,
+		&btnTexure, &this->font, L"ì—ë””í„°", 40,
 		sf::Color(0, 0, 0,255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["EXIT_STATE"] = new Button(1500, 900, 250, 160,
-		&btnTexure, &this->font, L"Á¾ ·á", 40,
+		&btnTexure, &this->font, L"ì¢… ë£Œ", 40,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150,250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
+}
+
+void MainMenuState::initMusic()
+{
+	this->bgm = new SoundComponent(sounds["BACKGROUND_MUSIC"], true);
+	bgm->playSound();
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
@@ -92,6 +99,8 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
+	this->initSounds();
+	this->initMusic();
 
 }
 
@@ -102,6 +111,8 @@ MainMenuState::~MainMenuState()
 	{
 		delete it->second;
 	}
+
+	delete bgm;
 }
 
 void MainMenuState::updateInput(const float & dt)
@@ -113,30 +124,33 @@ void MainMenuState::updateInput(const float & dt)
 
 void MainMenuState::updateButtons()
 {
-	//¸ðµç ¹öÆ°µéÀÇ »óÅÂ¸¦ ±â´É¿¡¸Â°Ô ¾÷µ¥ÀÌÆ®ÇØÁÜ
+	//ëª¨ë“  ë²„íŠ¼ë“¤ì˜ ìƒíƒœë¥¼ ê¸°ëŠ¥ì—ë§žê²Œ ì—…ë°ì´íŠ¸í•´ì¤Œ
 	for (auto &it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
 	}
 
-	//°ÔÀÓ½ÃÀÛ
+	//ê²Œìž„ì‹œìž‘
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+		this->bgm->stop();
 	}
 
-	//¼³Á¤
+	//ì„¤ì •
 
-	//¿¡µðÅÍ
+	//ì—ë””í„°
 	if (this->buttons["EDITOR_STATE"]->isPressed())
 	{
 		this->states->push(new EditorState(this->window, this->supportedKeys, this->states));
+		this->bgm->stop();
 	}
 
-	//Á¾·á
+	//ì¢…ë£Œ
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
 		this -> endState();
+		this->bgm->stop();
 	}
 }
 
@@ -166,7 +180,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 	target->draw(this->background);
 	this->renderButtons(*target);
 
-	//»èÁ¦¿¹Á¤. µð¹ö±ë¿ë.
+	//ì‚­ì œì˜ˆì •. ë””ë²„ê¹…ìš©.
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y-15));
 	mouseText.setFont(this->font);

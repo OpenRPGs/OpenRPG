@@ -1,3 +1,4 @@
+﻿#include "stdafx.h"
 #include "Entity.h"
 
 
@@ -40,6 +41,11 @@ void Entity::createAnimationComponent(sf::Texture & texture_sheet)
 void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, float offset_y, float width, float height)
 {
 	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
+}
+
+void Entity::createSoundComponent(sf::SoundBuffer& buffer, bool loop)
+{
+	this->soundComponent = new SoundComponent(buffer, loop);
 }
 
 //Functions

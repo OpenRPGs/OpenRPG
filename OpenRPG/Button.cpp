@@ -1,3 +1,4 @@
+ï»¿#include "stdafx.h"
 #include "Button.h"
 
 Button::Button(float x, float y, float width, float height,
@@ -40,7 +41,7 @@ Button::~Button()
 }
 
 
-//Á¢±ÙÀÚ
+//ì ‘ê·¼ì
 
 const bool Button::isPressed() const
 {
@@ -49,9 +50,9 @@ const bool Button::isPressed() const
 	return false;
 }
 
-//ÇÔ¼ö
+//í•¨ìˆ˜
 
-void Button::update(const sf::Vector2f mousePos)
+void Button::update(const sf::Vector2f& mousePos)
 {
 	//Update the booleans for hover and pressed
 

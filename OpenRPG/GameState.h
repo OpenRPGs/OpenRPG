@@ -1,25 +1,35 @@
-#ifndef GAMESTATE_H
+ï»¿#ifndef GAMESTATE_H
 #define GAMESTATE_H
 
 #include "State.h"
+#include "PauseMenu.h"
 
 class GameState :
 	public State
 {
 private:
-	Player* player;
+	sf::Font font;
+	PauseMenu* pmenu;
+	sf::Texture btnTexure;
 
-	//ÇÔ¼ö
+	Player* player;
+	sf::Texture texture;
+
+	//í•¨ìˆ˜
+	void initButtons();
 	void initKeybinds();
 	void initTextures();
 	void initPlayers();
+	void initFonts();
+	void initPauseMenu();
 public:
 	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~GameState();
 
-	//ÇÔ¼ö
-
+	//í•¨ìˆ˜
+	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
+	void updatePauseButtons();
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = NULL);
 };

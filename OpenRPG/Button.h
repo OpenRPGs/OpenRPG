@@ -1,15 +1,5 @@
-#ifndef BUTTON_H
+Ôªø#ifndef BUTTON_H
 #define BUTTON_H
-
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <sstream>
-
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Audio.hpp"
 
 enum button_state{ BTN_IDLE = 0, BTN_ACTIVE, BTN_HOVER };
 
@@ -37,10 +27,10 @@ public:
 		sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 		sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color);
 	~Button();
-	//¡¢±Ÿ¿⁄
+	//Ï†ëÍ∑ºÏûê
 	const bool isPressed() const;
-	//«‘ºˆ
-	void update(const sf::Vector2f mousePos);
+	//Ìï®Ïàò
+	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget& target);
 
 };

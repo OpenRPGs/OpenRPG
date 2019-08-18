@@ -1,3 +1,4 @@
+﻿#include "stdafx.h"
 #include "MovementComponent.h"
 
 MovementComponent::MovementComponent(sf::Sprite& sprite,
@@ -20,7 +21,7 @@ const sf::Vector2f & MovementComponent::getVelocity() const
 const float & MovementComponent::getMaxVelocity() const
 {
 	return this->maxVelocity;
-	// TODO: ���⿡ ��ȯ ������ �����մϴ�.
+	// TODO: 여기에 반환 구문을 삽입합니다.
 }
 
 

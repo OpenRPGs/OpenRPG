@@ -1,3 +1,4 @@
+ï»¿#include "stdafx.h"
 #include "Player.h"
 
 
@@ -16,7 +17,7 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 {
 	this->initVariables();
 	this->setPositions(x, y);
-	//ÃÊ·Ï»ö Ä³ÁÖ¾óÄÉ¸¯ÅÍ ¼³Á¤
+	//ì´ˆë¡ìƒ‰ ìºì£¼ì–¼ì¼€ë¦­í„° ì„¤ì •
 	//this->createMovementComponent(500.f, 500.f, 100.f);
 	//this->createAnimationComponent(texture_sheet);
 
@@ -44,7 +45,7 @@ Player::~Player()
 
 }
 
-//ÃÊ·Ï»ö Ä³ÁÖ¾óÄ³¸¯ÅÍ¿ë updateÇÔ¼ö
+//ì´ˆë¡ìƒ‰ ìºì£¼ì–¼ìºë¦­í„°ìš© updateí•¨ìˆ˜
 //void Player::update(const float & dt)
 //{
 //	this->movementComponent->update(dt);
@@ -85,25 +86,25 @@ void Player::updateAnimation(const float & dt)
 {
 	if (this->attacking)
 	{
-		//¹Ù¶óº¸´Â ¹æÇâÃ¼Å©
-		if (this->sprite.getScale().x > 0.f)//¿ÞÂÊ
+		//ë°”ë¼ë³´ëŠ” ë°©í–¥ì²´í¬
+		if (this->sprite.getScale().x > 0.f)//ì™¼ìª½
 		{
 			this->sprite.setOrigin(96.f, 0.f);
 		}
-		else//¿À¸¥ÂÊ
+		else//ì˜¤ë¥¸ìª½
 		{
 			this->sprite.setOrigin(258.f +96.f, 0.f);
 		}
 
-		//¾Ö´Ï¸ÞÀÌ¼Ç Á¾·á Ã¼Å©
+		//ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ ì²´í¬
 		if (this->animationComponent->play("ATTACK", dt, true))
 		{
-			//¹Ù¶óº¸´Â ¹æÇâÃ¼Å©
-			if (this->sprite.getScale().x > 0.f)//¿ÞÂÊ
+			//ë°”ë¼ë³´ëŠ” ë°©í–¥ì²´í¬
+			if (this->sprite.getScale().x > 0.f)//ì™¼ìª½
 			{
 				this->sprite.setOrigin(0.f, 0.f); 
 			}
-			else//¿À¸¥ÂÊ
+			else//ì˜¤ë¥¸ìª½
 			{
 				this->sprite.setOrigin(258.f, 0.f);
 			}

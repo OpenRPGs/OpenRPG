@@ -1,3 +1,4 @@
+ï»¿#include "stdafx.h"
 #include "AnimationComponent.h"
 
 
@@ -11,7 +12,7 @@ AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_
 const bool & AnimationComponent::isDone(std::string key) 
 {
 	return this->animations[key]->isDone();
-	// TODO: ¿©±â¿¡ ¹ÝÈ¯ ±¸¹®À» »ðÀÔÇÕ´Ï´Ù.
+	// TODO: ì—¬ê¸°ì— ë°˜í™˜ êµ¬ë¬¸ì„ ì‚½ìž…í•©ë‹ˆë‹¤.
 }
 
 //Functions
@@ -36,7 +37,7 @@ void AnimationComponent::addAnimation(
 const bool& AnimationComponent::play(const std::string key, const float & dt, const bool priority)
 {
 
-	if (this->priorityAnimation) // ¸¸¾à ¿ì¼±¼øÀ§ÀÎ ¾Ö´Ï¸ÞÀÌ¼ÇÀÌÀÖ´Ù¸é
+	if (this->priorityAnimation) // ë§Œì•½ ìš°ì„ ìˆœìœ„ì¸ ì• ë‹ˆë©”ì´ì…˜ì´ìžˆë‹¤ë©´
 	{
 		if (this->priorityAnimation == this->animations[key])
 		{
@@ -80,7 +81,7 @@ const bool& AnimationComponent::play(const std::string key, const float & dt, co
 
 const bool& AnimationComponent::play(const std::string key, const float & dt, const float & modifier, const float & modifier_max, const bool priority)
 {
-	if (this->priorityAnimation) // ¸¸¾à ¿ì¼±¼øÀ§ÀÎ ¾Ö´Ï¸ÞÀÌ¼ÇÀÌÀÖ´Ù¸é
+	if (this->priorityAnimation) // ë§Œì•½ ìš°ì„ ìˆœìœ„ì¸ ì• ë‹ˆë©”ì´ì…˜ì´ìžˆë‹¤ë©´
 	{
 		if (this->priorityAnimation == this->animations[key])
 		{

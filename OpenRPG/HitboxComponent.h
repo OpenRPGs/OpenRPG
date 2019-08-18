@@ -1,15 +1,5 @@
-#ifndef HITBOXCOMPONENT_H  
+﻿#ifndef HITBOXCOMPONENT_H  
 #define HITBOXCOMPONENT_H
-
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Network.hpp"
-#include "SFML/Audio.hpp"
 
 class HitboxComponent
 {
