@@ -39,6 +39,7 @@
 - 오타 교정
 - 버그 제보
 - 기능 제안 및 추가 
+- 커뮤니티 [Slack링크](https://join.slack.com/t/openrpgworkspace/shared_invite/enQtNzExMDI5NDg3MTU1LWFhMmNkMGM1YzQ3ZmUzZWYxNTkwYzYzM2UwOGMxOTkxYWVjNjE1MWM5NTNjYWQ1OWIwNzM2NTE3Zjc4Y2RjMzE) 
  ***
     
 ## 📋 Requirements 
@@ -68,3 +69,4 @@
 - 19년 8월 15일 Hitbox생성 및 적용완료.
 - 19년 8월 16일 메뉴화면텍스처변경 및 디자인수정, 버튼클래스 텍스처적용가능하도록 수정
 - 19년 8월 17일 게임플레이도중 일시정지 및 메뉴화면 팝업기능 구현
+- 19년 8월 18일 SoundComponent제작 및 배경음악 적용완료(X-rated-Curse님이 기여해주셨습니다.)
