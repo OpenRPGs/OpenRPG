@@ -1,31 +1,30 @@
-#include "SoundComponent.h"
+﻿#include "SoundComponent.h"
 
 
-void SoundComponent::initSoundComponent(const std::string &filename)
+void SoundComponent::initSoundComponent(sf::SoundBuffer &buffer, bool loop)
 {
-	if (!this->buffer.loadFromFile(filename))
-		throw "ERROR::SOUNDCOMPONENT::COULD_NOT_LOAD_SOUND_FILE";
+	this->sound.setBuffer(buffer);
+	this->sound.setLoop(loop);
 }
 
 void SoundComponent::pause()
 {
-	this->mysound.pause();
+	this->sound.pause();
 }
 
 void SoundComponent::playSound()
 {
-	this->mysound.setBuffer(buffer);
-	this->mysound.play();
+	this->sound.play();
 }
 
 void SoundComponent::stop()
 {
-	this->mysound.stop();
+	this->sound.stop();
 }
 
-SoundComponent::SoundComponent(const std::string &filename)
+SoundComponent::SoundComponent(sf::SoundBuffer &buffer, bool loop)
 {
-	this->initSoundComponent(filename);
+	this->initSoundComponent(buffer, loop);
 }
 
 

@@ -1,4 +1,4 @@
-#ifndef GAMESTATE_H
+ï»¿#ifndef GAMESTATE_H
 #define GAMESTATE_H
 
 #include "State.h"
@@ -9,7 +9,7 @@ class GameState :
 private:
 	Player* player;
 
-	//ÇÔ¼ö
+	//í•¨ìˆ˜
 	void initKeybinds();
 	void initTextures();
 	void initPlayers();
@@ -17,7 +17,7 @@ public:
 	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~GameState();
 
-	//ÇÔ¼ö
+	//í•¨ìˆ˜
 
 	void updateInput(const float& dt);
 	void update(const float& dt);

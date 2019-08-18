@@ -1,4 +1,5 @@
-#pragma once
+﻿#ifndef SOUNDCOMPONENT_H
+#define SOUNDCOMPONENT_H
 
 #include <iostream>
 #include <map>
@@ -11,16 +12,16 @@
 
 class SoundComponent
 {
-	sf::Sound mysound;
-	sf::SoundBuffer buffer;
+	sf::Sound sound;
 
 public:
-	void initSoundComponent(const std::string &filename);
+	void initSoundComponent(sf::SoundBuffer &buffer, bool loop);
 	void pause();
 	void playSound();
 	void stop();
 
-	SoundComponent(const std::string &filename);
+	SoundComponent(sf::SoundBuffer &buffer, bool loop);
 	~SoundComponent();
 };
 
+#endif

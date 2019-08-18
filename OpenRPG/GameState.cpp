@@ -1,4 +1,4 @@
-#include "GameState.h"
+ï»¿#include "GameState.h"
 
 //Initializer functions
 void GameState::initKeybinds()
@@ -56,7 +56,7 @@ GameState::~GameState()
 void GameState::updateInput(const float & dt)
 {
 
-	//»ç¿ëÀÚ ÀÔ·Â ¾÷µ¥ÀÌÆ®
+	//ì‚¬ìš©ìž ìž…ë ¥ ì—…ë°ì´íŠ¸
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 		this->player->move(-2.f, 0.f, dt);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))

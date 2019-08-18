@@ -160,6 +160,7 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SoundComponent.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
@@ -174,6 +175,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SoundComponent.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

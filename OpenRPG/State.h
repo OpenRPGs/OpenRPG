@@ -1,4 +1,4 @@
-#ifndef STATE_H
+﻿#ifndef STATE_H
 #define STATE_H
 
 #include "Player.h"
@@ -19,10 +19,12 @@ protected:
 	sf::Vector2f mousePosView;
 
 	//Resources
+	std::map<std::string, sf::SoundBuffer> sounds;
 	std::map<std::string,sf::Texture> textures;
 
-	//�Լ�
+	//함수
 	virtual void initKeybinds() = 0;
+	void initSounds();
 
 public:
 	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
