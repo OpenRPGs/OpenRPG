@@ -1,4 +1,5 @@
-﻿#include "SoundComponent.h"
+﻿#include "stdafx.h"
+#include "SoundComponent.h"
 
 
 void SoundComponent::initSoundComponent(sf::SoundBuffer &buffer, bool loop)

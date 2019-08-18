@@ -75,6 +75,9 @@
     <ClCompile Include="SoundComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="SoundComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

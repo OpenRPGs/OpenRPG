@@ -1,5 +1,4 @@
-#pragma once
-#ifndef GAME_H
+ï»¿#ifndef GAME_H
 #define GAME_H
 
 #include "GameState.h"
@@ -8,7 +7,7 @@
 class Game
 {
 private:
-	//º¯¼ö
+	//ë³€ìˆ˜
 	sf::RenderWindow *window;
 	sf::Event sfEvent;
 	std::vector<sf::VideoMode> videoModes;
@@ -17,17 +16,17 @@ private:
 	sf::Clock dtClock;
 	float dt;
 
-	std::stack<State*> states; // °ÔÀÓstate, ¸ŞÀÎ¸Ş´ºstate µîµî..
+	std::stack<State*> states; // ê²Œì„state, ë©”ì¸ë©”ë‰´state ë“±ë“±..
 
 	std::map<std::string, int> supportedKeys;
 
-	//ÃÊ±âÈ­
+	//ì´ˆê¸°í™”
 	void initVariables();
 	void initWindow();
 	void initKeys();
 	void initState();
 public:
-	//»ı¼ºÀÚ ¹× ¼Ò¸êÀÚ
+	//ìƒì„±ì ë° ì†Œë©¸ì
 	Game();
 	virtual ~Game();
 

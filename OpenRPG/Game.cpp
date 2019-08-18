@@ -1,8 +1,9 @@
+ï»¿#include "stdafx.h"
 #include "Game.h"
 
-// Àü¿ªÇÔ¼ö
+// ì „ì—­í•¨ìˆ˜
 
-// ÃÊ±âÈ­ ÇÔ¼ö
+// ì´ˆê¸°í™” í•¨ìˆ˜
 
 void Game::initVariables()
 {
@@ -13,7 +14,7 @@ void Game::initVariables()
 
 void Game::initWindow()
 {
-	//SFML À©µµ¿ìÃ¢ »ý¼º Todo : window.iniÆÄÀÏ·Î ÃÊ±âÈ­ÇÒ¿¹Á¤(¿Ï·á)
+	//SFML ìœˆë„ìš°ì°½ ìƒì„± Todo : window.iniíŒŒì¼ë¡œ ì´ˆê¸°í™”í• ì˜ˆì •(ì™„ë£Œ)
 	std::ifstream ifs("Config/window.ini");
 	this->videoModes = sf::VideoMode::getFullscreenModes();
 
@@ -66,7 +67,7 @@ void Game::initKeys()
 	this->supportedKeys["W"] = sf::Keyboard::Key::W;
 	this->supportedKeys["S"] = sf::Keyboard::Key::S;
 
-	//È®ÀÎ¿ë »èÁ¦¿¹Á¤ÄÚµå
+	//í™•ì¸ìš© ì‚­ì œì˜ˆì •ì½”ë“œ
 	for (auto i : this->supportedKeys)
 		std::cout << i.first << " " << i.second << std::endl;
 }
@@ -77,7 +78,7 @@ void Game::initState()
 	this->states.push(new MainMenuState(this->window, &this->supportedKeys, &this->states));
 }
 
-//»ý¼º ¹× ¼Ò¸êÇÔ¼ö
+//ìƒì„± ë° ì†Œë©¸í•¨ìˆ˜
 Game::Game()
 {
 	this->initWindow();
@@ -97,7 +98,7 @@ Game::~Game()
 }
 
 
-//ÇÔ¼ö 
+//í•¨ìˆ˜ 
 void Game::endApplication()
 {
 	std::cout << "Ending Application" << std::endl;
@@ -135,7 +136,7 @@ void Game::update()
 			this->states.pop();
 		}
 	}
-	else // ÇÁ·Î±×·¥Á¾·á
+	else // í”„ë¡œê·¸ëž¨ì¢…ë£Œ
 	{
 		this->endApplication();
 		this->window->close();
@@ -146,7 +147,7 @@ void Game::render()
 {
 	this->window->clear();
 
-	//¾ÆÀÌÅÛ ±×¸®±â
+	//ì•„ì´í…œ ê·¸ë¦¬ê¸°
 	if (!this->states.empty())
 		this->states.top()->render();
 

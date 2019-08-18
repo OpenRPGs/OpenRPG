@@ -1,16 +1,6 @@
 ﻿#ifndef BUTTON_H
 #define BUTTON_H
 
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <sstream>
-
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Audio.hpp"
-
 enum button_state{ BTN_IDLE = 0, BTN_ACTIVE, BTN_HOVER };
 
 class Button

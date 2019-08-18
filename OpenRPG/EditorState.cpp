@@ -1,3 +1,4 @@
+ï»¿#include "stdafx.h"
 #include "EditorState.h"
 
 
@@ -11,7 +12,7 @@ void EditorState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/R2.ttc"))
 	{
-		throw("¸ÞÀÎ¸Þ´º ÆùÆ®·Îµù ½ÇÆÐ");
+		throw("ë©”ì¸ë©”ë‰´ í°íŠ¸ë¡œë”© ì‹¤íŒ¨");
 	}
 }
 
@@ -39,7 +40,7 @@ void EditorState::initButtons()
 		throw "btn";
 
 	this->buttons["GAME_STATE"] = new Button(250, 100, 1250, 270,
-		&tx ,&this->font, L"(¿¡µðÅÍ) ¸Ê¼öÁ¤, Ä³¸¯ÅÍ¹èÄ¡ µîµî ", 50,
+		&tx ,&this->font, L"(ì—ë””í„°) ë§µìˆ˜ì •, ìºë¦­í„°ë°°ì¹˜ ë“±ë“± ", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
@@ -76,7 +77,7 @@ void EditorState::updateInput(const float & dt)
 
 void EditorState::updateButtons()
 {
-	//¸ðµç ¹öÆ°µéÀÇ »óÅÂ¸¦ ±â´É¿¡¸Â°Ô ¾÷µ¥ÀÌÆ®ÇØÁÜ
+	//ëª¨ë“  ë²„íŠ¼ë“¤ì˜ ìƒíƒœë¥¼ ê¸°ëŠ¥ì—ë§žê²Œ ì—…ë°ì´íŠ¸í•´ì¤Œ
 	for (auto &it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
@@ -106,7 +107,7 @@ void EditorState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-	//»èÁ¦¿¹Á¤. µð¹ö±ë¿ë.
+	//ì‚­ì œì˜ˆì •. ë””ë²„ê¹…ìš©.
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
 	mouseText.setFont(this->font);

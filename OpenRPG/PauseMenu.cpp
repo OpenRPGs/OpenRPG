@@ -1,4 +1,5 @@
-﻿#include "PauseMenu.h"
+﻿#include "stdafx.h"
+#include "PauseMenu.h"
 
 
 

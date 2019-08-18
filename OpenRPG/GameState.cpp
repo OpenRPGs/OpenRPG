@@ -1,4 +1,5 @@
-﻿#include "GameState.h"
+﻿#include "stdafx.h"
+#include "GameState.h"
 
 
 //Initializer functions
