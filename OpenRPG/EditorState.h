@@ -1,4 +1,4 @@
-#ifndef EDITORSTATE_H
+﻿#ifndef EDITORSTATE_H
 #define EDITORSTATE_H
 
 #include "State.h"
@@ -7,12 +7,12 @@ class EditorState :
 	public State
 {
 private:
-	//����
+	//변수
 	sf::Font font;
 	std::map<std::string, Button* > buttons;
 	sf::Texture	tx;
 
-	//�Լ�
+	//초기화함수
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
@@ -23,8 +23,7 @@ public:
 	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~EditorState();
 
-	//�Լ�
-
+	//업데이트함수
 	void updateInput(const float& dt);
 	void updateButtons();
 	void update(const float& dt);
