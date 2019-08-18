@@ -21,9 +21,11 @@ protected:
 
 	//Resources
 	std::map<std::string,sf::Texture> textures;
+	std::map<std::string, sf::SoundBuffer> sounds;
 
 	//함수
 	virtual void initKeybinds() = 0;
+	void initSounds();
 
 public:
 	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
