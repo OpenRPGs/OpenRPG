@@ -110,6 +110,8 @@ MainMenuState::~MainMenuState()
 	{
 		delete it->second;
 	}
+
+	delete bgm;
 }
 
 void MainMenuState::updateInput(const float & dt)

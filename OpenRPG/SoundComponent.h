@@ -21,7 +21,7 @@ public:
 	void stop();
 
 	SoundComponent(sf::SoundBuffer &buffer, bool loop);
-	~SoundComponent();
+	virtual ~SoundComponent();
 };
 
 #endif
