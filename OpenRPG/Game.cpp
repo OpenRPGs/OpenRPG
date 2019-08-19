@@ -1,5 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Game.h"
+#include "State.h"
+#include "MainMenuState.h"
+
 
 // 전역함수
 

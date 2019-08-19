@@ -1,4 +1,8 @@
-﻿
+﻿#pragma once
+
+class Player;
+class PauseMenu;
+
 class GameState :
 	public State
 {

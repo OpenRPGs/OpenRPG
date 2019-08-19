@@ -1,4 +1,8 @@
-﻿
+﻿#pragma once
+
+class Button;
+class SoundComponent;
+
 class MainMenuState :
 	public State
 {

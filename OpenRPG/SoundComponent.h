@@ -1,4 +1,4 @@
-﻿
+﻿#pragma once
 class SoundComponent
 {
 	sf::Sound sound;

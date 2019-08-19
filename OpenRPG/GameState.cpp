@@ -1,4 +1,10 @@
 ﻿#include "stdafx.h"
+#include "Entity.h"
+#include "Player.h"
+#include "Button.h"
+#include "PauseMenu.h"
+#include "State.h"
+#include "GameState.h"	
 
 //Initializer functions
 void GameState::initButtons()

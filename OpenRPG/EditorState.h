@@ -1,4 +1,8 @@
 ﻿
+class Button;
+
+#pragma once
+
 class EditorState :
 	public State
 {

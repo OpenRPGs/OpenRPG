@@ -1,4 +1,9 @@
-﻿
+﻿#pragma once
+class MovementComponent;
+class AnimationComponent;
+class HitboxComponent;
+class SoundComponent;
+
 class Entity
 {
 private:

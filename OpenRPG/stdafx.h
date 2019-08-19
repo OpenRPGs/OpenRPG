@@ -24,25 +24,4 @@
 #include <SFML\Audio.hpp>
 #include <SFML\Network.hpp>
 
-//GUI
-#include "Button.h"
-
-//MENU
-#include "PauseMenu.h"
-
-//COMPONENT
-#include "MovementComponent.h"
-#include "AnimationComponent.h"
-#include "HitboxComponent.h"
-#include "SoundComponent.h"
-
-//ENTITY
-#include "Entity.h"
-#include "Player.h"
-
-//State
-#include "State.h"
-#include "GameState.h"
-#include "EditorState.h"
-#include "MainMenuState.h"
 

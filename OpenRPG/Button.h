@@ -1,4 +1,5 @@
-﻿
+﻿#pragma once
+
 enum button_state{ BTN_IDLE = 0, BTN_ACTIVE, BTN_HOVER };
 
 class Button

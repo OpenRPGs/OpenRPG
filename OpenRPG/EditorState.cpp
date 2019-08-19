@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
-
+#include "Button.h"
+#include "State.h"
+#include "EditorState.h"
 //Initaillizer functions
 void EditorState::initVariables()
 {
