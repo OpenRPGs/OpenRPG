@@ -1,6 +1,4 @@
-﻿#ifndef HITBOXCOMPONENT_H  
-#define HITBOXCOMPONENT_H
-
+﻿
 class HitboxComponent
 {
 private:
@@ -21,4 +19,3 @@ public:
 
 };
 
-#endif // ! 

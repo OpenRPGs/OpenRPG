@@ -1,6 +1,4 @@
-﻿// header.h
-#ifndef HEADER_H
-#define HEADER_H
+﻿#pragma once
 
 //Core
 #include <algorithm>
@@ -26,4 +24,25 @@
 #include <SFML\Audio.hpp>
 #include <SFML\Network.hpp>
 
-#endif
+//GUI
+#include "Button.h"
+
+//MENU
+#include "PauseMenu.h"
+
+//COMPONENT
+#include "MovementComponent.h"
+#include "AnimationComponent.h"
+#include "HitboxComponent.h"
+#include "SoundComponent.h"
+
+//ENTITY
+#include "Entity.h"
+#include "Player.h"
+
+//State
+#include "State.h"
+#include "GameState.h"
+#include "EditorState.h"
+#include "MainMenuState.h"
+

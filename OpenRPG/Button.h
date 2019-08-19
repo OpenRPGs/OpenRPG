@@ -1,6 +1,4 @@
-﻿#ifndef BUTTON_H
-#define BUTTON_H
-
+﻿
 enum button_state{ BTN_IDLE = 0, BTN_ACTIVE, BTN_HOVER };
 
 class Button
@@ -34,6 +32,4 @@ public:
 	void render(sf::RenderTarget& target);
 
 };
-
-#endif 
 

@@ -1,6 +1,4 @@
-﻿#ifndef ANIMATIONCOMPONENT_H
-#define ANIMATIONCOMPONENT_H
-
+﻿
 class AnimationComponent
 {
 private:
@@ -127,4 +125,4 @@ public:
 	const bool& play(const std::string key, const float& dt, const float& modifier, const float& modifier_max, const bool priority = false);
 };
 
-#endif 
+

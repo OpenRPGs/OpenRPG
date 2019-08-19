@@ -1,8 +1,4 @@
-﻿#ifndef STATE_H
-#define STATE_H
-
-#include "Player.h"
-
+﻿
 class State
 {
 private:
@@ -42,4 +38,4 @@ public:
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget* target = NULL) = 0;
 };
-#endif
+

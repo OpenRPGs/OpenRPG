@@ -1,6 +1,4 @@
 ﻿#include "stdafx.h"
-#include "GameState.h"
-
 
 //Initializer functions
 void GameState::initButtons()

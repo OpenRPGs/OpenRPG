@@ -1,6 +1,4 @@
 ﻿#include "stdafx.h"
-#include "Player.h"
-
 
 //Initializer functions
 void Player::initVariables()

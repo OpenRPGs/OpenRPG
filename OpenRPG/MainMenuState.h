@@ -1,10 +1,4 @@
-﻿#ifndef MAINMENUSTATE_H
-#define MAINMENUSTATE_H
-
-#include "GameState.h"
-#include "EditorState.h"
-#include "Button.h"
-
+﻿
 class MainMenuState :
 	public State
 {
@@ -39,4 +33,4 @@ public:
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 };
-#endif
+

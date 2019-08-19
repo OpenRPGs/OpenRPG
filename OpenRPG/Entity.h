@@ -1,11 +1,4 @@
-﻿#ifndef ENTITY_H
-#define ENTITY_H
-
-#include "MovementComponent.h"
-#include "AnimationComponent.h"
-#include "HitboxComponent.h"
-#include "SoundComponent.h"
-
+﻿
 class Entity
 {
 private:
@@ -38,5 +31,5 @@ public:
 	virtual void render(sf::RenderTarget& target);
 
 };
-#endif // !ENTITY_H
+
 

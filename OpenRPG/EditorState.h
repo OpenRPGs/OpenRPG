@@ -1,8 +1,4 @@
-﻿#ifndef EDITORSTATE_H
-#define EDITORSTATE_H
-
-#include "State.h"
-#include "Button.h"
+﻿
 class EditorState :
 	public State
 {
@@ -32,4 +28,3 @@ public:
 
 };
 
-#endif // !EDITORSTATE_H

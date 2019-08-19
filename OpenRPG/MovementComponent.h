@@ -1,6 +1,4 @@
-﻿#ifndef MOVEMENTCOMPONENT_H
-#define MOVEMENTCOMPONENT_H
-
+﻿
 enum movement_states { IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, MOVING_DOWN };
 
 class MovementComponent
@@ -30,4 +28,3 @@ public:
 	void update(const float& dt);
 };
 
-#endif 

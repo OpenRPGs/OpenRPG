@@ -1,6 +1,4 @@
 ﻿#include "stdafx.h"
-#include "EditorState.h"
-
 
 //Initaillizer functions
 void EditorState::initVariables()

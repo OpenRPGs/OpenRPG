@@ -1,9 +1,4 @@
-﻿#ifndef GAMESTATE_H
-#define GAMESTATE_H
-
-#include "State.h"
-#include "PauseMenu.h"
-
+﻿
 class GameState :
 	public State
 {
@@ -33,4 +28,4 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = NULL);
 };
-#endif
+

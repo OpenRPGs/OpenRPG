@@ -1,8 +1,4 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-
-#include "Entity.h"
-
+﻿
 class Player :
 	public Entity
 {
@@ -22,4 +18,3 @@ public:
 	void updateAnimation(const float& dt);
 	virtual void update(const float& dt);
 };
-#endif

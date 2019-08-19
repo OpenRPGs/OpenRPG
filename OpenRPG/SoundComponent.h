@@ -1,6 +1,4 @@
-﻿#ifndef SOUNDCOMPONENT_H
-#define SOUNDCOMPONENT_H
-
+﻿
 class SoundComponent
 {
 	sf::Sound sound;
@@ -14,5 +12,3 @@ public:
 	SoundComponent(sf::SoundBuffer &buffer, bool loop);
 	virtual ~SoundComponent();
 };
-
-#endif
