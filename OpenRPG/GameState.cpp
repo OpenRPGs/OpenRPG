@@ -81,7 +81,7 @@ GameState::~GameState()
 
 void GameState::updateInput(const float & dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
 	{
 		if (!this->paused)
 			this->pauseState();
@@ -96,7 +96,7 @@ void GameState::updateInput(const float & dt)
 
 void GameState::updatePauseButtons()
 {
-	if (this->pmenu->isButtonPressed("QUIT"))
+	if (this->pmenu->isButtonPressed("QUIT") )
 		this->endState();
 }
 
@@ -121,6 +121,7 @@ void GameState::update(const float& dt)
 	window_focus = this->window->hasFocus();
 
 	this->updateMousePositions(); //일시정지든 아니든 마우스는 사용가능해야함
+	this->updateKeytime(dt);
 	this->updateInput(dt);
 
 	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
