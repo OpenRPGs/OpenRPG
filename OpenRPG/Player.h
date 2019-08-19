@@ -5,12 +5,12 @@ class Player :
 private:
 	//Variables
 	bool attacking;
-
+	int* window_focus;
 	//Initializer functions
 	void initVariables();
 	void initComponents();
 public:
-	Player(float x, float y, sf::Texture& texture);
+	Player(float x, float y, sf::Texture& texture, int& window_focus);
 	virtual ~Player();
 
 	//Functions

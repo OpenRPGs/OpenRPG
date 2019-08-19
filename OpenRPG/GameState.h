@@ -3,6 +3,8 @@ class GameState :
 	public State
 {
 private:
+	int window_focus;
+
 	sf::Font font;
 	PauseMenu* pmenu;
 	sf::Texture btnTexure;

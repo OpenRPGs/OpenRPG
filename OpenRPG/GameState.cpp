@@ -52,12 +52,12 @@ void GameState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
 
-	this->pmenu->addButton("QUIT",800.f,"Quit",this->btnTexure);
+	this->pmenu->addButton("QUIT", 800.f, "Quit", this->btnTexure);
 }
 
 void GameState::initPlayers()
 {
-	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"]);
+	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"], window_focus);
 }
 
 //Constructors / Destructors
@@ -102,22 +102,24 @@ void GameState::updatePauseButtons()
 
 void GameState::updatePlayerInput(const float & dt)
 {
-
-	//사용자 입력 업데이트
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
-		this->player->move(-2.f, 0.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-		this->player->move(2.f, 0.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-		this->player->move(0.f, -2.f, dt);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-		this->player->move(0.f, 2.f, dt);
-
-
+	if (this->window->hasFocus()) {
+		//사용자 입력 업데이트
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+			this->player->move(-2.f, 0.f, dt);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+			this->player->move(2.f, 0.f, dt);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+			this->player->move(0.f, -2.f, dt);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+			this->player->move(0.f, 2.f, dt);
+	}
 }
 
 void GameState::update(const float& dt)
 {
+	//윈도우 활성체크
+	window_focus = this->window->hasFocus();
+
 	this->updateMousePositions(); //일시정지든 아니든 마우스는 사용가능해야함
 	this->updateInput(dt);
 

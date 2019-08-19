@@ -123,6 +123,7 @@ void Game::updateSFMLEvents()
 
 void Game::update()
 {
+
 	this->updateSFMLEvents();
 
 	if (!this->states.empty())

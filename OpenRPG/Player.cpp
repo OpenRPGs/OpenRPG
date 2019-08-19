@@ -11,8 +11,9 @@ void Player::initComponents()
 
 }
 
-Player::Player(float x, float y, sf::Texture& texture_sheet)
+Player::Player(float x, float y, sf::Texture& texture_sheet, int& window_focus)
 {
+	this->window_focus = &window_focus;
 	this->initVariables();
 	this->setPositions(x, y);
 	//초록색 캐주얼케릭터 설정
@@ -74,7 +75,7 @@ Player::~Player()
 
 void Player::updateAttack()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && *window_focus )
 	{
 		this->attacking = true;
 	}
