@@ -1,9 +1,7 @@
-﻿#ifndef MAINMENUSTATE_H
-#define MAINMENUSTATE_H
+﻿#pragma once
 
-#include "GameState.h"
-#include "EditorState.h"
-#include "Button.h"
+class Button;
+class SoundComponent;
 
 class MainMenuState :
 	public State
@@ -39,4 +37,4 @@ public:
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 };
-#endif
+

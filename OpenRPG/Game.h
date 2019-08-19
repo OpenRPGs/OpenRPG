@@ -1,8 +1,6 @@
-﻿#ifndef GAME_H
-#define GAME_H
+﻿#pragma once
 
-#include "GameState.h"
-#include "MainMenuState.h"
+class State;
 
 class Game
 {
@@ -44,5 +42,4 @@ public:
 	//Core
 	void run();
 };
-#endif
 

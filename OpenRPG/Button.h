@@ -1,5 +1,4 @@
-﻿#ifndef BUTTON_H
-#define BUTTON_H
+﻿#pragma once
 
 enum button_state{ BTN_IDLE = 0, BTN_ACTIVE, BTN_HOVER };
 
@@ -34,6 +33,4 @@ public:
 	void render(sf::RenderTarget& target);
 
 };
-
-#endif 
 

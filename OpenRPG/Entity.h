@@ -1,10 +1,8 @@
-﻿#ifndef ENTITY_H
-#define ENTITY_H
-
-#include "MovementComponent.h"
-#include "AnimationComponent.h"
-#include "HitboxComponent.h"
-#include "SoundComponent.h"
+﻿#pragma once
+class MovementComponent;
+class AnimationComponent;
+class HitboxComponent;
+class SoundComponent;
 
 class Entity
 {
@@ -38,5 +36,5 @@ public:
 	virtual void render(sf::RenderTarget& target);
 
 };
-#endif // !ENTITY_H
+
 

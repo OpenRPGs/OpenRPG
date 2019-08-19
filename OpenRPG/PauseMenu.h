@@ -1,7 +1,4 @@
-﻿#ifndef PAUSEMENU_H
-#define PAUSEMENU_H
-
-#include "Button.h"
+﻿#pragma once
 
 class PauseMenu
 {
@@ -31,4 +28,3 @@ public:
 	void render(sf::RenderTarget& target);
 };
 
-#endif // !PAUSEMENU_H

@@ -1,5 +1,4 @@
-#ifndef TILE_H
-#define TILE_H
+﻿#pragma once
 
 class Tile
 {
@@ -12,4 +11,4 @@ public:
 	virtual ~Tile();
 };
 
-#endif // !TILE_H
+

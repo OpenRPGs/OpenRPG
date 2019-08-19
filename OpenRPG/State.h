@@ -1,7 +1,4 @@
-﻿#ifndef STATE_H
-#define STATE_H
-
-#include "Player.h"
+﻿#pragma once
 
 class State
 {
@@ -14,6 +11,8 @@ protected:
 	std::map<std::string, int> keybinds;
 	bool quit;
 	bool paused;
+	float keyTime;
+	float keyTimeMax;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
@@ -32,14 +31,17 @@ public:
 	virtual ~State();
 
 	const bool& getQuit() const;
+	const bool getKeytime();
+
 	void endState();
 	void pauseState();
 	void unpauseState();
 
 	
 	virtual void updateInput(const float& dt) = 0;
+	virtual void updateKeytime(const float& dt);
 	virtual void updateMousePositions();
 	virtual void update(const float& dt) = 0;
 	virtual void render(sf::RenderTarget* target = NULL) = 0;
 };
-#endif
+

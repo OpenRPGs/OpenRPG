@@ -1,5 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Game.h"
+#include "State.h"
+#include "MainMenuState.h"
+
 
 // 전역함수
 
@@ -123,6 +126,7 @@ void Game::updateSFMLEvents()
 
 void Game::update()
 {
+
 	this->updateSFMLEvents();
 
 	if (!this->states.empty())

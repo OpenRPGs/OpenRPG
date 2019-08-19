@@ -1,13 +1,14 @@
-﻿#ifndef GAMESTATE_H
-#define GAMESTATE_H
+﻿#pragma once
 
-#include "State.h"
-#include "PauseMenu.h"
+class Player;
+class PauseMenu;
 
 class GameState :
 	public State
 {
 private:
+	int window_focus;
+
 	sf::Font font;
 	PauseMenu* pmenu;
 	sf::Texture btnTexure;
@@ -33,4 +34,4 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderTarget* target = NULL);
 };
-#endif
+

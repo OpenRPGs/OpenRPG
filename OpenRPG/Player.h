@@ -1,20 +1,16 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-
-#include "Entity.h"
-
+﻿#pragma once
 class Player :
 	public Entity
 {
 private:
 	//Variables
 	bool attacking;
-
+	int* window_focus;
 	//Initializer functions
 	void initVariables();
 	void initComponents();
 public:
-	Player(float x, float y, sf::Texture& texture);
+	Player(float x, float y, sf::Texture& texture, int& window_focus);
 	virtual ~Player();
 
 	//Functions
@@ -22,4 +18,3 @@ public:
 	void updateAnimation(const float& dt);
 	virtual void update(const float& dt);
 };
-#endif

@@ -1,7 +1,9 @@
 ﻿#include "stdafx.h"
 #include "Entity.h"
-
-
+#include "MovementComponent.h"
+#include "AnimationComponent.h"
+#include "HitboxComponent.h"
+#include "SoundComponent.h"
 void Entity::initVariables()
 {
 	this->movementComponent = NULL;
