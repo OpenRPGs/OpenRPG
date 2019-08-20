@@ -1,14 +1,14 @@
 ﻿#include "stdafx.h"
 #include "Button.h"
-#include "State.h"
-#include "EditorState.h"
-//Initaillizer functions
-void EditorState::initVariables()
+#include "SettingsState.h"
+
+
+void SettingsState::initVariables()
 {
-	
+
 }
 
-void EditorState::initFonts()
+void SettingsState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/R2.ttc"))
 	{
@@ -16,7 +16,7 @@ void EditorState::initFonts()
 	}
 }
 
-void EditorState::initKeybinds()
+void SettingsState::initKeybinds()
 {
 	std::ifstream ifs("Config/editor_keybinds.ini");
 
@@ -34,22 +34,22 @@ void EditorState::initKeybinds()
 
 }
 
-void EditorState::initButtons()
+void SettingsState::initButtons()
 {
 	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
 	this->buttons["EXIT_STATE"] = new Button(250, 100, 1250, 270,
-		&tx ,&this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
+		&tx, &this->font, L"환경 설정 화면 입니다.", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
-void EditorState::initBackground()
+void SettingsState::initBackground()
 {
 }
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
 	:State(window, supportedKeys, states)
 {
 	this->initVariables();
@@ -60,7 +60,7 @@ EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* s
 
 }
 
-EditorState::~EditorState()
+SettingsState::~SettingsState()
 {
 	auto it = this->buttons.begin();
 	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
@@ -69,13 +69,13 @@ EditorState::~EditorState()
 	}
 }
 
-void EditorState::updateInput(const float & dt)
+void SettingsState::updateInput(const float & dt)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
 		this->endState();
 }
 
-void EditorState::updateButtons()
+void SettingsState::updateButtons()
 {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons)
@@ -89,17 +89,16 @@ void EditorState::updateButtons()
 	}
 }
 
-void EditorState::update(const float& dt)
+void SettingsState::update(const float& dt)
 {
 	this->updateMousePositions();
 	this->updateInput(dt);
 
 	this->updateButtons();
 
-
 }
 
-void EditorState::renderButtons(sf::RenderTarget & target)
+void SettingsState::renderButtons(sf::RenderTarget & target)
 {
 	for (auto &it : this->buttons)
 	{
@@ -107,7 +106,7 @@ void EditorState::renderButtons(sf::RenderTarget & target)
 	}
 }
 
-void EditorState::render(sf::RenderTarget* target)
+void SettingsState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;

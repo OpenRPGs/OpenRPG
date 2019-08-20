@@ -84,6 +84,9 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsState.h">
+      <Filter>States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

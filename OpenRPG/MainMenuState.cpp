@@ -5,6 +5,7 @@
 #include "MainMenuState.h"
 #include "GameState.h"
 #include "EditorState.h"
+#include "SettingsState.h"
 
 #include "SoundManager.h"
 
@@ -144,6 +145,11 @@ void MainMenuState::updateButtons()
 	}
 
 	//설정
+	if (this->buttons["SETTING_STATE"]->isPressed())
+	{
+		this->states->push(new SettingsState(this->window, this->supportedKeys, this->states));
+		SoundManager::getInstance()->getBGM()->stop();
+	}
 
 	//에디터
 	if (this->buttons["EDITOR_STATE"]->isPressed())
