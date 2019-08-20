@@ -171,6 +171,7 @@
     <ClCompile Include="States\Editor\EditorState.cpp" />
     <ClCompile Include="States\Game\GameState.cpp" />
     <ClCompile Include="States\MainMenu\MainMenuState.cpp" />
+    <ClCompile Include="States\Settings\SettingsState.cpp" />
     <ClCompile Include="States\State.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -193,6 +194,7 @@
     <ClInclude Include="States\Editor\EditorState.h" />
     <ClInclude Include="States\Game\GameState.h" />
     <ClInclude Include="States\MainMenu\MainMenuState.h" />
+    <ClInclude Include="States\Settings\SettingsState.h" />
     <ClInclude Include="States\State.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tiles\Tile.h" />

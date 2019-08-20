@@ -52,7 +52,9 @@ SoundManager* SoundManager::setVolumeSE(float volume) {
 	}
 	return this;
 }
-float SoundManager::getVolumeSE() { return this->volumeSE; }
+float SoundManager::getVolumeSE() {
+	return this->volumeSE;
+}
 
 SoundManager* SoundManager::setVolumeBGM(float volume) {
 	this->volumeBGM = volume;
@@ -62,7 +64,9 @@ SoundManager* SoundManager::setVolumeBGM(float volume) {
 
 	return this;
 }
-float SoundManager::getVolumeBGM() { return this->volumeBGM; }
+float SoundManager::getVolumeBGM() {
+	return this->volumeBGM;
+}
 #pragma endregion
 
 #pragma region BGM, SE
@@ -77,7 +81,9 @@ bool SoundManager::LoadBGM(sf::SoundBuffer& buffer) {
 	return this->BGM->Loaded();
 }
 
-SoundComponent* SoundManager::getBGM() { return this->BGM; }
+SoundComponent* SoundManager::getBGM() {
+	return this->BGM;
+}
 
 SoundManager* SoundManager::playSE(sf::SoundBuffer& buffer) {
 	auto sound = new sf::Sound(buffer);

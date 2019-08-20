@@ -1,4 +1,6 @@
 ﻿#include "stdafx.h"
+
+#include "Game/Game.h"
 #include "Entities/Entity.h"
 #include "Entities/Player.h"
 #include "GUI/Button.h"
@@ -67,8 +69,8 @@ void GameState::initPlayers()
 }
 
 //Constructors / Destructors
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
+	:State(window, supportedKeys)
 {
 	this->initButtons();
 	this->initKeybinds();
@@ -121,8 +123,10 @@ void GameState::updatePlayerInput(const float & dt)
 	}
 }
 
-void GameState::update(const float& dt)
+void GameState::update()
 {
+	auto dt = Game::getInstance()->frameTime();
+
 	//윈도우 활성체크
 	window_focus = this->window->hasFocus();
 

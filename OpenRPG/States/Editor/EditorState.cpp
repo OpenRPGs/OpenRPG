@@ -1,7 +1,10 @@
 ﻿#include "stdafx.h"
+
+#include "Game/Game.h"
 #include "GUI/Button.h"
 #include "States/State.h"
 #include "EditorState.h"
+
 //Initaillizer functions
 void EditorState::initVariables()
 {
@@ -49,8 +52,8 @@ void EditorState::initBackground()
 {
 }
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
+	:State(window, supportedKeys)
 {
 	this->initVariables();
 	this->initBackground();
@@ -89,8 +92,10 @@ void EditorState::updateButtons()
 	}
 }
 
-void EditorState::update(const float& dt)
+void EditorState::update()
 {
+	auto dt = Game::getInstance()->frameTime();
+
 	this->updateMousePositions();
 	this->updateInput(dt);
 

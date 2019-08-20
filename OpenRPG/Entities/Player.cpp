@@ -5,6 +5,7 @@
 #include "Components/SoundComponent.h"
 #include "Entity.h"
 #include "Player.h"
+
 //Initializer functions
 void Player::initVariables()
 {
