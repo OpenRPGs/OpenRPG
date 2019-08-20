@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "Game/Game.h"
-#include "GUI/Button.h"
+#include "GUI/Gui.h"
 #include "States/State.h"
 #include "EditorState.h"
 
@@ -42,7 +42,7 @@ void EditorState::initButtons()
 	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
-	this->buttons["EXIT_STATE"] = new Button(250, 100, 1250, 270,
+	this->buttons["EXIT_STATE"] = new gui::Button(250, 100, 1250, 270,
 		&tx ,&this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "Game/Game.h"
-#include "GUI/Button.h"
+#include "GUI/Gui.h"
 #include "SettingsState.h"
 
 void SettingsState::initVariables()
@@ -40,10 +40,14 @@ void SettingsState::initButtons()
 	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
-	this->buttons["EXIT_STATE"] = new Button(250, 100, 1250, 270,
+	this->buttons["EXIT_STATE"] = new gui::Button(250, 100, 1250, 270,
 		&tx, &this->font, L"환경 설정 화면 입니다.", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+
+	//테스트용 드랍다운메뉴 생성.
+	std::wstring li[] = { L"aaaaa",L"bbbbb",L"ccccc",L"ddddd",L"eeee",L"fffff" };
+	this->ddl = new gui::DropDownList(600, 400, 200, 50, font, li, 5);
 }
 
 void SettingsState::initBackground()
@@ -68,6 +72,8 @@ SettingsState::~SettingsState()
 	{
 		delete it->second;
 	}
+
+	delete this->ddl;
 }
 
 void SettingsState::updateInput(const float & dt)
@@ -88,6 +94,7 @@ void SettingsState::updateButtons()
 	{
 		this->endState();
 	}
+
 }
 
 void SettingsState::update()
@@ -99,6 +106,7 @@ void SettingsState::update()
 
 	this->updateButtons();
 
+	this->ddl->update(this->mousePosView, dt);
 }
 
 void SettingsState::renderButtons(sf::RenderTarget & target)
@@ -125,4 +133,6 @@ void SettingsState::render(sf::RenderTarget* target)
 
 	this->renderButtons(*target);
 	target->draw(mouseText);
+
+	this->ddl->render(*target);
 }
