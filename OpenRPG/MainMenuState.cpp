@@ -95,9 +95,7 @@ void MainMenuState::initButtons()
 void MainMenuState::initMusic()
 {
 	SoundManager::getInstance()->LoadBGM(sounds["BACKGROUND_MUSIC"]);
-	auto bgm = SoundManager::getInstance()->getBGM();
-	bgm->setLoop(true);
-	bgm->play();
+	auto bgm = SoundManager::getInstance()->getBGM()->setLoop(true)->play();
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
