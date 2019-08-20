@@ -1,13 +1,13 @@
 ﻿#include "stdafx.h"
-#include "Button.h"
-#include "SoundComponent.h"
-#include "State.h"
-#include "MainMenuState.h"
-#include "GameState.h"
-#include "EditorState.h"
-#include "SettingsState.h"
+#include "GUI/Button.h"
+#include "Components/SoundComponent.h"
+#include "States/State.h"
+#include "States/MainMenu/MainMenuState.h"
+#include "States/Game/GameState.h"
+#include "States/Editor/EditorState.h"
+#include "States/Settings/SettingsState.h" 
 
-#include "SoundManager.h"
+#include "Managers/SoundManager.h"
 
 //Initaillizer functions
 void MainMenuState::initVariables()

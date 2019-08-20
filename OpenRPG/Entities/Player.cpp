@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
-#include "MovementComponent.h"
-#include "AnimationComponent.h"
-#include "HitboxComponent.h"
-#include "SoundComponent.h"
+#include "Components/MovementComponent.h"
+#include "Components/AnimationComponent.h"
+#include "Components/HitboxComponent.h"
+#include "Components/SoundComponent.h"
 #include "Entity.h"
 #include "Player.h"
 //Initializer functions
