@@ -22,108 +22,144 @@
     <Filter Include="Components">
       <UniqueIdentifier>{fc54ac76-e223-43a8-b6a4-482fa2290a2b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tile">
-      <UniqueIdentifier>{7ce417d0-cfb5-4b47-9ed5-3ccf95d4200d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{39d38865-f5a9-4cf1-a171-694c6edbbf69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\Editor">
+      <UniqueIdentifier>{15a65ca9-bfb8-469c-871b-4611cdc4776f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\Game">
+      <UniqueIdentifier>{3f87631e-658a-4ba4-8e1a-443754b202b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\MainMenu">
+      <UniqueIdentifier>{e82dfb22-5c2c-4974-bfa7-8d324169450f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\Settings">
+      <UniqueIdentifier>{620a12ce-b360-4627-9eae-c2506ef83bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{affdc3f3-59ea-46aa-bc43-542159ccb161}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tiles">
+      <UniqueIdentifier>{7ce417d0-cfb5-4b47-9ed5-3ccf95d4200d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{a57fa6c6-5b3a-4fa4-b29d-292000092236}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>리소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorState.cpp">
-      <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="HitboxComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="PauseMenu.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>헤더 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Components\AnimationComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\HitboxComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MovementComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\SoundComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Player.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Entity.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Button.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\PauseMenu.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\SoundManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="States\Editor\EditorState.cpp">
+      <Filter>States\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="States\Game\GameState.cpp">
+      <Filter>States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="States\MainMenu\MainMenuState.cpp">
+      <Filter>States\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="States\Settings\SettingsState.cpp">
+      <Filter>States\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\Tile.cpp">
+      <Filter>Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="States\State.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\StateManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>리소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorState.h">
-      <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="HitboxComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="PauseMenu.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AnimationComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\HitboxComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SoundComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Entity.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Player.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Button.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\PauseMenu.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\SoundManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="States\Editor\EditorState.h">
+      <Filter>States\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="States\Game\GameState.h">
+      <Filter>States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="States\MainMenu\MainMenuState.h">
+      <Filter>States\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="States\Settings\SettingsState.h">
+      <Filter>States\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\Tile.h">
+      <Filter>Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="States\State.h">
+      <Filter>States</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\StateManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

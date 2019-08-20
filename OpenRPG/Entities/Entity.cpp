@@ -1,9 +1,9 @@
 ﻿#include "stdafx.h"
 #include "Entity.h"
-#include "MovementComponent.h"
-#include "AnimationComponent.h"
-#include "HitboxComponent.h"
-#include "SoundComponent.h"
+#include "Components/MovementComponent.h"
+#include "Components/AnimationComponent.h"
+#include "Components/HitboxComponent.h"
+#include "Components/SoundComponent.h"
 void Entity::initVariables()
 {
 	this->movementComponent = NULL;
@@ -43,11 +43,6 @@ void Entity::createAnimationComponent(sf::Texture & texture_sheet)
 void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, float offset_y, float width, float height)
 {
 	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
-}
-
-void Entity::createSoundComponent(sf::SoundBuffer& buffer, bool loop)
-{
-	this->soundComponent = new SoundComponent(buffer, loop);
 }
 
 //Functions

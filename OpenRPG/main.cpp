@@ -1,11 +1,8 @@
 ﻿#include "stdafx.h"
-#include "Game.h"
+#include "Game/Game.h"
 
-int main()
-{
-	Game game;
-
-	game.run();
+int main() {
+	Game::getInstance()->run();
 
 	return 0;
 }

@@ -1,8 +1,9 @@
 ﻿#pragma once
-class MovementComponent;
-class AnimationComponent;
-class HitboxComponent;
-class SoundComponent;
+
+#include "Components/MovementComponent.h"
+#include "Components/AnimationComponent.h"
+#include "Components/HitboxComponent.h"
+#include "Components/SoundComponent.h"
 
 class Entity
 {
@@ -26,7 +27,6 @@ public:
 	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
 	void createAnimationComponent(sf::Texture& texture_sheet);
 	void createHitboxComponent(sf::Sprite& sprite,const float offset_x, float offset_y, float width, float height);
-	void createSoundComponent(sf::SoundBuffer& buffer, bool loop);
 
 	//함수들
 	virtual void setPositions(const float x, const float y);
