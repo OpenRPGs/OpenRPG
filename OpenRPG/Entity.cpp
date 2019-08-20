@@ -45,11 +45,6 @@ void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, flo
 	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
 
-void Entity::createSoundComponent(sf::SoundBuffer& buffer, bool loop)
-{
-	this->soundComponent = new SoundComponent(buffer, loop);
-}
-
 //Functions
 
 void Entity::setPositions(const float x, const float y)

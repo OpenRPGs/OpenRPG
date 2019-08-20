@@ -5,6 +5,9 @@
 #include "MainMenuState.h"
 #include "GameState.h"
 #include "EditorState.h"
+
+#include "SoundManager.h"
+
 //Initaillizer functions
 void MainMenuState::initVariables()
 {
@@ -91,8 +94,9 @@ void MainMenuState::initButtons()
 
 void MainMenuState::initMusic()
 {
-	this->bgm = new SoundComponent(sounds["BACKGROUND_MUSIC"], true);
-	bgm->playSound();
+	auto sm = SoundManager::getInstance();
+	sm->LoadBGM(sounds["BACKGROUND_MUSIC"]);
+	sm->getBGM()->setLoop(true)->play();
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
@@ -115,8 +119,6 @@ MainMenuState::~MainMenuState()
 	{
 		delete it->second;
 	}
-
-	delete bgm;
 }
 
 void MainMenuState::updateInput(const float & dt)
@@ -138,7 +140,7 @@ void MainMenuState::updateButtons()
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
-		this->bgm->stop();
+		SoundManager::getInstance()->getBGM()->stop();
 	}
 
 	//설정
@@ -147,14 +149,14 @@ void MainMenuState::updateButtons()
 	if (this->buttons["EDITOR_STATE"]->isPressed())
 	{
 		this->states->push(new EditorState(this->window, this->supportedKeys, this->states));
-		this->bgm->stop();
+		SoundManager::getInstance()->getBGM()->stop();
 	}
 
 	//종료
 	if (this->buttons["EXIT_STATE"]->isPressed())
 	{
 		this -> endState();
-		this->bgm->stop();
+		SoundManager::getInstance()->getBGM()->stop();
 	}
 }
 

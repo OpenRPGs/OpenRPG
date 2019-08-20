@@ -15,8 +15,6 @@ private:
 
 	std::map<std::string, Button* > buttons;
 
-	SoundComponent* bgm;
-
 	//함수
 	void initVariables();
 	void initBackground();
