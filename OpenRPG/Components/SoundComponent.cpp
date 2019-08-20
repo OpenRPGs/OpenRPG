@@ -11,7 +11,7 @@ bool SoundComponent::Loaded() {
 
 #pragma region Play, Pause, Stop
 SoundComponent* SoundComponent::play() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 
 	this->sound->play();
@@ -19,7 +19,7 @@ SoundComponent* SoundComponent::play() {
 }
 
 SoundComponent* SoundComponent::pause() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 
 	this->sound->pause();
@@ -27,7 +27,7 @@ SoundComponent* SoundComponent::pause() {
 }
 
 SoundComponent* SoundComponent::stop() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 
 	this->sound->stop();
@@ -36,20 +36,20 @@ SoundComponent* SoundComponent::stop() {
 #pragma endregion
 
 bool SoundComponent::isPlaying() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return false;
 	return this->sound->getStatus() == sf::Sound::Status::Playing;
 }
 
 #pragma region Volume
 SoundComponent* SoundComponent::setVolume(float volume) {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 	this->sound->setVolume(volume);
 	return this;
 }
 float SoundComponent::getVolume() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return -1;
 	return this->sound->getVolume();
 }
@@ -57,14 +57,14 @@ float SoundComponent::getVolume() {
 
 #pragma region Offset
 SoundComponent* SoundComponent::setOffset(int msec) {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 
 	this->sound->setPlayingOffset(sf::milliseconds(msec));
 	return this;
 }
 int SoundComponent::getOffset() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return -1;
 
 	return this->sound->getPlayingOffset().asMilliseconds();
@@ -73,14 +73,14 @@ int SoundComponent::getOffset() {
 
 #pragma region Loop
 SoundComponent* SoundComponent::setLoop(bool loop) {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 
 	this->sound->setLoop(loop);
 	return this;
 }
 bool SoundComponent::getLoop() {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return false;
 	return this->sound->getLoop();
 }
@@ -97,7 +97,7 @@ SoundComponent::~SoundComponent() {
 }
 
 SoundComponent* SoundComponent::reset(sf::SoundBuffer& buffer) {
-	if (this == NULL || this->sound == NULL)
+	if (this->sound == NULL)
 		return this;
 
 	this->sound->stop();
