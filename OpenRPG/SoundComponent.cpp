@@ -1,33 +1,95 @@
 ﻿#include "stdafx.h"
 #include "SoundComponent.h"
 
-void SoundComponent::initSoundComponent(sf::SoundBuffer &buffer, bool loop)
-{
-	this->sound.setBuffer(buffer);
-	this->sound.setLoop(loop);
+bool SoundComponent::Loaded() {
+	return this->sound != NULL;
 }
 
-void SoundComponent::pause()
+#pragma region Play, Pause, Stop
+SoundComponent* SoundComponent::play()
 {
-	this->sound.pause();
+	if (this->sound == NULL) return this;
+
+	this->sound->play();
+	return this;
 }
 
-void SoundComponent::playSound()
+SoundComponent* SoundComponent::pause()
 {
-	this->sound.play();
+	if (this->sound == NULL) return this;
+
+	this->sound->pause();
+	return this;
 }
 
-void SoundComponent::stop()
+SoundComponent* SoundComponent::stop()
 {
-	this->sound.stop();
+	if (this->sound == NULL) return this;
+
+	this->sound->stop();
+	return this;
+}
+#pragma endregion
+
+bool SoundComponent::isPlaying() {
+	if (this->sound == NULL) return false;
+	return this->sound->getStatus() == sf::Sound::Status::Playing;
 }
 
-SoundComponent::SoundComponent(sf::SoundBuffer &buffer, bool loop)
-{
-	this->initSoundComponent(buffer, loop);
+#pragma region Volume
+SoundComponent* SoundComponent::setVolume(float volume) {
+	if (this->sound == NULL) return this;
+	this->sound->setVolume(volume);
+	return this;
+}
+float SoundComponent::getVolume() {
+	if (this->sound == NULL) return -1;
+	return this->sound->getVolume();
+}
+#pragma endregion
+
+#pragma region Offset
+SoundComponent* SoundComponent::setOffset(int msec) {
+	if (this->sound == NULL) return this;
+
+	this->sound->setPlayingOffset(sf::milliseconds(msec));
+	return this;
+}
+int SoundComponent::getOffset() {
+	if (this->sound == NULL) return -1;
+
+	return this->sound->getPlayingOffset().asMilliseconds();
+}
+#pragma endregion
+
+#pragma region Loop
+SoundComponent* SoundComponent::setLoop(bool loop) {
+	if (this->sound == NULL) return this;
+
+	this->sound->setLoop(loop);
+	return this;
+}
+bool SoundComponent::getLoop() {
+	if (this->sound == NULL) return false;
+	return this->sound->getLoop();
+}
+#pragma endregion
+
+SoundComponent::SoundComponent(sf::SoundBuffer &buffer){
+	this->sound = new sf::Sound(buffer);
+}
+SoundComponent::~SoundComponent(){
+	if (this->sound != NULL) {
+		delete this->sound;
+		this->sound = NULL;
+	}
 }
 
+SoundComponent* SoundComponent::reset(sf::SoundBuffer &buffer) {
+	if (this->sound == NULL) return this;
 
-SoundComponent::~SoundComponent()
-{
+	this->sound->stop();
+	this->sound->setBuffer(buffer);
+	this->sound->setPlayingOffset(sf::milliseconds(0));
+	return this;
 }
