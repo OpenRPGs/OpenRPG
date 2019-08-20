@@ -57,6 +57,7 @@ State* StateManager::Pop() {
 	auto back = this->stateStack.back();
 	this->stateStack.pop_back();
 
+	back.first->onDeactivated();
 	back.first->onLeave();
 	if (!this->Empty()) // 스택이 비어있지 않다면 최상위 장면에 onActivated 호출
 		this->stateStack.back().first->onActivated();
