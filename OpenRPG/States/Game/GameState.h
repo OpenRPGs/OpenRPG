@@ -32,4 +32,10 @@ class GameState : public State {
 	void updatePauseButtons();
 	void update();
 	void render(sf::RenderTarget* target = NULL);
+
+	// State 이벤트
+	void onActivated() {}
+	void onDeactivated() {}
+	void onEnter() {}
+	void onLeave() {}
 };

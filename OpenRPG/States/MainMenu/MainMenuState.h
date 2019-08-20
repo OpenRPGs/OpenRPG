@@ -18,7 +18,6 @@ class MainMenuState : public State {
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
-	void initMusic();
 
   public:
 	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
@@ -31,4 +30,10 @@ class MainMenuState : public State {
 	void update();
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
+
+	// State 이벤트
+	void onActivated();
+	void onDeactivated();
+	void onEnter() {}
+	void onLeave() {}
 };

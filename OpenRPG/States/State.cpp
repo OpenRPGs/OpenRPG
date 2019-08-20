@@ -47,8 +47,3 @@ void State::initSounds() {
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_BGM";
 	}
 }
-
-void State::onActivated() {}
-void State::onDeactivated() {}
-void State::onEnter() {}
-void State::onLeave() {}

@@ -35,4 +35,10 @@ class SettingsState : public State {
 	//랜더함수
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
+
+	// State 이벤트
+	void onActivated() {}
+	void onDeactivated() {}
+	void onEnter() {}
+	void onLeave() {}
 };

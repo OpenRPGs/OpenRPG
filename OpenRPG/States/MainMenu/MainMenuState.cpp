@@ -79,12 +79,6 @@ void MainMenuState::initButtons() {
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
-void MainMenuState::initMusic() {
-	auto sm = SoundManager::getInstance();
-	sm->LoadBGM(sounds["BACKGROUND_MUSIC"]);
-	sm->getBGM()->setLoop(true)->play();
-}
-
 MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
 	: State(window, supportedKeys) {
 	this->initVariables();
@@ -93,7 +87,6 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 	this->initKeybinds();
 	this->initButtons();
 	this->initSounds();
-	this->initMusic();
 }
 
 MainMenuState::~MainMenuState() {
@@ -118,25 +111,21 @@ void MainMenuState::updateButtons() {
 	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed()) {
 		StateManager::getInstance()->Push(new GameState(this->window, this->supportedKeys));
-		SoundManager::getInstance()->getBGM()->stop();
 	}
 
 	//설정
 	if (this->buttons["SETTING_STATE"]->isPressed()) {
 		StateManager::getInstance()->Push(new SettingsState(this->window, this->supportedKeys));
-		SoundManager::getInstance()->getBGM()->stop();
 	}
 
 	//에디터
 	if (this->buttons["EDITOR_STATE"]->isPressed()) {
 		StateManager::getInstance()->Push(new EditorState(this->window, this->supportedKeys));
-		SoundManager::getInstance()->getBGM()->stop();
 	}
 
 	//종료
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
 		this->endState();
-		SoundManager::getInstance()->getBGM()->stop();
 	}
 }
 
@@ -172,4 +161,15 @@ void MainMenuState::render(sf::RenderTarget* target) {
 	mouseText.setString(ss.str());
 
 	target->draw(mouseText);
+}
+
+// 메인 화면이 표시될 때 BGM 재생
+void MainMenuState::onActivated() {
+	auto sm = SoundManager::getInstance();
+	sm->LoadBGM(sounds["BACKGROUND_MUSIC"]);
+	sm->getBGM()->setLoop(true)->play();
+}
+// 메인 화면이 숨겨질 때 BGM 중지
+void MainMenuState::onDeactivated() {
+	SoundManager::getInstance()->getBGM()->stop();
 }

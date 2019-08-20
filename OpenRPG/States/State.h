@@ -34,13 +34,13 @@ class State {
 	void unpauseState();
 
 	/// <summary>장면이 화면의 최상단에 위치할 때 호출됩니다.</summary>
-	virtual void onActivated();
+	virtual void onActivated() = 0;
 	/// <summary>장면이 화면의 최상단에 위치하지 않게될 때 호출됩니다.</summary>
-	virtual void onDeactivated();
+	virtual void onDeactivated() = 0;
 	/// <summary>장면이 화면 스택에 진입한 후에 호출됩니다.</summary>
-	virtual void onEnter();
+	virtual void onEnter() = 0;
 	/// <summary>장면이 화면 스택에서 제거된 후에 호출됩니다.</summary>
-	virtual void onLeave();
+	virtual void onLeave() = 0;
 
 	virtual void updateInput(const float& dt) = 0;
 	virtual void updateKeytime(const float& dt);

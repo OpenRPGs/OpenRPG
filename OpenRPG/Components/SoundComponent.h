@@ -3,15 +3,19 @@
 /// <summary>
 /// <see cref="sf::SoundBuffer"/>를 재생 가능한 상태로 불러오는 클래스입니다.
 /// </summary>
-class SoundComponent
-{
+class SoundComponent {
+  private:
 	/// <summary>
 	/// 버퍼에서 생성된 <see cref="sf::Sound"/> 객체입니다.
 	/// 할당에 실패하면 <c>NULL</c> 입니다.
 	/// </summary>
 	sf::Sound *sound;
 
-public:
+  public:
+	/// <summary>전달된 <paramref name="buffer"/>가 불러져있는 <see cref="sf::SoundBuffer"/>와
+	/// 동일한지 검사합니다.</summary>
+	bool isSame(sf::SoundBuffer &buffer);
+
 	/// <summary>음원을 불러오는데 성공했는지 여부입니다.</summary>
 	bool Loaded();
 
@@ -59,5 +63,5 @@ public:
 	/// <summary>
 	/// 음원의 버퍼를 교체합니다.
 	/// </summary>
-	SoundComponent* reset(sf::SoundBuffer &buffer);
+	SoundComponent *reset(sf::SoundBuffer &buffer);
 };

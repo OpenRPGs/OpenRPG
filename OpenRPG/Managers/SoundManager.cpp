@@ -72,7 +72,8 @@ float SoundManager::getVolumeBGM() {
 #pragma region BGM, SE
 bool SoundManager::LoadBGM(sf::SoundBuffer& buffer) {
 	if (this->BGM) {
-		this->BGM->reset(buffer);
+		if (!this->BGM->isSame(buffer))
+			this->BGM->reset(buffer);
 	} else {
 		this->BGM = new SoundComponent(buffer);
 	}

@@ -26,4 +26,10 @@ class EditorState : public State {
 	void update();
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
+
+	// State 이벤트
+	virtual void onActivated() {}
+	virtual void onDeactivated() {}
+	virtual void onEnter() {}
+	virtual void onLeave() {}
 };
