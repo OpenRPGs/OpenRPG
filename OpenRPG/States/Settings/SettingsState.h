@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "States/State.h"
-#include "GUI/Button.h"
+#include "GUI/Gui.h"
 
 class SettingsState : public State {
   private:
@@ -11,7 +11,10 @@ class SettingsState : public State {
 	sf::Font font;
 	sf::Texture tx;
 
-	std::map<std::string, Button*> buttons;
+	//임시 테스트용 드랍다운메뉴
+	gui::DropDownList* ddl;
+
+	std::map<std::string, gui::Button*> buttons;
 
 	//초기화 함수
 	void initVariables();

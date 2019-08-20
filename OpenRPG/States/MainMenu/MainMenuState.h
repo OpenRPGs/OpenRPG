@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "GUI/Button.h"
+#include "GUI/Gui.h"
 
 class MainMenuState : public State {
   private:
@@ -10,7 +10,7 @@ class MainMenuState : public State {
 	sf::RectangleShape background;
 	sf::Font font;
 
-	std::map<std::string, Button*> buttons;
+	std::map<std::string, gui::Button*> buttons;
 
 	//함수
 	void initVariables();

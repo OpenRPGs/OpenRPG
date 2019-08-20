@@ -3,7 +3,7 @@
 #include "Game/Game.h"
 #include "Entities/Entity.h"
 #include "Entities/Player.h"
-#include "GUI/Button.h"
+#include "GUI/Gui.h"
 #include "GUI/PauseMenu.h"
 #include "States/State.h"
 #include "GameState.h"	

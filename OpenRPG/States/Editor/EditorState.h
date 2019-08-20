@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "GUI/Button.h"
+#include "GUI/Gui.h"
 
 class EditorState : public State {
   private:
 	//변수
 	sf::Font font;
-	std::map<std::string, Button*> buttons;
+	std::map<std::string, gui::Button*> buttons;
 	sf::Texture tx;
 
 	//초기화함수
