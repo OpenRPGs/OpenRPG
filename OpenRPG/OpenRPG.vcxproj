@@ -76,12 +76,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -154,46 +156,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnimationComponent.cpp" />
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="EditorState.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="HitboxComponent.cpp" />
+    <ClCompile Include="Components\AnimationComponent.cpp" />
+    <ClCompile Include="Components\HitboxComponent.cpp" />
+    <ClCompile Include="Components\MovementComponent.cpp" />
+    <ClCompile Include="Components\SoundComponent.cpp" />
+    <ClCompile Include="Entities\Entity.cpp" />
+    <ClCompile Include="Entities\Player.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="GUI\Button.cpp" />
+    <ClCompile Include="GUI\PauseMenu.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainMenuState.cpp" />
-    <ClCompile Include="MovementComponent.cpp" />
-    <ClCompile Include="PauseMenu.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SettingsState.cpp" />
-    <ClCompile Include="SoundComponent.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
-    <ClCompile Include="State.cpp" />
+    <ClCompile Include="Managers\SoundManager.cpp" />
+    <ClCompile Include="Managers\StateManager.cpp" />
+    <ClCompile Include="States\Editor\EditorState.cpp" />
+    <ClCompile Include="States\Game\GameState.cpp" />
+    <ClCompile Include="States\MainMenu\MainMenuState.cpp" />
+    <ClCompile Include="States\Settings\SettingsState.cpp" />
+    <ClCompile Include="States\State.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="Tiles\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationComponent.h" />
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="EditorState.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="HitboxComponent.h" />
-    <ClInclude Include="MainMenuState.h" />
-    <ClInclude Include="MovementComponent.h" />
-    <ClInclude Include="PauseMenu.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="SettingsState.h" />
-    <ClInclude Include="SoundComponent.h" />
-    <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="State.h" />
+    <ClInclude Include="Components\AnimationComponent.h" />
+    <ClInclude Include="Components\HitboxComponent.h" />
+    <ClInclude Include="Components\MovementComponent.h" />
+    <ClInclude Include="Components\SoundComponent.h" />
+    <ClInclude Include="Entities\Entity.h" />
+    <ClInclude Include="Entities\Player.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="GUI\Button.h" />
+    <ClInclude Include="GUI\PauseMenu.h" />
+    <ClInclude Include="Managers\SoundManager.h" />
+    <ClInclude Include="Managers\StateManager.h" />
+    <ClInclude Include="States\Editor\EditorState.h" />
+    <ClInclude Include="States\Game\GameState.h" />
+    <ClInclude Include="States\MainMenu\MainMenuState.h" />
+    <ClInclude Include="States\Settings\SettingsState.h" />
+    <ClInclude Include="States\State.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="Tiles\Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

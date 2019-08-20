@@ -1,8 +1,9 @@
 ﻿#pragma once
-class MovementComponent;
-class AnimationComponent;
-class HitboxComponent;
-class SoundComponent;
+
+#include "Components/MovementComponent.h"
+#include "Components/AnimationComponent.h"
+#include "Components/HitboxComponent.h"
+#include "Components/SoundComponent.h"
 
 class Entity
 {

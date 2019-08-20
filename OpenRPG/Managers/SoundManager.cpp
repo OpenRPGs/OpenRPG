@@ -1,10 +1,12 @@
 ﻿#include "stdafx.h"
 #include "SoundManager.h"
 
-#pragma region getInstance, Constructor, Finalizer
-SoundManager *SoundManager::Instance = NULL;
+using namespace std;
 
-SoundManager *SoundManager::getInstance() {
+#pragma region getInstance, Constructor, Finalizer
+SoundManager* SoundManager::Instance = NULL;
+
+SoundManager* SoundManager::getInstance() {
 	if (SoundManager::Instance == NULL) {
 		SoundManager::Instance = new SoundManager();
 	}
@@ -18,10 +20,23 @@ SoundManager::SoundManager() {
 	this->BGM = NULL;
 
 	// vector 공간 예약 할당
-	this->SE.reserve(sizeof(SoundManager*) * 4);
+	this->SE.reserve(sizeof(SoundComponent*) * 4);
 }
 
 SoundManager::~SoundManager() {
+	// BGM 해제
+	if (this->BGM != NULL) {
+		delete this->BGM;
+		this->BGM = NULL;
+	}
+
+	// SE 해제
+	while (this->SE.size() > 0) {
+		auto back = this->SE.back();
+		this->SE.pop_back();
+		if (back != NULL)
+			delete back;
+	}
 }
 #pragma endregion
 
@@ -30,7 +45,7 @@ SoundManager* SoundManager::setVolumeSE(float volume) {
 	this->volumeSE = volume;
 
 	// SE 음원은 일회성이기에 재생중인 음원의 음량만 조절
-	for (std::vector<SoundComponent*>::size_type i = 0; i < this->SE.size(); i++) {
+	for (vector<SoundComponent*>::size_type i = 0; i < this->SE.size(); i++) {
 		auto item = this->SE[i];
 		if (item != NULL && item->isPlaying())
 			item->setVolume(volume);
@@ -55,11 +70,11 @@ float SoundManager::getVolumeBGM() {
 #pragma endregion
 
 #pragma region BGM, SE
-bool SoundManager::LoadBGM(sf::SoundBuffer &buffer) {
+bool SoundManager::LoadBGM(sf::SoundBuffer& buffer) {
 	if (this->BGM) {
-		this->BGM->reset(buffer);
-	}
-	else {
+		if (!this->BGM->isSame(buffer))
+			this->BGM->reset(buffer);
+	} else {
 		this->BGM = new SoundComponent(buffer);
 	}
 
@@ -71,11 +86,12 @@ SoundComponent* SoundManager::getBGM() {
 	return this->BGM;
 }
 
-SoundManager* SoundManager::playSE(sf::SoundBuffer &buffer) {
+SoundManager* SoundManager::playSE(sf::SoundBuffer& buffer) {
 	auto sound = new sf::Sound(buffer);
-	if (sound == NULL) return this;
+	if (sound == NULL)
+		return this;
 
-	std::vector<SoundComponent*>::size_type i;
+	vector<SoundComponent*>::size_type i;
 
 	// 비어있거나 재생이 끝난 SE가 있는지 검사
 	for (i = 0; i < this->SE.size(); i++) {
@@ -90,7 +106,8 @@ SoundManager* SoundManager::playSE(sf::SoundBuffer &buffer) {
 	}
 
 	// Idle 상태의 SE가 없다면 새 벡터 영역을 할당
-	while (i >= this->SE.size()) this->SE.push_back(NULL);
+	while (i >= this->SE.size())
+		this->SE.push_back(NULL);
 
 	auto item = new SoundComponent(buffer);
 	item->setVolume(this->volumeSE); // 관리중인 볼륨으로

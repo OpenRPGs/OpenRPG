@@ -1,7 +1,8 @@
 ﻿#include "stdafx.h"
-#include "Button.h"
-#include "SettingsState.h"
 
+#include "Game/Game.h"
+#include "GUI/Button.h"
+#include "SettingsState.h"
 
 void SettingsState::initVariables()
 {
@@ -49,8 +50,8 @@ void SettingsState::initBackground()
 {
 }
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
+	:State(window, supportedKeys)
 {
 	this->initVariables();
 	this->initBackground();
@@ -89,8 +90,10 @@ void SettingsState::updateButtons()
 	}
 }
 
-void SettingsState::update(const float& dt)
+void SettingsState::update()
 {
+	auto dt = Game::getInstance()->frameTime();
+
 	this->updateMousePositions();
 	this->updateInput(dt);
 
