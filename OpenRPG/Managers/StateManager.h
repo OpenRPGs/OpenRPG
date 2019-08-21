@@ -11,10 +11,14 @@ class StateManager {
 	/// <returns><see cref="StateManager"/>의 싱글톤 객체입니다.</returns>
 	static StateManager* getInstance();
 
-	/// <summary>모든 장면을 정리하고 삭제합니다.</summary>
+	/// <summary>
+	///모든 장면을 정리하고 삭제합니다.
+	///</summary>
 	StateManager* Clear();
 
-	/// <summary>장면 스택에 장면이 존재하지 않는지 검사합니다.</summary>
+	/// <summary>
+	///장면 스택에 장면이 존재하지 않는지 검사합니다.
+	///</summary>
 	bool Empty();
 
 	/// <summary>새 장면을 추가합니다. 추가된 장면은 <see cref="State"/> 스택에 추가됩니다.</summary>
@@ -25,7 +29,9 @@ class StateManager {
 	/// </param>
 	StateManager* Push(State* state, bool pararell = false);
 
-	/// <summary>현재 장면을 제거하고 반환합니다.</summary>
+	/// <summary>
+	///현재 장면을 제거하고 반환합니다.
+	///</summary>
 	State* Pop();
 
 	/// <summary>
@@ -35,7 +41,9 @@ class StateManager {
 	/// <param name="state">찾을 <see cref="State"/>입니다.</param>
 	StateManager* PopUntil(State* state);
 
-	/// <summary>장면 스택의 front부터 back까지 갱신 가능한 모든 장면을 갱신하고 화면에 그립니다.</summary>
+	/// <summary>
+	///장면 스택의 front부터 back까지 갱신 가능한 모든 장면을 갱신하고 화면에 그립니다.
+	///</summary>
 	StateManager* Update();
 
   private:
