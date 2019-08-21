@@ -79,9 +79,10 @@
 - 19년 8월 17일 게임플레이도중 일시정지 및 메뉴화면 팝업기능 구현
 - 19년 8월 18일 SoundComponent제작 및 배경음악 적용완료(X-rated-Curse님이 기여해주셨습니다.)
 - 19년 8월 19일 긴급이슈사항들 처리 (버그 위주로 픽스, 포커스가 아닌 상태에서 키입력 외 2가지) 
-- 19년 8월 20일 
--               WolfgangKurz님의 컨트리뷰트로 엔진디자인 수정. 이제 State는 매니저에 의해 관리됩니다. 
-                SoundManager,StateManger추가, 및 Game 싱글턴으로 구조변경. 
-                DropDownList GUI가 추가되었습니다. Button클래스파일들은 Gui.h로 변경되었고, 이제 gui::namespace로 관리합니다. 
+- 19년 8월 20일
+   - WolfgangKurz님의 컨트리뷰트로 엔진디자인 수정. 이제 State는 매니저에 의해 관리됩니다. 
+   - SoundManager,StateManger추가, 및 Game 싱글턴으로 구조변경. 
+   - DropDownList GUI가 추가되었습니다. Button클래스파일들은 Gui.h로 변경되었고,
+      이제 gui::namespace로 관리합니다. 
 - 19년 8월 21일 설정화면 기능추가 --> 해상도조절이 가능해졌습니다.  타일맵 작업진행 시작 
 
