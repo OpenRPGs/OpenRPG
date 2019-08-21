@@ -168,6 +168,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Managers\SoundManager.cpp" />
     <ClCompile Include="Managers\StateManager.cpp" />
+    <ClCompile Include="Maps\TileMap.cpp" />
     <ClCompile Include="States\Editor\EditorState.cpp" />
     <ClCompile Include="States\Game\GameState.cpp" />
     <ClCompile Include="States\MainMenu\MainMenuState.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="GUI\PauseMenu.h" />
     <ClInclude Include="Managers\SoundManager.h" />
     <ClInclude Include="Managers\StateManager.h" />
+    <ClInclude Include="Maps\TileMap.h" />
     <ClInclude Include="States\Editor\EditorState.h" />
     <ClInclude Include="States\Game\GameState.h" />
     <ClInclude Include="States\MainMenu\MainMenuState.h" />
