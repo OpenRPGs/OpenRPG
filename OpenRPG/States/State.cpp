@@ -22,7 +22,7 @@ const bool State::getKeytime() {
 }
 
 void State::endState() {
-	StateManager::getInstance()->PopUntil(this);
+	StateManager::getInstance()->Pop();
 }
 void State::pauseState() {
 	this->paused = true;

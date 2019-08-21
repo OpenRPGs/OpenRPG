@@ -11,17 +11,18 @@ class SettingsState : public State {
 	sf::Font font;
 	sf::Texture tx;
 
-	//임시 테스트용 드랍다운메뉴
-	gui::DropDownList* ddl;
-
 	std::map<std::string, gui::Button*> buttons;
+	std::map<std::string, gui::DropDownList*> dropDownLists;
+
+
+
 
 	//초기화 함수
 	void initVariables();
 	void initBackground();
 	void initFonts();
 	void initKeybinds();
-	void initButtons();
+	void initGui();
 	// void initMusic();
 
   public:
@@ -32,11 +33,11 @@ class SettingsState : public State {
 
 	//업데이트함수
 	void updateInput(const float& dt);
-	void updateButtons();
+	void updateGui();
 	void update();
 
 	//랜더함수
-	void renderButtons(sf::RenderTarget& target);
+	void renderGui(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트

@@ -17,28 +17,44 @@ class Game {
 	Game();
 	virtual ~Game();
 
-	/// <summary>프로그램 화면을 가리키는 객체입니다.</summary>
+	/// <summary>
+	///프로그램 화면을 가리키는 객체입니다.
+	///</summary>
 	sf::RenderWindow* window;
 
-	/// <summary>프로그램 화면에서 발생한 이벤트를 전달하는 객체입니다.</summary>
+	/// <summary>
+	///프로그램 화면에서 발생한 이벤트를 전달하는 객체입니다.
+	///</summary>
 	sf::Event sfEvent;
 
-	/// <summary>프로그램 화면의 크기를 담은 객체입니다.</summary>
+	/// <summary>
+	///프로그램 화면의 크기를 담은 객체입니다.
+	///</summary>
 	std::vector<sf::VideoMode> videoModes;
 
-	/// <summary>프로그램 화면을 나타낼 때 사용되는 설정들을 담은 객체입니다.</summary>
+	/// <summary>
+	///프로그램 화면을 나타낼 때 사용되는 설정들을 담은 객체입니다.
+	///</summary>
 	sf::ContextSettings windowSettings;
 
-	/// <summary>최대화 화면으로 나타낼지 여부입니다.</summary>
+	/// <summary>
+	///최대화 화면으로 나타낼지 여부입니다.
+	///</summary>
 	bool fullscreen;
 
-	/// <summary>장면 관리자입니다.</summary>
+	/// <summary>
+	///장면 관리자입니다.
+	///</summary>
 	StateManager* StateManager;
 
-	/// <summary>사용 가능한 키들을 관리하는 맵입니다.</summary>
+	/// <summary>
+	///사용 가능한 키들을 관리하는 맵입니다.
+	///</summary>
 	std::map<std::string, int> supportedKeys;
 
-	/// <summary>현재 게임이 작동하는 프레임 레이트입니다.</summary>
+	/// <summary>
+	///현재 게임이 작동하는 프레임 레이트입니다.
+	///</summary>
 	int frameRate;
 
 	//초기화
@@ -68,10 +84,14 @@ class Game {
 	/// <param name="frameRate">설정할 프레임 레이트입니다. 1 이상의 값이어야 합니다.</param>
 	void setFramerate(int frameRate);
 
-	/// <summary>현재 게임이 작동하고 있는 프레임 레이트를 가져옵니다.</summary>
+	/// <summary>
+	///현재 게임이 작동하고 있는 프레임 레이트를 가져옵니다.
+	///</summary>
 	int getFramerate();
 
-	/// <summary>프레임 레이트에 기반한 프레임당 소요 시간입니다.</summary>
+	/// <summary>
+	///프레임 레이트에 기반한 프레임당 소요 시간입니다.
+	///</summary>
 	float frameTime();
 
 	// Core

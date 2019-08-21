@@ -35,19 +35,27 @@ void SettingsState::initKeybinds()
 
 }
 
-void SettingsState::initButtons()
+void SettingsState::initGui()
 {
 	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
-	this->buttons["EXIT_STATE"] = new gui::Button(250, 100, 1250, 270,
-		&tx, &this->font, L"환경 설정 화면 입니다.", 50,
+	this->buttons["BACK"] = new gui::Button(
+		1600, 800, 250, 200,
+		&tx, &this->font, L"뒤로가기", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
+	this->buttons["APPLY"] = new gui::Button(
+		1300, 800, 250, 200,
+		&tx, &this->font, L"적용", 50,
+		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+
+
 	//테스트용 드랍다운메뉴 생성.
-	std::wstring li[] = { L"aaaaa",L"bbbbb",L"ccccc",L"ddddd",L"eeee",L"fffff" };
-	this->ddl = new gui::DropDownList(600, 400, 200, 50, font, li, 5);
+	std::wstring li[] = { L"1920x1080",L"800x600",L"640x480",L"ddddd",L"eeee",L"fffff" };
+	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(800, 450, 200, 50, font, li, 5);
 }
 
 void SettingsState::initBackground()
@@ -61,7 +69,7 @@ SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
-	this->initButtons();
+	this->initGui();
 
 }
 
@@ -73,7 +81,11 @@ SettingsState::~SettingsState()
 		delete it->second;
 	}
 
-	delete this->ddl;
+	auto it2 = this->dropDownLists.begin();
+	for (it2 = this->dropDownLists.begin(); it2 != this->dropDownLists.end(); ++it2)
+	{
+		delete it2->second;
+	}
 }
 
 void SettingsState::updateInput(const float & dt)
@@ -82,17 +94,33 @@ void SettingsState::updateInput(const float & dt)
 		this->endState();
 }
 
-void SettingsState::updateButtons()
+void SettingsState::updateGui()
 {
+	auto dt = Game::getInstance()->frameTime();
+
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
 	}
 
-	if (this->buttons["EXIT_STATE"]->isPressed())
+
+	//게임종료
+	if (this->buttons["BACK"]->isPressed())
 	{
 		this->endState();
+	}
+
+	if (this->buttons["APPLY"]->isPressed())
+	{
+		
+	}
+
+
+	//드랍다운리스트
+	for (auto &it : this->dropDownLists)
+	{
+		it.second->update(this->mousePosView,dt);
 	}
 
 }
@@ -104,17 +132,22 @@ void SettingsState::update()
 	this->updateMousePositions();
 	this->updateInput(dt);
 
-	this->updateButtons();
+	this->updateGui();
 
-	this->ddl->update(this->mousePosView, dt);
 }
 
-void SettingsState::renderButtons(sf::RenderTarget & target)
+void SettingsState::renderGui(sf::RenderTarget & target)
 {
 	for (auto &it : this->buttons)
 	{
 		it.second->render(target);
 	}
+
+	for (auto &it : this->dropDownLists)
+	{
+		it.second->render(target);
+	}
+
 }
 
 void SettingsState::render(sf::RenderTarget* target)
@@ -122,7 +155,10 @@ void SettingsState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-	//삭제예정. 디버깅용.
+	this->renderGui(*target);
+
+
+	//삭제예정. 디버깅용. 마우스위에 좌표표시
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
 	mouseText.setFont(this->font);
@@ -130,9 +166,6 @@ void SettingsState::render(sf::RenderTarget* target)
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
-
-	this->renderButtons(*target);
 	target->draw(mouseText);
 
-	this->ddl->render(*target);
 }
