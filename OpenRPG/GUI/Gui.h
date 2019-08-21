@@ -73,6 +73,8 @@ namespace gui {
 		~DropDownList();
 
 
+		const unsigned short& getActiveElementId() const;
+
 		//함수
 		const bool getKeytime();
 		void updateKeytime(const float& dt);

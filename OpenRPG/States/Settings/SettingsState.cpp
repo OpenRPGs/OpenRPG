@@ -6,7 +6,7 @@
 
 void SettingsState::initVariables()
 {
-
+	this->modes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initFonts()
@@ -41,21 +41,37 @@ void SettingsState::initGui()
 		throw "btn";
 
 	this->buttons["BACK"] = new gui::Button(
-		1600, 800, 250, 200,
+		100, 800, 250, 200,
 		&tx, &this->font, L"뒤로가기", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["APPLY"] = new gui::Button(
-		1300, 800, 250, 200,
+		400, 800, 250, 200,
 		&tx, &this->font, L"적용", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
+	std::vector<std::wstring> modes_str;
+	for (auto &i : this->modes)
+	{
+		modes_str.push_back(std::to_wstring(i.width) + L'x' + std::to_wstring(i.height));
+	}
 
-	//테스트용 드랍다운메뉴 생성.
-	std::wstring li[] = { L"1920x1080",L"800x600",L"640x480",L"ddddd",L"eeee",L"fffff" };
-	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(800, 450, 200, 50, font, li, 5);
+	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(400, 100, 200, 50, font, modes_str.data(), modes_str.size());
+}
+
+void SettingsState::initText()
+{
+	this->optionsText.setFont(this->font);
+	this->optionsText.setPosition(sf::Vector2f(100.f, 100.f));
+	this->optionsText.setCharacterSize(30.f);
+	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
+	
+	this->optionsText.setString(
+		"Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n "
+	);
+
 }
 
 void SettingsState::initBackground()
@@ -70,6 +86,7 @@ SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int
 	this->initFonts();
 	this->initKeybinds();
 	this->initGui();
+	this->initText();
 
 }
 
@@ -113,7 +130,9 @@ void SettingsState::updateGui()
 
 	if (this->buttons["APPLY"]->isPressed())
 	{
-		
+		//삭제예정 테스트용 설정이날아가기때문에 프레임이 솓구칩니다.
+		this->window->create(this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()],"Test",sf::Style::Default);
+		this->window->setFramerateLimit(120);
 	}
 
 
@@ -156,7 +175,7 @@ void SettingsState::render(sf::RenderTarget* target)
 		target = this->window;
 
 	this->renderGui(*target);
-
+	target->draw(this->optionsText);
 
 	//삭제예정. 디버깅용. 마우스위에 좌표표시
 	sf::Text mouseText;
