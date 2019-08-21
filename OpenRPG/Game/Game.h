@@ -1,9 +1,55 @@
 ﻿#pragma once
 
+#include "Interfaces/IDisposable.h"
 #include "States/State.h"
 #include "Managers/StateManager.h"
 
-class Game {
+class Game : public IDisposable {
+  public:
+	/// <summary>
+	/// 싱글톤 인스턴스를 가져옵니다.
+	/// 기존에 인스턴스가 없었다면 새로 생성합니다.
+	/// </summary>
+	/// <returns><see cref="Game"/>의 싱글톤 객체입니다.</returns>
+	static Game* getInstance();
+
+	/// <summary>모든 자원을 해제하고 사용을 중지시킵니다.</summary>
+	void Dispose();
+
+	/// <summary>진입점 State를 추가합니다.</summary>
+	Game* init();
+
+	// Update + Render
+	void update();
+
+#pragma region Framerate, frameTime
+	/// <summary>현재 게임이 작동하고 있는 프레임 레이트를 설정합니다.</summary>
+	/// <param name="frameRate">설정할 프레임 레이트입니다. 1 이상의 값이어야 합니다.</param>
+	void setFramerate(int frameRate);
+
+	/// <summary>
+	///현재 게임이 작동하고 있는 프레임 레이트를 가져옵니다.
+	///</summary>
+	int getFramerate();
+
+	/// <summary>
+	///프레임 레이트에 기반한 프레임당 소요 시간입니다.
+	///</summary>
+	float frameTime();
+#pragma endregion
+
+	/// <summary>표시되고 있는 게임 창을 반환합니다.</summary>
+	sf::RenderWindow* getWindow();
+
+	/// <summary>사용 가능한 키 맵을 반환합니다.</summary>
+	std::map<std::string, int>* getSupportedKeys();
+
+	/// <summary>게임 창이 포커스를 가지고 있는지를 반환합니다.</summary>
+	bool getFocused();
+
+	// Core
+	Game* run();
+
   private:
 	/// <summary>
 	/// 싱글톤 인스턴스입니다.
@@ -63,37 +109,9 @@ class Game {
 	void initKeys();
 	void initState();
 
-  public:
-	/// <summary>
-	/// 싱글톤 인스턴스를 가져옵니다.
-	/// 기존에 인스턴스가 없었다면 새로 생성합니다.
-	/// </summary>
-	/// <returns><see cref="Game"/>의 싱글톤 객체입니다.</returns>
-	static Game* getInstance();
+	// Update Events
+	void updateSFMLEvents();
 
 	// Regular
 	void endApplication();
-
-	// Update
-	void updateSFMLEvents();
-
-	// Update + Render
-	void update();
-
-	/// <summary>현재 게임이 작동하고 있는 프레임 레이트를 설정합니다.</summary>
-	/// <param name="frameRate">설정할 프레임 레이트입니다. 1 이상의 값이어야 합니다.</param>
-	void setFramerate(int frameRate);
-
-	/// <summary>
-	///현재 게임이 작동하고 있는 프레임 레이트를 가져옵니다.
-	///</summary>
-	int getFramerate();
-
-	/// <summary>
-	///프레임 레이트에 기반한 프레임당 소요 시간입니다.
-	///</summary>
-	float frameTime();
-
-	// Core
-	void run();
 };

@@ -52,7 +52,7 @@ namespace gui {
 
 		//함수
 		void update(const sf::Vector2f& mousePos);
-		void render(sf::RenderTarget& target);
+		void render(sf::RenderTarget* target);
 
 	};
 
@@ -79,6 +79,6 @@ namespace gui {
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2f& mousePos, const float& dt);
-		void render(sf::RenderTarget& target);
+		void render(sf::RenderTarget* target);
 	};
 }

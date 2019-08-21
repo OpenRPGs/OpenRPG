@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#pragma region getInstance, Constructor, Finalizer
+#pragma region getInstance, Constructor, Finalizer, Dispose
 SoundManager* SoundManager::Instance = NULL;
 
 SoundManager* SoundManager::getInstance() {
@@ -24,6 +24,23 @@ SoundManager::SoundManager() {
 }
 
 SoundManager::~SoundManager() {
+	this->Dispose();
+}
+
+void SoundManager::Dispose() {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
+	this->Clear();
+
+	this->disposed = true;
+}
+#pragma endregion
+
+SoundManager* SoundManager::Clear() {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
 	// BGM 해제
 	if (this->BGM != NULL) {
 		delete this->BGM;
@@ -37,11 +54,15 @@ SoundManager::~SoundManager() {
 		if (back != NULL)
 			delete back;
 	}
+
+	return this;
 }
-#pragma endregion
 
 #pragma region Volume
 SoundManager* SoundManager::setVolumeSE(float volume) {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
 	this->volumeSE = volume;
 
 	// SE 음원은 일회성이기에 재생중인 음원의 음량만 조절
@@ -53,10 +74,16 @@ SoundManager* SoundManager::setVolumeSE(float volume) {
 	return this;
 }
 float SoundManager::getVolumeSE() {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
 	return this->volumeSE;
 }
 
 SoundManager* SoundManager::setVolumeBGM(float volume) {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
 	this->volumeBGM = volume;
 
 	if (this->BGM != NULL)
@@ -65,12 +92,21 @@ SoundManager* SoundManager::setVolumeBGM(float volume) {
 	return this;
 }
 float SoundManager::getVolumeBGM() {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
 	return this->volumeBGM;
 }
 #pragma endregion
 
 #pragma region BGM, SE
-bool SoundManager::LoadBGM(sf::SoundBuffer& buffer) {
+bool SoundManager::LoadBGM(sf::SoundBuffer* buffer) {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
+	if (buffer == NULL)
+		throw "ERROR:SoundManager::buffer is NULL";
+
 	if (this->BGM) {
 		if (!this->BGM->isSame(buffer))
 			this->BGM->reset(buffer);
@@ -83,11 +119,20 @@ bool SoundManager::LoadBGM(sf::SoundBuffer& buffer) {
 }
 
 SoundComponent* SoundManager::getBGM() {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
 	return this->BGM;
 }
 
-SoundManager* SoundManager::playSE(sf::SoundBuffer& buffer) {
-	auto sound = new sf::Sound(buffer);
+SoundManager* SoundManager::playSE(sf::SoundBuffer* buffer) {
+	if (this->disposed)
+		throw "ERROR::SoundManager::Already Disposed";
+
+	if (buffer == NULL)
+		throw "ERROR:SoundManager::buffer is NULL";
+
+	auto sound = new sf::Sound(*buffer);
 	if (sound == NULL)
 		return this;
 

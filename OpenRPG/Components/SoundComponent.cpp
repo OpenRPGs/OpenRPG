@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 #include "SoundComponent.h"
 
-bool SoundComponent::isSame(sf::SoundBuffer& buffer) {
-	return &buffer == this->sound->getBuffer();
+bool SoundComponent::isSame(sf::SoundBuffer* buffer) {
+	return buffer == this->sound->getBuffer();
 }
 
 bool SoundComponent::Loaded() {
@@ -86,8 +86,11 @@ bool SoundComponent::getLoop() {
 }
 #pragma endregion
 
-SoundComponent::SoundComponent(sf::SoundBuffer& buffer) {
-	this->sound = new sf::Sound(buffer);
+SoundComponent::SoundComponent(sf::SoundBuffer* buffer) {
+	if (buffer == NULL)
+		throw "ERROR:SoundComponent::buffer is NULL";
+
+	this->sound = new sf::Sound(*buffer);
 }
 SoundComponent::~SoundComponent() {
 	if (this->sound != NULL) {
@@ -96,12 +99,15 @@ SoundComponent::~SoundComponent() {
 	}
 }
 
-SoundComponent* SoundComponent::reset(sf::SoundBuffer& buffer) {
+SoundComponent* SoundComponent::reset(sf::SoundBuffer* buffer) {
+	if (buffer == NULL)
+		throw "ERROR:SoundComponent::buffer is NULL";
+
 	if (this->sound == NULL)
 		return this;
 
 	this->sound->stop();
-	this->sound->setBuffer(buffer);
+	this->sound->setBuffer(*buffer);
 	this->sound->setPlayingOffset(sf::milliseconds(0));
 	return this;
 }

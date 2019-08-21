@@ -14,7 +14,7 @@ class SoundComponent {
   public:
 	/// <summary>전달된 <paramref name="buffer"/>가 불러져있는 <see cref="sf::SoundBuffer"/>와
 	/// 동일한지 검사합니다.</summary>
-	bool isSame(sf::SoundBuffer &buffer);
+	bool isSame(sf::SoundBuffer *buffer);
 
 	/// <summary>음원을 불러오는데 성공했는지 여부입니다.</summary>
 	bool Loaded();
@@ -51,9 +51,10 @@ class SoundComponent {
 	bool getLoop();
 
 	/// <summary>
-	/// <see cref="sf::SoundBuffer"/>로부터 재생 가능하고 관리되는 <see cref="SoundComponent"/>를 생성합니다.
+	/// <see cref="sf::SoundBuffer"/>로부터 재생 가능하고 관리되는
+	/// <see cref="SoundComponent"/>를 생성합니다.
 	/// </summary>
-	SoundComponent(sf::SoundBuffer &buffer);
+	SoundComponent(sf::SoundBuffer *buffer);
 
 	/// <summary>
 	/// <see cref="SoundComponent"/>가 해제될 때, 할당된 자원들을 같이 해제합니다.
@@ -63,5 +64,5 @@ class SoundComponent {
 	/// <summary>
 	/// 음원의 버퍼를 교체합니다.
 	/// </summary>
-	SoundComponent *reset(sf::SoundBuffer &buffer);
+	SoundComponent *reset(sf::SoundBuffer *buffer);
 };

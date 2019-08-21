@@ -28,8 +28,12 @@ class SettingsState : public State {
 	// void initMusic();
 
   public:
-	SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
-	virtual ~SettingsState();
+	const StateFlow flow() {
+		// 흐를 수 없음
+		return StateFlow::FLOW_NONE;
+	}
+
+	SettingsState() : State() {}
 
 	//접근자
 
@@ -39,12 +43,12 @@ class SettingsState : public State {
 	void update();
 
 	//랜더함수
-	void renderGui(sf::RenderTarget& target);
+	void renderGui(sf::RenderTarget* target);
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트
+	void onEnter();
 	void onActivated() {}
 	void onDeactivated() {}
-	void onEnter() {}
-	void onLeave() {}
+	void onLeave();
 };

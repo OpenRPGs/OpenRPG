@@ -4,7 +4,7 @@ enum movement_states { IDLE = 0, MOVING, MOVING_LEFT, MOVING_RIGHT, MOVING_UP, M
 class MovementComponent
 {
 private:
-	sf::Sprite& sprite;
+	sf::Sprite* sprite;
 
 	float maxVelocity;
 	float acceleration;
@@ -14,7 +14,7 @@ private:
 
 	//Initializer functions
 public:
-	MovementComponent(sf::Sprite& sprite, float maxVelocity, float acceleration, float deceleration);
+	MovementComponent(sf::Sprite* sprite, float maxVelocity, float acceleration, float deceleration);
 	virtual ~MovementComponent();
 
 	//Accecssors

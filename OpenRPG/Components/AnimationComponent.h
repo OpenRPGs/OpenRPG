@@ -6,8 +6,8 @@ private:
 	{
 	public:
 		//Variables
-		sf::Sprite& sprite;
-		sf::Texture& textureSheet;
+		sf::Sprite* sprite;
+		sf::Texture* textureSheet;
 		float animationTimer;
 		float timer;
 		bool done;
@@ -17,7 +17,7 @@ private:
 		sf::IntRect currentRect;
 		sf::IntRect endRect;
 
-		Animation(sf::Sprite& sprite, sf::Texture& textureSheet, 
+		Animation(sf::Sprite* sprite, sf::Texture* textureSheet, 
 			float animation_Timer,
 			int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height)
 			:sprite(sprite), textureSheet(textureSheet), 
@@ -29,8 +29,8 @@ private:
 			this->currentRect = this->startRect;
 			this->endRect = sf::IntRect(frames_x * width, frames_y*height, width, height);
 
-			this->sprite.setTexture(this->textureSheet, true);
-			this->sprite.setTextureRect(this->startRect);
+			this->sprite->setTexture(*this->textureSheet, true);
+			this->sprite->setTextureRect(this->startRect);
 		}
 
 		//Accecssor
@@ -60,7 +60,7 @@ private:
 					this->done = true;
 				}
 
-				this->sprite.setTextureRect(this->currentRect);
+				this->sprite->setTextureRect(this->currentRect);
 			}
 			return this->done;
 		}
@@ -89,7 +89,7 @@ private:
 					this->done = true;
 				}
 
-				this->sprite.setTextureRect(this->currentRect);
+				this->sprite->setTextureRect(this->currentRect);
 			}
 			return this->done;
 		}
@@ -101,15 +101,15 @@ private:
 		}
 	};
 
-	sf::Sprite& sprite;
-	sf::Texture& textureSheet;
+	sf::Sprite* sprite;
+	sf::Texture* textureSheet;
 	std::map<std::string, Animation*> animations;
 
 	Animation* lastAnimation;
 	Animation* priorityAnimation;
 
 public:
-	AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet);
+	AnimationComponent(sf::Sprite* sprite, sf::Texture* texture_sheet);
 	virtual ~AnimationComponent();
 
 	//Accessor

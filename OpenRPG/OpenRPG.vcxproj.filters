@@ -46,6 +46,12 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{a57fa6c6-5b3a-4fa4-b29d-292000092236}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\Game\PauseMenuState">
+      <UniqueIdentifier>{c00c9442-2baa-4d00-bc14-51a4977e8a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{930e492c-d69b-47a9-a0ba-e7cfd0e1c725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="Entities\Entity.cpp">
       <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\PauseMenu.cpp">
-      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Managers\SoundManager.cpp">
       <Filter>Managers</Filter>
@@ -105,6 +108,9 @@
     <ClCompile Include="GUI\Gui.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="States\Game\PauseMenu\PauseMenuState.cpp">
+      <Filter>States\Game\PauseMenuState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -127,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="Entities\Player.h">
       <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\PauseMenu.h">
-      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Managers\SoundManager.h">
       <Filter>Managers</Filter>
@@ -160,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="GUI\Gui.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="States\Game\PauseMenu\PauseMenuState.h">
+      <Filter>States\Game\PauseMenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IDisposable.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

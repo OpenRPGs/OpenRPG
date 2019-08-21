@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "MovementComponent.h"
 
-MovementComponent::MovementComponent(sf::Sprite& sprite,
+MovementComponent::MovementComponent(sf::Sprite* sprite,
 	float maxVelocity, float acceleration, float deceleration)
 	:sprite(sprite), maxVelocity(maxVelocity), acceleration(acceleration), deceleration(deceleration)
 {
@@ -87,7 +87,7 @@ void MovementComponent::update(const float & dt)
 	}
 
 	//Final move
-	this->sprite.move(this->velocity*dt);  // Uses velocity
+	this->sprite->move(this->velocity*dt);  // Uses velocity
 }
 
 const bool MovementComponent::getState(const short unsigned state) const

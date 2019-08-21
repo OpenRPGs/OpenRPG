@@ -3,9 +3,54 @@
 #include "States/State.h"
 #include "States/MainMenu/MainMenuState.h"
 
-// 전역함수
+#include "Managers/StateManager.h"
+#include "Managers/SoundManager.h"
 
-// 초기화 함수
+#pragma region getInstance, Constructor, Finalizer
+Game* Game::Instance = NULL;
+
+Game* Game::getInstance() {
+	if (Game::Instance == NULL) {
+		Game::Instance = new Game();
+	}
+	return Game::Instance;
+}
+
+//생성 및 소멸함수
+Game::Game() {
+	this->initVariables();
+
+	// TODO: 이후 initConfiguration 등으로 분리
+	this->setFramerate(120);
+
+	this->initWindow();
+	this->initKeys();
+}
+
+Game::~Game() {
+	this->Dispose();
+}
+
+void Game::Dispose() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	delete this->window;
+	this->StateManager->Dispose();
+	SoundManager::getInstance()->Dispose();
+
+	this->disposed = true;
+}
+#pragma endregion
+
+#pragma region init(), Initializers
+Game* Game::init() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	this->initState();
+	return this;
+}
 
 void Game::initVariables() {
 	this->window = NULL;
@@ -39,9 +84,11 @@ void Game::initWindow() {
 	this->fullscreen = fullscreen;
 	this->windowSettings.antialiasingLevel = antialiasing_level;
 	if (this->fullscreen)
-		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, windowSettings);
+		this->window =
+			new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, windowSettings);
 	else
-		this->window = new sf::RenderWindow(window_bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+		this->window = new sf::RenderWindow(
+			window_bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
 
 	// 프레임 레이트를 재설정
 	// 설정 파일에서 불러온 프레임 레이트 값이 다르다면 재설정을 해야하고,
@@ -73,55 +120,59 @@ void Game::initKeys() {
 }
 
 void Game::initState() {
-	this->StateManager->Push(new MainMenuState(this->window, &this->supportedKeys));
-}
-
-#pragma region getInstance, Constructor, Finalizer
-Game* Game::Instance = NULL;
-
-Game* Game::getInstance() {
-	if (Game::Instance == NULL) {
-		Game::Instance = new Game();
-	}
-	return Game::Instance;
-}
-
-//생성 및 소멸함수
-Game::Game() {
-	this->initVariables();
-
-	// TODO: 이후 initConfiguration 등으로 분리
-	this->setFramerate(120);
-
-	this->initWindow();
-	this->initKeys();
-	this->initState();
-}
-
-Game::~Game() {
-	delete this->window;
-	this->StateManager->Clear();
+	this->StateManager->Push(new MainMenuState());
 }
 #pragma endregion
 
-#pragma region Framerate
+#pragma region Framerate, frameTime
 void Game::setFramerate(int frameRate) {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
 	this->frameRate = frameRate;
 	if (this->window != NULL)
 		this->window->setFramerateLimit(this->frameRate);
 }
 int Game::getFramerate() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
 	return this->frameRate;
 }
 
 float Game::frameTime() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
 	//  60 frame = 0.016666...
 	// 120 frame = 0.008333...
 	return 1.f / this->frameRate;
 }
 #pragma endregion
 
-//함수
+#pragma region Getters
+sf::RenderWindow* Game::getWindow() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	return this->window;
+}
+
+std::map<std::string, int>* Game::getSupportedKeys() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	return &this->supportedKeys;
+}
+
+bool Game::getFocused() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	return this->window->hasFocus();
+}
+#pragma endregion
+
 void Game::endApplication() {
 	std::cout << "Ending Application" << std::endl;
 }
@@ -136,6 +187,9 @@ void Game::updateSFMLEvents() {
 }
 
 void Game::update() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
 	// SFML 창의 이벤트들을 처리
 	this->updateSFMLEvents();
 
@@ -156,8 +210,12 @@ void Game::update() {
 	this->window->display();
 }
 
-void Game::run() {
-	while (this->window->isOpen()) {
+Game* Game::run() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	while (this->window->isOpen())
 		this->update();
-	}
+
+	return this;
 }

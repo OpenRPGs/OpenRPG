@@ -3,34 +3,39 @@
 #include "States/State.h"
 #include "Entities/Player.h"
 
-class GameState : public State {
-  private:
-	sf::Font font;
-	sf::Texture btnTexure;
+#include "GUI/Gui.h"
 
-	Player* player;
-	sf::Texture texture;
+class PauseMenuState : public State {
+  private:
+	State* parent;
+
+	sf::Font font;
+	sf::Texture btnTexture;
+
+	sf::RectangleShape background;
+	sf::RectangleShape container;
+	sf::Text menuText;
+
+	std::map<std::string, gui::Button*> buttons;
 
 	//함수
+	void initBackground();
+	void initContainer();
+	void initText();
 	void initButtons();
 	void initKeybinds();
-	void initTextures();
-	void initPlayers();
-	void initFonts();
-	void initPauseMenu();
 
   public:
 	const StateFlow flow() {
-		// 흐를 수 없음
-		return StateFlow::FLOW_NONE;
+		// 렌더링은 될 수 있음
+		return StateFlow::FLOW_RENDER;
 	}
 
-	GameState() : State() {}
+	PauseMenuState(State* parent);
 
 	//함수
 	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
-	void updatePauseButtons();
 	void update();
 	void render(sf::RenderTarget* target = NULL);
 

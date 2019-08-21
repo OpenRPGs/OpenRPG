@@ -2,7 +2,7 @@
 #include "Game/Game.h"
 
 int main() {
-	Game::getInstance()->run();
-
+	auto game = Game::getInstance();
+	game->init()->run()->Dispose();
 	return 0;
 }

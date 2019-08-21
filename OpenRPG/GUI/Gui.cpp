@@ -158,10 +158,10 @@ void gui::Button::update(const sf::Vector2f& mousePos)
 	}
 }
 
-void gui::Button::render(sf::RenderTarget & target)
+void gui::Button::render(sf::RenderTarget* target)
 {
-	target.draw(this->shape);
-	target.draw(this->text);
+	target->draw(this->shape);
+	target->draw(this->text);
 }
 
 
@@ -262,7 +262,7 @@ void gui::DropDownList::update(const sf::Vector2f & mousePos, const float& dt)
 	}
 }
 
-void gui::DropDownList::render(sf::RenderTarget & target)
+void gui::DropDownList::render(sf::RenderTarget* target)
 {
 	this->activeElement->render(target);
 

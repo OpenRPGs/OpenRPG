@@ -5,28 +5,29 @@
 #include "Components/HitboxComponent.h"
 #include "Components/SoundComponent.h"
 
-class Entity
-{
-private:
+class Entity {
+  private:
 	void initVariables();
-protected:
 
-	sf::Sprite sprite;
+  protected:
+	sf::Sprite* sprite;
 
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;
 	HitboxComponent* hitboxComponent;
 	SoundComponent* soundComponent;
 
-public:
+  public:
 	Entity();
 	virtual ~Entity();
 
-	//Component functions
-	void setTexture(sf::Texture& texture);
-	void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
-	void createAnimationComponent(sf::Texture& texture_sheet);
-	void createHitboxComponent(sf::Sprite& sprite,const float offset_x, float offset_y, float width, float height);
+	// Component functions
+	void setTexture(sf::Texture* texture);
+	void createMovementComponent(
+		const float maxVelocity, const float acceleration, const float deceleration);
+	void createAnimationComponent(sf::Texture* texture_sheet);
+	void createHitboxComponent(
+		sf::Sprite* sprite, const float offset_x, float offset_y, float width, float height);
 
 	//함수들
 	virtual void setPositions(const float x, const float y);
@@ -34,7 +35,4 @@ public:
 
 	virtual void update(const float& dt);
 	virtual void render(sf::RenderTarget& target);
-
 };
-
-
