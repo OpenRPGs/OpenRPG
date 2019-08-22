@@ -27,7 +27,8 @@ class MainMenuState : public State {
 		return StateFlow::FLOW_NONE;
 	}
 
-	MainMenuState() : State() {}
+	MainMenuState();
+	~MainMenuState();
 
 	//함수
 	void updateInput(const float& dt);
@@ -38,8 +39,6 @@ class MainMenuState : public State {
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트
-	void onEnter();
 	void onActivated() {}
 	void onDeactivated() {}
-	void onLeave();
 };

@@ -43,7 +43,6 @@ StateManager* StateManager::Clear() {
 		this->stateStack.pop_back();
 
 		back->onDeactivated();
-		back->onLeave();
 		delete back;
 	}
 	return this;
@@ -78,7 +77,6 @@ StateManager* StateManager::Push(State* state) {
 		this->stateStack.back()->onDeactivated();
 
 	this->stateStack.push_back(state);
-	state->onEnter();
 	state->onActivated();
 	return this;
 }
@@ -93,7 +91,6 @@ State* StateManager::Pop() {
 	this->stateStack.pop_back();
 
 	back->onDeactivated();
-	back->onLeave();
 	if (!this->Empty()) // 스택이 비어있지 않다면 최상위 장면에 onActivated 호출
 		this->stateStack.back()->onActivated();
 

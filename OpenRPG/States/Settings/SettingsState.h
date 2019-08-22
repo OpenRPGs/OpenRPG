@@ -33,7 +33,8 @@ class SettingsState : public State {
 		return StateFlow::FLOW_NONE;
 	}
 
-	SettingsState() : State() {}
+	SettingsState();
+	~SettingsState();
 
 	//접근자
 
@@ -47,8 +48,6 @@ class SettingsState : public State {
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트
-	void onEnter();
 	void onActivated() {}
 	void onDeactivated() {}
-	void onLeave();
 };

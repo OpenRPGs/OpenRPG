@@ -32,6 +32,7 @@ class PauseMenuState : public State {
 	}
 
 	PauseMenuState(State* parent);
+	~PauseMenuState();
 
 	//함수
 	void updatePlayerInput(const float& dt);
@@ -40,8 +41,6 @@ class PauseMenuState : public State {
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트
-	void onEnter();
 	void onActivated() {}
 	void onDeactivated() {}
-	void onLeave();
 };

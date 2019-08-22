@@ -45,7 +45,7 @@ void EditorState::initButtons() {
 void EditorState::initBackground() {}
 #pragma endregion
 
-void EditorState::onEnter() {
+EditorState::EditorState() : State() {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -53,7 +53,7 @@ void EditorState::onEnter() {
 	this->initButtons();
 }
 
-void EditorState::onLeave() {
+EditorState::~EditorState() {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it) {
 		delete it->second;
 	}

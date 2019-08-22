@@ -19,14 +19,14 @@ void MainMenuState::initBackground() {
 	auto window = Game::getInstance()->getWindow();
 
 	this->backgroundTexture = new sf::Texture();
-	if(this->backgroundTexture == NULL || !this->backgroundTexture->loadFromFile("Resources/image/Backgrounds/bg3.png")) 
-			throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	if (this->backgroundTexture == NULL ||
+		!this->backgroundTexture->loadFromFile("Resources/image/Backgrounds/bg3.png"))
+		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 
 	this->background.setTexture(this->backgroundTexture);
 	this->background.setSize(sf::Vector2f(
-		static_cast<float>(window->getSize().x),
-		static_cast<float>(window->getSize().y)));
-	}
+		static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
+}
 
 void MainMenuState::initFonts() {
 	if (!this->font.loadFromFile("Fonts/R2.ttc")) {
@@ -57,7 +57,7 @@ void MainMenuState::initKeybinds() {
 
 void MainMenuState::initButtons() {
 	btnTexture = new sf::Texture();
-	if (btnTexture ==NULL || !btnTexture->loadFromFile("Resources/image/Buttons/btn1.png")) {
+	if (btnTexture == NULL || !btnTexture->loadFromFile("Resources/image/Buttons/btn1.png")) {
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
@@ -90,7 +90,7 @@ void MainMenuState::initSounds() {
 }
 #pragma endregion
 
-void MainMenuState::onEnter() {
+MainMenuState::MainMenuState() : State() {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -104,7 +104,7 @@ void MainMenuState::onEnter() {
 	sm->getBGM()->setLoop(true)->play();
 }
 
-void MainMenuState::onLeave() {
+MainMenuState::~MainMenuState() {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 		delete it->second;
 
@@ -128,19 +128,19 @@ void MainMenuState::updateButtons() {
 
 	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new GameState(), [](State *state) { delete state; });
+		StateManager::getInstance()->GoTo(new GameState(), [](State* state) { delete state; });
 		return;
 	}
 
 	//설정
 	if (this->buttons["SETTING_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new SettingsState(), [](State *state) { delete state; });
+		StateManager::getInstance()->GoTo(new SettingsState(), [](State* state) { delete state; });
 		return;
 	}
 
 	//에디터
 	if (this->buttons["EDITOR_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new EditorState(), [](State *state) { delete state; });
+		StateManager::getInstance()->GoTo(new EditorState(), [](State* state) { delete state; });
 		return;
 	}
 

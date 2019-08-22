@@ -42,7 +42,9 @@ void PauseMenuState::initText() {
 void PauseMenuState::initKeybinds() {}
 #pragma endregion
 
-void PauseMenuState::onEnter() {
+PauseMenuState::PauseMenuState(State* parent) : State() {
+	this->parent = parent;
+	
 	if (!this->font.loadFromFile("Fonts/R2.ttc"))
 		throw "ERROR:PauseMenuState::FAILED_TO_LOAD_FONT";
 
@@ -57,13 +59,9 @@ void PauseMenuState::onEnter() {
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
-void PauseMenuState::onLeave() {
+PauseMenuState::~PauseMenuState() {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 		delete it->second;
-}
-
-PauseMenuState::PauseMenuState(State* parent) : State() {
-	this->parent = parent;
 }
 
 void PauseMenuState::update() {

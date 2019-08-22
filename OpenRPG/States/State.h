@@ -25,18 +25,14 @@ class State {
 	State();
 	~State();
 
-	const bool getKeytime();
-
-	void endState();
-
-	/// <summary>장면이 화면 스택에 진입한 후에 호출됩니다.</summary>
-	virtual void onEnter() = 0;
 	/// <summary>장면이 화면의 최상단에 위치할 때 호출됩니다.</summary>
 	virtual void onActivated() = 0;
 	/// <summary>장면이 화면의 최상단에 위치하지 않게될 때 호출됩니다.</summary>
 	virtual void onDeactivated() = 0;
-	/// <summary>장면이 화면 스택에서 제거된 후에 호출됩니다.</summary>
-	virtual void onLeave() = 0;
+
+	const bool getKeytime();
+
+	void endState();
 
 	virtual void updateInput(const float& dt) = 0;
 	virtual void updateKeytime(const float& dt);

@@ -64,7 +64,7 @@ void SettingsState::initText() {
 
 void SettingsState::initBackground() {}
 
-void SettingsState::onEnter() {
+SettingsState::SettingsState() : State() {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -73,7 +73,7 @@ void SettingsState::onEnter() {
 	this->initText();
 }
 
-void SettingsState::onLeave() {
+SettingsState::~SettingsState() {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 		delete it->second;
 

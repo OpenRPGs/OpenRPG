@@ -55,7 +55,7 @@ void GameState::initPlayers() {
 }
 #pragma endregion
 
-void GameState::onEnter() {
+GameState::GameState() : State() {
 	this->initButtons();
 	this->initKeybinds();
 	this->initFonts();
@@ -63,7 +63,7 @@ void GameState::onEnter() {
 	this->initPlayers();
 }
 
-void GameState::onLeave() {
+GameState::~GameState() {
 	delete this->player;
 }
 

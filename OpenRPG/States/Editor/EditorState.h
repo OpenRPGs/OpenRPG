@@ -23,7 +23,8 @@ class EditorState : public State {
 		return StateFlow::FLOW_NONE;
 	}
 
-	EditorState() : State() {}
+	EditorState();
+	~EditorState();
 
 	//업데이트함수
 	void updateInput(const float& dt);
@@ -33,8 +34,6 @@ class EditorState : public State {
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트
-	virtual void onEnter();
 	virtual void onActivated() {}
 	virtual void onDeactivated() {}
-	virtual void onLeave();
 };
