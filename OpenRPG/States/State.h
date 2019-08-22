@@ -1,5 +1,17 @@
 ﻿#pragma once
 
+class StateData
+{
+public:
+	StateData() {}
+
+	//변수
+	float gridSize;
+	sf::RenderWindow* window;
+	std::map<std::string, int>* supportedKeys;
+
+};
+
 class State {
   private:
   protected:

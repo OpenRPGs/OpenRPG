@@ -59,28 +59,28 @@ void MainMenuState::initButtons() {
 	}
 
 	this->buttons["GAME_STATE"] = new gui::Button(
-		1500, 500, 250, 160, btnTexure, this->font, L"새 게임", 40, sf::Color(0, 0, 0, 255),
+		1500, 500, 250, 80, btnTexure, this->font, L"새 게임", 40, sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["SETTING_STATE"] = new gui::Button(
-		1500, 600, 250, 160, btnTexure, this->font, L"게임 설정", 40, sf::Color(0, 0, 0, 255),
+		1500, 600, 250, 80, btnTexure, this->font, L"게임 설정", 40, sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["EDITOR_STATE"] = new gui::Button(
-		1500, 700, 250, 160, btnTexure, this->font, L"에디터", 40, sf::Color(0, 0, 0, 255),
+		1500, 700, 250, 80, btnTexure, this->font, L"에디터", 40, sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["EXIT_STATE"] = new gui::Button(
-		1500, 900, 250, 160, btnTexure, this->font, L"종 료", 40, sf::Color(0, 0, 0, 255),
+		1500, 900, 250, 80, btnTexure, this->font, L"종 료", 40, sf::Color(0, 0, 0, 255),
 		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	: State(window, supportedKeys) {
+MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys)
+	: State(window, supportedKeys), gfxSettings(gfxSettings) {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -115,7 +115,7 @@ void MainMenuState::updateButtons() {
 
 	//설정
 	if (this->buttons["SETTING_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new SettingsState(this->window, this->supportedKeys));
+		StateManager::getInstance()->Push(new SettingsState(this->window, this->gfxSettings, this->supportedKeys));
 	}
 
 	//에디터

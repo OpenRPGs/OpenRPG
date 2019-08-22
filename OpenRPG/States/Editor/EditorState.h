@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "GUI/Gui.h"
+#include "GUI/PauseMenu.h"
+#include "../../Maps/TileMap.h"
 
 class EditorState : public State {
   private:
@@ -8,6 +10,9 @@ class EditorState : public State {
 	sf::Font font;
 	std::map<std::string, gui::Button*> buttons;
 	sf::Texture tx;
+	PauseMenu* pmenu;
+
+	TileMap map;
 
 	//초기화함수
 	void initVariables();
@@ -15,6 +20,7 @@ class EditorState : public State {
 	void initKeybinds();
 	void initButtons();
 	void initBackground();
+	void initPauseMenu();
 
   public:
 	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
@@ -23,6 +29,7 @@ class EditorState : public State {
 	//업데이트함수
 	void updateInput(const float& dt);
 	void updateButtons();
+	void updatePauseMenuButtons();
 	void update();
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);

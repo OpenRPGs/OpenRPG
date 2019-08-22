@@ -8,7 +8,7 @@
 //Initaillizer functions
 void EditorState::initVariables()
 {
-	
+
 }
 
 void EditorState::initFonts()
@@ -42,8 +42,9 @@ void EditorState::initButtons()
 	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
-	this->buttons["EXIT_STATE"] = new gui::Button(250, 100, 1250, 270,
-		tx ,this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
+	this->buttons["EXIT_STATE"] = new gui::Button(
+		250, 100, 1250, 80,
+		tx, this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
@@ -59,6 +60,7 @@ EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* s
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
+	this->initPauseMenu();
 	this->initButtons();
 
 }
@@ -70,12 +72,28 @@ EditorState::~EditorState()
 	{
 		delete it->second;
 	}
+
+	delete this->pmenu;
+}
+
+
+//함수
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+
+	this->pmenu->addButton("QUIT", 800.f, "Quit", this->tx);
 }
 
 void EditorState::updateInput(const float & dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpauseState();
+	}
 }
 
 void EditorState::updateButtons()
@@ -92,16 +110,29 @@ void EditorState::updateButtons()
 	}
 }
 
+void EditorState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+		this->endState();
+}
+
 void EditorState::update()
 {
 	auto dt = Game::getInstance()->deltaTime();
 
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
 
-	this->updateButtons();
-
-
+	if (!this->paused)
+	{
+		this->updateButtons();
+	}
+	else
+	{
+		this->pmenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
 }
 
 void EditorState::renderButtons(sf::RenderTarget & target)
@@ -116,6 +147,12 @@ void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
+	this->map.render(*target);
+
+	this->renderButtons(*target);
+
+	if (this->paused)
+		this->pmenu->render(*target);
 
 	//삭제예정. 디버깅용.
 	sf::Text mouseText;
@@ -125,7 +162,5 @@ void EditorState::render(sf::RenderTarget* target)
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
-
-	this->renderButtons(*target);
 	target->draw(mouseText);
 }

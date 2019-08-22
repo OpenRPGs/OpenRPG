@@ -2,6 +2,8 @@
 
 #include "State.h"
 #include "Managers/StateManager.h"
+#include "../Entities/Player.h"
+#include "../GraphicsSettings.h"
 
 State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys) {
 	this->window = window;

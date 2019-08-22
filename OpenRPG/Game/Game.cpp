@@ -54,7 +54,7 @@ void Game::initKeys() {
 }
 
 void Game::initState() {
-	this->StateManager->Push(new MainMenuState(this->window, &this->supportedKeys));
+	this->StateManager->Push(new MainMenuState(this->window,this->gfxSettings, &this->supportedKeys));
 }
 
 void Game::initGraphicsSettings()

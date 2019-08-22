@@ -3,8 +3,9 @@
 #include "GUI/Gui.h"
 
 class MainMenuState : public State {
-  private:
+private:
 	//변수
+	GraphicsSettings& gfxSettings;
 	sf::Texture backgroundTexture;
 	sf::Texture btnTexure;
 	sf::RectangleShape background;
@@ -19,8 +20,8 @@ class MainMenuState : public State {
 	void initKeybinds();
 	void initButtons();
 
-  public:
-	MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+public:
+	MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys);
 	virtual ~MainMenuState();
 
 	//함수
