@@ -126,7 +126,7 @@ void GameState::updatePlayerInput(const float & dt)
 
 void GameState::update()
 {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 
 	//윈도우 활성체크
 	window_focus = this->window->hasFocus();

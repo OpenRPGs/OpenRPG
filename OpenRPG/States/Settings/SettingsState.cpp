@@ -42,13 +42,13 @@ void SettingsState::initGui()
 
 	this->buttons["BACK"] = new gui::Button(
 		100, 800, 250, 200,
-		&tx, &this->font, L"뒤로가기", 50,
+		tx, this->font, L"뒤로가기", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["APPLY"] = new gui::Button(
 		400, 800, 250, 200,
-		&tx, &this->font, L"적용", 50,
+		tx, this->font, L"적용", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
@@ -113,7 +113,7 @@ void SettingsState::updateInput(const float & dt)
 
 void SettingsState::updateGui()
 {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons)
@@ -146,7 +146,7 @@ void SettingsState::updateGui()
 
 void SettingsState::update()
 {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 
 	this->updateMousePositions();
 	this->updateInput(dt);
