@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 /// <summary><c>Dispose</c> 가능한 인터페이스입니다.</summary>
-class IDisposable {
+interface IDisposable {
   protected:
 	bool disposed = false;
 

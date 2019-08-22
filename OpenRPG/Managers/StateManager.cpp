@@ -43,7 +43,6 @@ StateManager* StateManager::Clear() {
 		this->stateStack.pop_back();
 
 		back->onDeactivated();
-		delete back;
 	}
 	return this;
 }
@@ -57,14 +56,11 @@ bool StateManager::Empty() {
 #pragma endregion
 
 #pragma region GoTo, Push, Pop, PopUntil
-StateManager* StateManager::GoTo(State* state, StateDeleter callback) {
+StateManager* StateManager::GoTo(State* state) {
 	if (this->disposed)
 		throw "ERROR::StateManager::Already Disposed";
 
-	auto back = this->Pop();
-	if (callback != NULL)
-		callback(back);
-
+	this->Pop();
 	this->Push(state);
 	return this;
 }
@@ -76,12 +72,12 @@ StateManager* StateManager::Push(State* state) {
 	if (!this->Empty()) // 스택이 비어있지 않다면 기존 최상위 장면에 onDeactivated 호출
 		this->stateStack.back()->onDeactivated();
 
-	this->stateStack.push_back(state);
+	this->stateStack.push_back(g::safe<State>(state));
 	state->onActivated();
 	return this;
 }
 
-State* StateManager::Pop() {
+g::safe<State> StateManager::Pop() {
 	using std::find;
 
 	if (this->disposed)
@@ -97,17 +93,13 @@ State* StateManager::Pop() {
 	return back;
 }
 
-StateManager* StateManager::PopUntil(State* state, StateDeleter callback) {
+StateManager* StateManager::PopUntil(State* state) {
 	if (this->disposed)
 		throw "ERROR::StateManager::Already Disposed";
 
 	while (!this->Empty()) {
 		auto back = this->Pop();
-
-		if (callback != NULL)
-			callback(back);
-
-		if (back == state)
+		if (back.get() == state)
 			break;
 	}
 	return this;
@@ -118,23 +110,14 @@ StateManager* StateManager::Update() {
 	if (this->disposed)
 		throw "ERROR::StateManager::Already Disposed";
 
-	using std::find;
-	using std::vector;
-
 	bool update = true, render = true;
 
 	auto stackSize = this->stateStack.size();
-	for (vector<State*>::size_type i = stackSize - 1; i >= 0; i--) { // 최상위부터 순서대로 갱신
+	for (g::safevector<State>::size_type i = stackSize - 1; i >= 0; i--) { // 최상위부터 순서대로 갱신
 		auto item = this->stateStack[i];
 
 		if (update)
 			item->update(); // 장면을 갱신
-
-		auto alive =
-			find(this->stateStack.begin(), this->stateStack.end(), item) != this->stateStack.end();
-		if (!alive)
-			break;
-
 		if (render)
 			item->render(); // 장면을 그리기
 

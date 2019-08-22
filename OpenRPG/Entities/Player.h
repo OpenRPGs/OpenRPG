@@ -6,12 +6,13 @@ class Player : public Entity {
   private:
 	// Variables
 	bool attacking;
+
 	// Initializer functions
 	void initVariables();
 	void initComponents();
 
   public:
-	Player(float x, float y, sf::Texture* texture);
+	Player(float x, float y, g::safe<sf::Texture> texture);
 	virtual ~Player();
 
 	// Functions

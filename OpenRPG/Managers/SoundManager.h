@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Interfaces/IDisposable.h"
+#include "Defines/IDisposable.h"
 #include "Components/SoundComponent.h"
 
 /// <summary>
@@ -38,19 +38,19 @@ class SoundManager : public IDisposable {
 	/// 불러온 정보는 <see cref="getBGM"/>을 통해 불러올 수 있습니다.
 	/// </summary>
 	/// <param name="buffer">BGM으로 불러올 <see cref="sf::SoundBuffer"/>입니다.</param>
-	bool LoadBGM(sf::SoundBuffer* buffer);
+	bool LoadBGM(g::safe<sf::SoundBuffer> buffer);
 
 	/// <summary>
 	/// 불러온 BGM 정보를 가지는 <see cref="SoundComponent"/> 객체입니다.
 	/// BGM 정보가 없다면 <c>NULL</c>을 반환합니다.
 	/// </summary>
-	SoundComponent* getBGM();
+	g::safe<SoundComponent> getBGM();
 
 	/// <summary>
 	/// SE로 재생될 음원을 불러오고 병렬적으로 재생합니다.
 	/// </summary>
 	/// <param name="buffer">SE로 불러올 <see cref="sf::SoundBuffer"/>입니다.</param>
-	SoundManager* playSE(sf::SoundBuffer* buffer);
+	SoundManager* playSE(g::safe<sf::SoundBuffer> buffer);
 
   private:
 	/// <summary>
@@ -60,12 +60,12 @@ class SoundManager : public IDisposable {
 	static SoundManager* Instance;
 
 	/// <summary>BGM 정보를 담고있는 <see cref="SoundComponent"/> 객체입니다.</summary>
-	SoundComponent* BGM;
+	g::safe<SoundComponent> BGM;
 
 	/// <summary>
 	/// 관리되지 않는 SE 정보들을 담고 있는 <see cref="SoundComponent"/> 목록입니다.
 	/// </summary>
-	std::vector<SoundComponent*> SE;
+	g::safevector<SoundComponent> SE;
 
 	float volumeSE;
 	float volumeBGM;

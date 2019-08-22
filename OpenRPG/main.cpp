@@ -3,6 +3,6 @@
 
 int main() {
 	auto game = Game::getInstance();
-	game->init()->run()->Dispose();
+	game->boot()->run()->Dispose();
 	return 0;
 }

@@ -6,12 +6,12 @@
 class MainMenuState : public State {
   private:
 	//변수
-	sf::Texture* backgroundTexture;
-	sf::Texture* btnTexture;
+	g::safe<sf::Texture> backgroundTexture;
+	g::safe<sf::Texture> btnTexture;
+	g::safe<sf::Font> font;
 	sf::RectangleShape background;
-	sf::Font font;
 
-	std::map<std::string, gui::Button*> buttons;
+	g::safemap<gui::Button> buttons;
 
 	//함수
 	void initVariables();
@@ -29,16 +29,14 @@ class MainMenuState : public State {
 
 	MainMenuState();
 	~MainMenuState();
+	void onActivated() {}
+	void onDeactivated() {}
 
 	//함수
-	void updateInput(const float& dt);
+	void updateInput(const float dt);
 	void updateButtons();
 	void renderButtons(sf::RenderTarget* target);
 
 	void update();
 	void render(sf::RenderTarget* target = NULL);
-
-	// State 이벤트
-	void onActivated() {}
-	void onDeactivated() {}
 };

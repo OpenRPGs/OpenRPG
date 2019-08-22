@@ -3,13 +3,17 @@
 #include "States/State.h"
 #include "Entities/Player.h"
 
+#include "Maps/TileMap.h"
+
 class GameState : public State {
   private:
-	sf::Font font;
-	sf::Texture btnTexure;
+	g::safe<sf::Font> font;
+	g::safe<sf::Texture> btnTexture;
 
-	Player* player;
-	sf::Texture texture;
+	g::safe<sf::Texture> texture;
+	g::safe<Player> player;
+
+	g::safe<TileMap> tileMap;
 
 	//함수
 	void initButtons();
@@ -17,7 +21,7 @@ class GameState : public State {
 	void initTextures();
 	void initPlayers();
 	void initFonts();
-	void initPauseMenu();
+	void initTileMap();
 
   public:
 	const StateFlow flow() {
@@ -27,15 +31,14 @@ class GameState : public State {
 
 	GameState();
 	~GameState();
-
-	//함수
-	void updatePlayerInput(const float& dt);
-	void updateInput(const float& dt);
-	void updatePauseButtons();
-	void update();
-	void render(sf::RenderTarget* target = NULL);
-
-	// State 이벤트
 	void onActivated() {}
 	void onDeactivated() {}
+
+	//함수
+	void updatePlayerInput(const float dt);
+	void updateInput(const float dt);
+	void updatePauseButtons();
+	void update();
+
+	void render(sf::RenderTarget* target = NULL);
 };

@@ -1,14 +1,14 @@
 ﻿#pragma once
 
-class Tile
-{
-private:
+class Tile {
+  private:
+  protected:
+	sf::RectangleShape shap;
 
-protected:
-
-public:
-	Tile();
+  public:
+	Tile(float x, float y, float gridSizeF);
 	virtual ~Tile();
+
+	void update();
+	void render(sf::RenderTarget* target);
 };
-
-

@@ -3,18 +3,15 @@
 #include "Game/Game.h"
 #include "State.h"
 #include "Managers/StateManager.h"
+#include "Entities/Player.h"
 
-State::State() {
+State::State(State* parent) {
+	this->parent = parent;
+	
 	this->keyTime = 0.f;
 	this->keyTimeMax = 0.1f;
 }
-
 State::~State() {
-	for (auto it = this->textures.begin(); it != this->textures.end(); ++it)
-		delete it->second;
-
-	for (auto it = this->sounds.begin(); it != this->sounds.end(); ++it)
-		delete it->second;
 }
 
 const bool State::getKeytime() {
@@ -27,23 +24,24 @@ const bool State::getKeytime() {
 
 //현재 스테이지를 끝내는 것이므로 pop으로 수정.
 void State::endState() {
-	StateManager::getInstance()->PopUntil(this, [](State* x) { delete x; });
+	StateManager::getInstance()->PopUntil(this);
 }
 
-void State::updateKeytime(const float& dt) {
+void State::updateKeytime(const float dt) {
 	if (this->keyTime < this->keyTimeMax)
 		this->keyTime += 0.5f * dt;
 }
 
 void State::updateMousePositions() {
-	auto window = Game::getInstance()->getWindow();
+	auto window = Game::getWindow();
+
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*window);
 	this->mousePosView = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 }
 
 void State::update() {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 	this->updateKeytime(dt);
 }
 void State::render(sf::RenderTarget* target) {}

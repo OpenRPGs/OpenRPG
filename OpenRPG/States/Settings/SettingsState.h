@@ -5,14 +5,15 @@
 
 class SettingsState : public State {
   private:
-	sf::Texture backgroundTexture;
-	sf::Texture btnTexure;
+	g::safe<sf::Texture> backgroundTexture;
+	g::safe<sf::Texture> btnTexturee;
 	sf::RectangleShape background;
-	sf::Font font;
-	sf::Texture tx;
 
-	std::map<std::string, gui::Button*> buttons;
-	std::map<std::string, gui::DropDownList*> dropDownLists;
+	g::safe<sf::Font> font;
+	g::safe<sf::Texture> tx;
+
+	g::safemap<gui::Button> buttons;
+	g::safemap<gui::DropDownList> dropDownLists;
 
 	sf::Text optionsText;
 
@@ -39,7 +40,7 @@ class SettingsState : public State {
 	//접근자
 
 	//업데이트함수
-	void updateInput(const float& dt);
+	void updateInput(const float dt);
 	void updateGui();
 	void update();
 

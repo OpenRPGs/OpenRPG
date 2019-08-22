@@ -19,12 +19,9 @@ Game* Game::getInstance() {
 //생성 및 소멸함수
 Game::Game() {
 	this->initVariables();
-
+	this->initGraphicsSettings();
 	// TODO: 이후 initConfiguration 등으로 분리
 	this->setFramerate(120);
-
-	this->initWindow();
-	this->initKeys();
 }
 
 Game::~Game() {
@@ -35,66 +32,32 @@ void Game::Dispose() {
 	if (this->disposed)
 		throw "ERROR::Game::Already Disposed";
 
-	delete this->window;
-	this->StateManager->Dispose();
+	this->window.reset();
+
+	StateManager::getInstance()->Dispose();
 	SoundManager::getInstance()->Dispose();
 
 	this->disposed = true;
 }
 #pragma endregion
 
-#pragma region init(), Initializers
-Game* Game::init() {
-	if (this->disposed)
-		throw "ERROR::Game::Already Disposed";
-
-	this->initState();
-	return this;
-}
-
+#pragma region Initializers
 void Game::initVariables() {
-	this->window = NULL;
-	this->fullscreen = 0;
-	this->StateManager = StateManager::getInstance();
+	this->gridSize = 50.f;
 }
 
 void Game::initWindow() {
-	// SFML 윈도우창 생성 Todo : window.ini파일로 초기화할예정(완료)
-	std::ifstream ifs("Config/window.ini");
-	this->videoModes = sf::VideoMode::getFullscreenModes();
-
-	std::string title = "None";
-	sf::VideoMode window_bounds = sf::VideoMode::getDesktopMode();
-	bool fullscreen = false;
-	bool vertical_sync_enable = false;
-	unsigned antialiasing_level = 0;
-
-	int frameRate = this->getFramerate();
-
-	if (ifs.is_open()) {
-		std::getline(ifs, title);
-		ifs >> window_bounds.width >> window_bounds.height;
-		ifs >> fullscreen;
-		ifs >> frameRate;
-		ifs >> vertical_sync_enable;
-		ifs >> antialiasing_level;
-	}
-	ifs.close();
-
-	this->fullscreen = fullscreen;
-	this->windowSettings.antialiasingLevel = antialiasing_level;
-	if (this->fullscreen)
-		this->window =
-			new sf::RenderWindow(window_bounds, title, sf::Style::Fullscreen, windowSettings);
+	if (this->gfxSettings.fullscreen)
+		this->window = g::safe<sf::RenderWindow>(new sf::RenderWindow(
+			this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Fullscreen,
+			this->gfxSettings.contextSettings));
 	else
-		this->window = new sf::RenderWindow(
-			window_bounds, title, sf::Style::Titlebar | sf::Style::Close, windowSettings);
+		this->window = g::safe<sf::RenderWindow>(new sf::RenderWindow(
+			this->gfxSettings.resolution, this->gfxSettings.title,
+			sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings));
 
-	// 프레임 레이트를 재설정
-	// 설정 파일에서 불러온 프레임 레이트 값이 다르다면 재설정을 해야하고,
-	// this->window가 할당되었으니 알아서 setFramerateLimit을 호출할 것
-	this->setFramerate(frameRate);
-	this->window->setVerticalSyncEnabled(vertical_sync_enable);
+	this->setFramerate(this->gfxSettings.frameRateLimit);
+	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 }
 
 void Game::initKeys() {
@@ -103,11 +66,11 @@ void Game::initKeys() {
 	if (ifs.is_open()) {
 		std::string key = "";
 		int key_value = 0;
-		while (ifs >> key >> key_value) {
+		while (ifs >> key >> key_value)
 			this->supportedKeys[key] = key_value;
-		}
 	}
 	ifs.close();
+
 	this->supportedKeys["Escape"] = sf::Keyboard::Key::Escape;
 	this->supportedKeys["A"] = sf::Keyboard::Key::A;
 	this->supportedKeys["D"] = sf::Keyboard::Key::D;
@@ -119,12 +82,12 @@ void Game::initKeys() {
 		std::cout << i.first << " " << i.second << std::endl;
 }
 
-void Game::initState() {
-	this->StateManager->Push(new MainMenuState());
+void Game::initGraphicsSettings() {
+	this->gfxSettings.loadFromFile("Config/graphics.ini");
 }
 #pragma endregion
 
-#pragma region Framerate, frameTime
+#pragma region Framerate, deltaTime
 void Game::setFramerate(int frameRate) {
 	if (this->disposed)
 		throw "ERROR::Game::Already Disposed";
@@ -140,10 +103,7 @@ int Game::getFramerate() {
 	return this->frameRate;
 }
 
-float Game::frameTime() {
-	if (this->disposed)
-		throw "ERROR::Game::Already Disposed";
-
+float Game::deltaTime() {
 	//  60 frame = 0.016666...
 	// 120 frame = 0.008333...
 	return 1.f / this->frameRate;
@@ -151,30 +111,49 @@ float Game::frameTime() {
 #pragma endregion
 
 #pragma region Getters
-sf::RenderWindow* Game::getWindow() {
-	if (this->disposed)
+g::safe<sf::RenderWindow> Game::getWindow() {
+	auto obj = Game::getInstance();
+	if (obj->disposed)
 		throw "ERROR::Game::Already Disposed";
 
-	return this->window;
+	return obj->window;
 }
 
-std::map<std::string, int>* Game::getSupportedKeys() {
-	if (this->disposed)
+g::map<int>* Game::getSupportedKeys() {
+	auto obj = Game::getInstance();
+	if (obj->disposed)
 		throw "ERROR::Game::Already Disposed";
 
-	return &this->supportedKeys;
+	return &obj->supportedKeys;
 }
 
 bool Game::getFocused() {
-	if (this->disposed)
+	auto obj = Game::getInstance();
+	if (obj->disposed)
 		throw "ERROR::Game::Already Disposed";
 
-	return this->window->hasFocus();
+	return obj->window->hasFocus();
+}
+
+float Game::getGridSize() {
+	auto obj = Game::getInstance();
+	if (obj->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	return obj->gridSize;
+}
+
+GraphicsSettings* Game::getGraphicsSettings() {
+	auto obj = Game::getInstance();
+	if (obj->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	return &obj->gfxSettings;
 }
 #pragma endregion
 
 void Game::endApplication() {
-	std::cout << "Ending Application" << std::endl;
+	std::cout << "Shutdown" << std::endl;
 }
 
 void Game::updateSFMLEvents() {
@@ -193,8 +172,10 @@ void Game::update() {
 	// SFML 창의 이벤트들을 처리
 	this->updateSFMLEvents();
 
+	auto stateManager = StateManager::getInstance();
+
 	// 남아있는 장면이 없다면 프로그램 종료
-	if (this->StateManager->Empty()) {
+	if (stateManager->Empty()) {
 		this->endApplication();
 		this->window->close();
 		return;
@@ -204,10 +185,21 @@ void Game::update() {
 	this->window->clear();
 
 	// 갱신 및 그리기 작업
-	this->StateManager->Update();
+	stateManager->Update();
 
 	// 그린 결과물을 화면에 표시
 	this->window->display();
+}
+
+Game* Game::boot() {
+	if (this->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	this->initWindow();
+	this->initKeys();
+
+	StateManager::getInstance()->Push(new MainMenuState());
+	return this;
 }
 
 Game* Game::run() {

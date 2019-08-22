@@ -7,6 +7,11 @@
 #include <crtdbg.h>
 #endif
 
+#ifndef interface
+#define interface struct
+;
+#endif
+
 //Core
 #include <algorithm>
 #include <deque>
@@ -33,3 +38,6 @@
 
 // 유니버설 문자 이름 '~~'(으)로 표현되는 문자는 현재 코드 페이지(~~)에서 표현할 수 없습니다.
 #pragma warning(disable: 4566)
+
+// Utilities
+#include "Utils/Utils.h"

@@ -1,8 +1,10 @@
 ﻿#include "stdafx.h"
+
 #include "Components/MovementComponent.h"
 #include "Components/AnimationComponent.h"
 #include "Components/HitboxComponent.h"
 #include "Components/SoundComponent.h"
+
 #include "Entity.h"
 #include "Player.h"
 
@@ -13,9 +15,10 @@ void Player::initVariables() {
 
 void Player::initComponents() {}
 
-Player::Player(float x, float y, sf::Texture* texture_sheet) {
+Player::Player(float x, float y, g::safe<sf::Texture> texture_sheet) : Entity() {
 	this->initVariables();
 	this->setPositions(x, y);
+
 	//초록색 캐주얼케릭터 설정
 	// this->createMovementComponent(500.f, 500.f, 100.f);
 	// this->createAnimationComponent(texture_sheet);

@@ -7,19 +7,18 @@
 
 class PauseMenuState : public State {
   private:
-	State* parent;
-
-	sf::Font font;
-	sf::Texture btnTexture;
+	g::safe<sf::Font> font;
+	g::safe<sf::Texture> btnTexture;
 
 	sf::RectangleShape background;
 	sf::RectangleShape container;
 	sf::Text menuText;
 
-	std::map<std::string, gui::Button*> buttons;
+	g::safemap<gui::Button> buttons;
 
 	//함수
-	void initBackground();
+	void initTexture();
+	void initFont();
 	void initContainer();
 	void initText();
 	void initButtons();
@@ -31,12 +30,12 @@ class PauseMenuState : public State {
 		return StateFlow::FLOW_RENDER;
 	}
 
-	PauseMenuState(State* parent);
+	PauseMenuState();
 	~PauseMenuState();
 
 	//함수
-	void updatePlayerInput(const float& dt);
-	void updateInput(const float& dt);
+	void updatePlayerInput(const float dt) {}
+	void updateInput(const float dt);
 	void update();
 	void render(sf::RenderTarget* target = NULL);
 

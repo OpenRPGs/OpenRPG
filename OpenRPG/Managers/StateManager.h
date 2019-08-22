@@ -1,9 +1,7 @@
 ﻿#pragma once
 
-#include "Interfaces/IDisposable.h"
+#include "Defines/IDisposable.h"
 #include "States/State.h"
-
-typedef void (*StateDeleter)(State*);
 
 class StateManager : public IDisposable {
   public:
@@ -28,10 +26,7 @@ class StateManager : public IDisposable {
 	/// <see cref="State"/> 스택에 추가되지 않고 현재 장면을 교체합니다.
 	/// </summary>
 	/// <param name="state">추가할 장면입니다.</param>
-	/// <param name="callback">
-	/// <c>Pop</c>되는 <see cref="State"/>를 전달받는 콜백 메서드입니다.
-	/// </param>
-	StateManager* GoTo(State* state, StateDeleter callback = NULL);
+	StateManager* GoTo(State* state);
 
 	/// <summary>
 	/// 새 장면을 추가합니다.
@@ -41,17 +36,14 @@ class StateManager : public IDisposable {
 	StateManager* Push(State* state);
 
 	/// <summary>현재 장면을 제거하고 반환합니다.</summary>
-	State* Pop();
+	g::safe<State> Pop();
 
 	/// <summary>
 	/// 전달된 <see cref="State"/>를 찾을 때 까지 <see cref="Pop"/>합니다.
 	/// 만약 찾지 못했다면, 모든 <see cref="State"/>가 <see cref="Pop"/>됩니다.
 	/// </summary>
 	/// <param name="state">찾을 <see cref="State"/>입니다.</param>
-	/// <param name="callback">
-	/// <c>Pop</c>되는 <see cref="State"/>를 전달받는 콜백 메서드입니다.
-	/// </param>
-	StateManager* PopUntil(State* state, StateDeleter callback = NULL);
+	StateManager* PopUntil(State* state);
 
 	/// <summary>
 	///장면 스택의 front부터 back까지 갱신 가능한 모든 장면을 갱신하고 화면에 그립니다.
@@ -69,7 +61,7 @@ class StateManager : public IDisposable {
 	/// 장면을 관리하는 스택입니다.
 	/// <c>stateStack.back().first</c>는 항상 현재 장면을 가리킵니다.
 	/// </summary>
-	std::vector<State*> stateStack;
+	g::safevector<State> stateStack;
 
 	/// <summary>생성자입니다. private로 지정하여 일반적인 할당을 금지합니다.</summary>
 	StateManager();

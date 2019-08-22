@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
-#include "SoundManager.h"
 
-using namespace std;
+#include "SoundManager.h"
 
 #pragma region getInstance, Constructor, Finalizer, Dispose
 SoundManager* SoundManager::Instance = NULL;
@@ -16,11 +15,6 @@ SoundManager* SoundManager::getInstance() {
 SoundManager::SoundManager() {
 	// 초기 볼륨
 	this->volumeBGM = this->volumeSE = 100.f;
-
-	this->BGM = NULL;
-
-	// vector 공간 예약 할당
-	this->SE.reserve(sizeof(SoundComponent*) * 4);
 }
 
 SoundManager::~SoundManager() {
@@ -42,19 +36,11 @@ SoundManager* SoundManager::Clear() {
 		throw "ERROR::SoundManager::Already Disposed";
 
 	// BGM 해제
-	if (this->BGM != NULL) {
-		delete this->BGM;
-		this->BGM = NULL;
-	}
+	if (this->BGM)
+		this->BGM.reset();
 
 	// SE 해제
-	while (this->SE.size() > 0) {
-		auto back = this->SE.back();
-		this->SE.pop_back();
-		if (back != NULL)
-			delete back;
-	}
-
+	this->SE.clear();
 	return this;
 }
 
@@ -66,10 +52,9 @@ SoundManager* SoundManager::setVolumeSE(float volume) {
 	this->volumeSE = volume;
 
 	// SE 음원은 일회성이기에 재생중인 음원의 음량만 조절
-	for (vector<SoundComponent*>::size_type i = 0; i < this->SE.size(); i++) {
-		auto item = this->SE[i];
-		if (item != NULL && item->isPlaying())
-			item->setVolume(volume);
+	for (auto se : this->SE) {
+		if (se->isPlaying())
+			se->setVolume(volume);
 	}
 	return this;
 }
@@ -86,7 +71,7 @@ SoundManager* SoundManager::setVolumeBGM(float volume) {
 
 	this->volumeBGM = volume;
 
-	if (this->BGM != NULL)
+	if (this->BGM)
 		this->BGM->setVolume(volume);
 
 	return this;
@@ -100,32 +85,32 @@ float SoundManager::getVolumeBGM() {
 #pragma endregion
 
 #pragma region BGM, SE
-bool SoundManager::LoadBGM(sf::SoundBuffer* buffer) {
+bool SoundManager::LoadBGM(g::safe<sf::SoundBuffer> buffer) {
 	if (this->disposed)
 		throw "ERROR::SoundManager::Already Disposed";
 
-	if (buffer == NULL)
+	if (!buffer)
 		throw "ERROR:SoundManager::buffer is NULL";
 
 	if (this->BGM) {
 		if (!this->BGM->isSame(buffer))
 			this->BGM->reset(buffer);
 	} else {
-		this->BGM = new SoundComponent(buffer);
+		this->BGM = g::safe<SoundComponent>(new SoundComponent(buffer));
 	}
 
 	this->BGM->setVolume(this->volumeBGM);
 	return this->BGM->Loaded();
 }
 
-SoundComponent* SoundManager::getBGM() {
+g::safe<SoundComponent> SoundManager::getBGM() {
 	if (this->disposed)
 		throw "ERROR::SoundManager::Already Disposed";
 
 	return this->BGM;
 }
 
-SoundManager* SoundManager::playSE(sf::SoundBuffer* buffer) {
+SoundManager* SoundManager::playSE(g::safe<sf::SoundBuffer> buffer) {
 	if (this->disposed)
 		throw "ERROR::SoundManager::Already Disposed";
 
@@ -136,29 +121,19 @@ SoundManager* SoundManager::playSE(sf::SoundBuffer* buffer) {
 	if (sound == NULL)
 		return this;
 
-	vector<SoundComponent*>::size_type i;
-
 	// 비어있거나 재생이 끝난 SE가 있는지 검사
-	for (i = 0; i < this->SE.size(); i++) {
-		auto item = this->SE[i];
-		if (item == NULL || !item->isPlaying()) {
-			if (item != NULL) {
-				delete item;
-				this->SE[i] = NULL;
-			}
-			break;
-		}
+	for (auto it = this->SE.begin(); it != this->SE.end();) {
+		auto se = *it;
+		if (!se->isPlaying())
+			this->SE.erase(it);
+		else
+			it++;
 	}
 
-	// Idle 상태의 SE가 없다면 새 벡터 영역을 할당
-	while (i >= this->SE.size())
-		this->SE.push_back(NULL);
+	auto item = g::safe<SoundComponent>(new SoundComponent(buffer));
+	this->SE.push_back(item); // 벡터에 삽입
 
-	auto item = new SoundComponent(buffer);
-	item->setVolume(this->volumeSE); // 관리중인 볼륨으로
-	item->play();
-	this->SE[i] = item; // 벡터에 삽입
-
+	item->setVolume(this->volumeSE)->play(); // 관리중인 볼륨으로 설정하고 재생
 	return this;
 }
 #pragma endregion
