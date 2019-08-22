@@ -12,20 +12,24 @@ private:
 
 	//변수
 	GraphicsSettings gfxSettings;
+	StateData stateData;
 	static Game* Instance;
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 	StateManager* StateManager;
+
+	float gridSize;
 
 	std::map<std::string, int> supportedKeys;
 	int frameRate;
 
 	//초기화
 	void initVariables();
+	void initGraphicsSettings();
 	void initWindow();
 	void initKeys();
+	void initStateData();
 	void initState();
-	void initGraphicsSettings();
 
 public:
 	static Game* getInstance();

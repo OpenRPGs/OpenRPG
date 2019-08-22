@@ -5,7 +5,7 @@
 class MainMenuState : public State {
 private:
 	//변수
-	GraphicsSettings& gfxSettings;
+
 	sf::Texture backgroundTexture;
 	sf::Texture btnTexure;
 	sf::RectangleShape background;
@@ -21,7 +21,7 @@ private:
 	void initButtons();
 
 public:
-	MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys);
+	MainMenuState(StateData* state_Data);
 	virtual ~MainMenuState();
 
 	//함수

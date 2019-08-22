@@ -3,14 +3,15 @@
 #include "State.h"
 #include "Managers/StateManager.h"
 #include "../Entities/Player.h"
-#include "../GraphicsSettings.h"
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys) {
-	this->window = window;
-	this->supportedKeys = supportedKeys;
+State::State(StateData* state_data) {
+	this->stateData = state_data;
+	this->window = state_data->window;
+	this->supportedKeys = state_data->supportedKeys;
 	this->paused = false;
 	this->keyTime = 0.f;
 	this->keyTimeMax = 0.1f;
+	this->gridSize = state_data->gridSize;
 }
 
 State::~State() {}

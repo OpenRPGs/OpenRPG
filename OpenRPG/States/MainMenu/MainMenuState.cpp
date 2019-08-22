@@ -79,8 +79,9 @@ void MainMenuState::initButtons() {
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys)
-	: State(window, supportedKeys), gfxSettings(gfxSettings) {
+MainMenuState::MainMenuState(StateData* state_Data)
+	:State(state_Data)
+{
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -110,17 +111,17 @@ void MainMenuState::updateButtons() {
 
 	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new GameState(this->window, this->supportedKeys));
+		StateManager::getInstance()->Push(new GameState(this->stateData));
 	}
 
 	//설정
 	if (this->buttons["SETTING_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new SettingsState(this->window, this->gfxSettings, this->supportedKeys));
+		StateManager::getInstance()->Push(new SettingsState(this->stateData));
 	}
 
 	//에디터
 	if (this->buttons["EDITOR_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new EditorState(this->window, this->supportedKeys));
+		StateManager::getInstance()->Push(new EditorState(this->stateData));
 	}
 
 	//종료

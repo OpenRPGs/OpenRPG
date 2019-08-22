@@ -70,8 +70,8 @@ void GameState::initPlayers()
 }
 
 //Constructors / Destructors
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	:State(window, supportedKeys)
+GameState::GameState(StateData* state_data)
+	:State(state_data)
 {
 	this->initButtons();
 	this->initKeybinds();

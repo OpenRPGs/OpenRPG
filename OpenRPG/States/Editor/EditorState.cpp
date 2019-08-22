@@ -53,8 +53,8 @@ void EditorState::initBackground()
 {
 }
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	:State(window, supportedKeys)
+EditorState::EditorState(StateData* state_data)
+	:State(state_data)
 {
 	this->initVariables();
 	this->initBackground();

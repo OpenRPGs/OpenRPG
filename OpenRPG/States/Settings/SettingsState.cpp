@@ -78,8 +78,8 @@ void SettingsState::initBackground()
 {
 }
 
-SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys)
-	:State(window, supportedKeys) ,gfxSettings(gfxSettings)
+SettingsState::SettingsState(StateData* state_data)
+	:State(state_data)
 {
 	this->initVariables();
 	this->initBackground();
@@ -131,8 +131,8 @@ void SettingsState::updateGui()
 	if (this->buttons["APPLY"]->isPressed())
 	{
 		//삭제예정 테스트용 설정이날아가기때문에 프레임이 솓구칩니다.
-		this->gfxSettings.resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
-		this->window->create(this->gfxSettings.resolution,this->gfxSettings.title,sf::Style::Default);
+		this->stateData->gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
+		this->window->create(this->stateData->gfxSettings->resolution,this->stateData->gfxSettings->title,sf::Style::Default);
 		this->window->setFramerateLimit(120);
 	}
 

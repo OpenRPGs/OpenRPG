@@ -27,7 +27,7 @@ class GameState : public State {
 	void initPauseMenu();
 
   public:
-	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	GameState(StateData* state_data);
 	virtual ~GameState();
 
 	//함수

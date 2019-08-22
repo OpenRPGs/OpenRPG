@@ -5,7 +5,6 @@
 
 class SettingsState : public State {
 private:
-	GraphicsSettings& gfxSettings;
 	sf::Texture backgroundTexture;
 	sf::Texture btnTexure;
 	sf::RectangleShape background;
@@ -29,7 +28,7 @@ private:
 	// void initMusic();
 
 public:
-	SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys);
+	SettingsState(StateData* state_data);
 	virtual ~SettingsState();
 
 	//접근자

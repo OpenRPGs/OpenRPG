@@ -23,7 +23,7 @@ class EditorState : public State {
 	void initPauseMenu();
 
   public:
-	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	EditorState(StateData* state_data);
 	virtual ~EditorState();
 
 	//업데이트함수

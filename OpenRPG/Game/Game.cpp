@@ -10,6 +10,7 @@
 void Game::initVariables() {
 	this->window = NULL;
 	this->StateManager = StateManager::getInstance();
+	this->gridSize = 50.f;
 }
 
 void Game::initWindow() {
@@ -54,13 +55,21 @@ void Game::initKeys() {
 }
 
 void Game::initState() {
-	this->StateManager->Push(new MainMenuState(this->window,this->gfxSettings, &this->supportedKeys));
+	this->StateManager->Push(new MainMenuState(&this->stateData));
 }
 
 void Game::initGraphicsSettings()
 {
 	this->gfxSettings.loadFromFile("Config/graphics.ini");
 
+}
+
+void Game::initStateData()
+{
+	this->stateData.window = this->window;
+	this->stateData.gfxSettings = &this->gfxSettings;
+	this->stateData.supportedKeys = &this->supportedKeys;
+	this->stateData.gridSize = this->gridSize;
 }
 
 #pragma region getInstance, Constructor, Finalizer
@@ -80,9 +89,9 @@ Game::Game() {
 	this->initGraphicsSettings();
 	// TODO: 이후 initConfiguration 등으로 분리
 	this->setFramerate(120);
-
 	this->initWindow();
 	this->initKeys();
+	this->initStateData();
 	this->initState();
 }
 
