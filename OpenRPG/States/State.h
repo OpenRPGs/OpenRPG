@@ -1,14 +1,32 @@
 ﻿#pragma once
 
+#include "../GraphicsSettings.h"
+
+class StateData
+{
+public:
+	StateData()
+	{}
+
+	//변수
+	float gridSize;
+	sf::RenderWindow* window;
+	GraphicsSettings* gfxSettings;
+	std::map<std::string, int>* supportedKeys;
+
+};
+
 class State {
-  private:
-  protected:
+private:
+protected:
+	StateData* stateData;
 	sf::RenderWindow* window;
 	std::map<std::string, int>* supportedKeys;
 	std::map<std::string, int> keybinds;
 	bool paused;
 	float keyTime;
 	float keyTimeMax;
+	float gridSize;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
@@ -22,11 +40,11 @@ class State {
 	virtual void initKeybinds() = 0;
 	void initSounds();
 
-  public:
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+public:
+	State(StateData* state_data);
 	virtual ~State();
 
-	const bool& getQuit() const;
+	//const bool& getQuit() const;
 	const bool getKeytime();
 
 	void endState();

@@ -2,7 +2,7 @@
 #include "Gui.h"
 
 gui::Button::Button(float x, float y, float width, float height,
-	sf::Texture* buttonTexture, sf::Font* font, std::wstring text, unsigned character_size,
+	sf::Texture& buttonTexture, sf::Font& font, std::wstring text, unsigned character_size,
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 	sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color)
 {
@@ -11,10 +11,9 @@ gui::Button::Button(float x, float y, float width, float height,
 	this->shape.setPosition(sf::Vector2f(x, y));
 	this->shape.setSize(sf::Vector2f(width, height));
 	this->shape.setFillColor(idle_Color);
-	this->shape.setTexture(buttonTexture);
+	this->shape.setTexture(&buttonTexture);
 
-	this->font = font;
-	this->text.setFont(*this->font);
+	this->text.setFont(font);
 	this->text.setString(text);
 	this->text.setFillColor(text_idle_color);
 	this->text.setCharacterSize(character_size);
@@ -37,7 +36,7 @@ gui::Button::Button(float x, float y, float width, float height,
 
 gui::Button::Button(
 	float x, float y, float width, float height, 
-	sf::Font * font, std::wstring text, unsigned character_size, 
+	sf::Font& font, std::wstring text, unsigned character_size, 
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, 
 	sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
 	sf::Color outline_idle_Color , sf::Color outline_hover_Color, sf::Color outline_active_Color ,
@@ -52,8 +51,7 @@ gui::Button::Button(
 	this->shape.setOutlineThickness(1.f);
 	this->shape.setOutlineColor(outline_idle_Color);
 
-	this->font = font;
-	this->text.setFont(*this->font);
+	this->text.setFont(font);
 	this->text.setString(text);
 	this->text.setFillColor(text_idle_color);
 	this->text.setCharacterSize(character_size);
@@ -79,6 +77,7 @@ gui::Button::Button(
 
 gui::Button::~Button()
 {
+
 }
 
 
@@ -179,7 +178,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 
 	this->activeElement = new gui::Button(
 		x, y , width, height,
-		&this->font, list[default_index], 20,
+		this->font, list[default_index], 20,
 		sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 200), sf::Color(155, 155, 155, 200), sf::Color(25, 25, 25, 200),
 		sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(25, 25, 25, 50)
@@ -190,7 +189,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 		this->list.push_back(
 			new gui::Button(
 				x, y + (i+1) * height, width, height,
-				&this->font, list[i], 20,
+				this->font, list[i], 20,
 				sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
 				sf::Color(70, 70, 70, 200), sf::Color(155, 155, 155, 200), sf::Color(25, 25, 25, 200),
 				sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 255), sf::Color(25, 25, 25, 50),

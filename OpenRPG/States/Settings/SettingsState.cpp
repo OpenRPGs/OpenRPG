@@ -41,14 +41,14 @@ void SettingsState::initGui()
 		throw "btn";
 
 	this->buttons["BACK"] = new gui::Button(
-		100, 800, 250, 200,
-		&tx, &this->font, L"뒤로가기", 50,
+		100, 800, 250, 80,
+		tx, this->font, L"뒤로가기", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
 	this->buttons["APPLY"] = new gui::Button(
-		400, 800, 250, 200,
-		&tx, &this->font, L"적용", 50,
+		400, 800, 250, 80,
+		tx, this->font, L"적용", 50,
 		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 
@@ -78,8 +78,8 @@ void SettingsState::initBackground()
 {
 }
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	:State(window, supportedKeys)
+SettingsState::SettingsState(StateData* state_data)
+	:State(state_data)
 {
 	this->initVariables();
 	this->initBackground();
@@ -113,7 +113,7 @@ void SettingsState::updateInput(const float & dt)
 
 void SettingsState::updateGui()
 {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons)
@@ -131,7 +131,8 @@ void SettingsState::updateGui()
 	if (this->buttons["APPLY"]->isPressed())
 	{
 		//삭제예정 테스트용 설정이날아가기때문에 프레임이 솓구칩니다.
-		this->window->create(this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()],"Test",sf::Style::Default);
+		this->stateData->gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
+		this->window->create(this->stateData->gfxSettings->resolution,this->stateData->gfxSettings->title,sf::Style::Default);
 		this->window->setFramerateLimit(120);
 	}
 
@@ -146,7 +147,7 @@ void SettingsState::updateGui()
 
 void SettingsState::update()
 {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 
 	this->updateMousePositions();
 	this->updateInput(dt);

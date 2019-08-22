@@ -4,7 +4,7 @@
 #include "GUI/Gui.h"
 
 class SettingsState : public State {
-  private:
+private:
 	sf::Texture backgroundTexture;
 	sf::Texture btnTexure;
 	sf::RectangleShape background;
@@ -27,8 +27,8 @@ class SettingsState : public State {
 	void initText();
 	// void initMusic();
 
-  public:
-	SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+public:
+	SettingsState(StateData* state_data);
 	virtual ~SettingsState();
 
 	//접근자

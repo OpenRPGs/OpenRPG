@@ -3,6 +3,8 @@
 #include "Entities/Player.h"
 #include "GUI/PauseMenu.h"
 
+#include "../../Maps/TileMap.h"
+
 class GameState : public State {
   private:
 	int window_focus;
@@ -14,6 +16,8 @@ class GameState : public State {
 	Player* player;
 	sf::Texture texture;
 
+	TileMap* tileMap;
+
 	//함수
 	void initButtons();
 	void initKeybinds();
@@ -21,9 +25,10 @@ class GameState : public State {
 	void initPlayers();
 	void initFonts();
 	void initPauseMenu();
+	void initTileMap();
 
   public:
-	GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	GameState(StateData* state_data);
 	virtual ~GameState();
 
 	//함수
