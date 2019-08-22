@@ -9,11 +9,14 @@ private:
 	unsigned layers;
 	std::vector<std::vector<std::vector<Tile>>> map;
 public:
-	TileMap();
+	TileMap(float gridSize, unsigned width, unsigned height);
 	virtual ~TileMap();
 
 	void update();
 	void render(sf::RenderTarget& target);
+
+	void addTile();
+	void removeTile();
 
 };
 

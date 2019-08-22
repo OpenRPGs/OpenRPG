@@ -12,7 +12,9 @@ class EditorState : public State {
 	sf::Texture tx;
 	PauseMenu* pmenu;
 
-	TileMap map;
+	TileMap* tileMap;
+
+	sf::RectangleShape selectorRect;
 
 	//초기화함수
 	void initVariables();
@@ -21,6 +23,8 @@ class EditorState : public State {
 	void initButtons();
 	void initBackground();
 	void initPauseMenu();
+	void initGui();
+	void initTileMap();
 
   public:
 	EditorState(StateData* state_data);
@@ -29,9 +33,13 @@ class EditorState : public State {
 	//업데이트함수
 	void updateInput(const float& dt);
 	void updateButtons();
+	void updateGui();
 	void updatePauseMenuButtons();
 	void update();
+
+	//랜더함수
 	void renderButtons(sf::RenderTarget& target);
+	void renderGui(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트

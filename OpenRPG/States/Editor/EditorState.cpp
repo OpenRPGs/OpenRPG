@@ -53,6 +53,30 @@ void EditorState::initBackground()
 {
 }
 
+
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+
+	this->pmenu->addButton("QUIT", 800.f, "Quit", this->tx);
+}
+
+void EditorState::initGui()
+{
+	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+
+	this->selectorRect.setFillColor(sf::Color::Transparent);
+	this->selectorRect.setOutlineThickness(1.f);
+	this->selectorRect.setOutlineColor(sf::Color::Green);
+}
+
+
+void EditorState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
+
 EditorState::EditorState(StateData* state_data)
 	:State(state_data)
 {
@@ -62,6 +86,8 @@ EditorState::EditorState(StateData* state_data)
 	this->initKeybinds();
 	this->initPauseMenu();
 	this->initButtons();
+	this->initGui();
+	this->initTileMap();
 
 }
 
@@ -74,16 +100,12 @@ EditorState::~EditorState()
 	}
 
 	delete this->pmenu;
+	delete this->tileMap;
 }
 
 
 //함수
-void EditorState::initPauseMenu()
-{
-	this->pmenu = new PauseMenu(*this->window, this->font);
 
-	this->pmenu->addButton("QUIT", 800.f, "Quit", this->tx);
-}
 
 void EditorState::updateInput(const float & dt)
 {
@@ -110,6 +132,11 @@ void EditorState::updateButtons()
 	}
 }
 
+void EditorState::updateGui()
+{
+	this->selectorRect.setPosition(this->mousePosView);
+}
+
 void EditorState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
@@ -127,6 +154,7 @@ void EditorState::update()
 	if (!this->paused)
 	{
 		this->updateButtons();
+		this->updateGui();
 	}
 	else
 	{
@@ -143,17 +171,23 @@ void EditorState::renderButtons(sf::RenderTarget & target)
 	}
 }
 
+void EditorState::renderGui(sf::RenderTarget & target)
+{
+	target.draw(this->selectorRect);
+}
+
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
-	this->map.render(*target);
+	this->tileMap->render(*target);
 
 	this->renderButtons(*target);
+	this->renderGui(*target);
 
-	if (this->paused)
+	if (this->paused) {
 		this->pmenu->render(*target);
-
+	}
 	//삭제예정. 디버깅용.
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
