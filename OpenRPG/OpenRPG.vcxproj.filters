@@ -218,5 +218,8 @@
     <ClInclude Include="Game\GraphicsSettings.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>Defines</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,11 +7,6 @@
 #include <crtdbg.h>
 #endif
 
-#ifndef interface
-#define interface struct
-;
-#endif
-
 //Core
 #include <algorithm>
 #include <deque>

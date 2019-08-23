@@ -8,14 +8,18 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	// 디버그일 때 콘솔을 표시
 	AllocConsole();
 
-	// 출력 및 입력 스트림을 재설정
-	freopen("CONIN$", "rb", stdin);
-	freopen("CONOUT$", "wb", stdout);
-	freopen("CONOUT$", "wb", stderr);
-	std::ios::sync_with_stdio();
+	{
+		FILE* stream;
+
+		// 출력 및 입력 스트림을 재설정
+		freopen_s(&stream, "CONIN$", "rb", stdin);
+		freopen_s(&stream, "CONOUT$", "wb", stdout);
+		freopen_s(&stream, "CONOUT$", "wb", stderr);
+		std::ios::sync_with_stdio();
+	}
 #endif
 
-	Game::getInstance()->run();
+	Game::getInstance()->boot()->run();
 
 #ifdef _DEBUG
 	// 콘솔 해제

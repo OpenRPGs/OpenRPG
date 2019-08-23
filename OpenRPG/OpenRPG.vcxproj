@@ -199,6 +199,7 @@
     <ClInclude Include="GUI\Button\Button.h" />
     <ClInclude Include="GUI\DropDownList\DropDownList.h" />
     <ClInclude Include="GUI\Gui.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Managers\SoundManager.h" />
     <ClInclude Include="Managers\StateManager.h" />
     <ClInclude Include="Maps\TileMap.h" />

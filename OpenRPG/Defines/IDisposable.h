@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "Interface.h"
+
 /// <summary><c>Dispose</c> 가능한 인터페이스입니다.</summary>
 interface IDisposable {
   protected:
