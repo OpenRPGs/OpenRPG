@@ -24,4 +24,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+template <typename T>
+using sharedPtr = std::shared_ptr<T>;
 

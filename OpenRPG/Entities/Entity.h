@@ -13,10 +13,14 @@ protected:
 
 	sf::Sprite sprite;
 
-	MovementComponent* movementComponent;
-	AnimationComponent* animationComponent;
-	HitboxComponent* hitboxComponent;
-	SoundComponent* soundComponent;
+	//MovementComponent* movementComponent;
+	sharedPtr<MovementComponent> movementComponent;
+	//AnimationComponent* animationComponent;
+	sharedPtr<AnimationComponent> animationComponent;
+	//HitboxComponent* hitboxComponent;
+	sharedPtr<HitboxComponent> hitboxComponent;
+	//SoundComponent* soundComponent;
+	sharedPtr<SoundComponent> soundComponent;
 
 public:
 	Entity();

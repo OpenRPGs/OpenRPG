@@ -4,6 +4,7 @@
 #include "Components/AnimationComponent.h"
 #include "Components/HitboxComponent.h"
 #include "Components/SoundComponent.h"
+
 void Entity::initVariables()
 {
 	this->movementComponent = NULL;
@@ -18,9 +19,9 @@ Entity::Entity()
 
 Entity::~Entity()
 {
-	delete this->movementComponent;
-	delete this->animationComponent;
-	delete this->hitboxComponent;
+	//delete this->movementComponent;
+	//delete this->animationComponent;
+	//delete this->hitboxComponent;
 }
 
 //Componet functions
@@ -32,17 +33,19 @@ void Entity::setTexture(sf::Texture& texture)
 
 void Entity::createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration)
 {
-	this->movementComponent = new MovementComponent(this->sprite, maxVelocity, acceleration, deceleration);
+	movementComponent = sharedPtr<MovementComponent>(new MovementComponent(this->sprite, maxVelocity, acceleration, deceleration));
 }
 
 void Entity::createAnimationComponent(sf::Texture & texture_sheet)
 {
-	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
+	//this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
+	animationComponent = sharedPtr<AnimationComponent>(new AnimationComponent(this->sprite, texture_sheet));
 }
 
 void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, float offset_y, float width, float height)
 {
-	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
+	//this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
+	hitboxComponent = sharedPtr<HitboxComponent>(new HitboxComponent(sprite, offset_x, offset_y, width, height));
 }
 
 //Functions
