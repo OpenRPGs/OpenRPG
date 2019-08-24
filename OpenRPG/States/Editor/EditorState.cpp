@@ -156,6 +156,22 @@ void EditorState::updateEditorInput(const float & dt)
 			this->textureRect.left -= 100;
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && this->getKeytime())
+	{
+		if (this->textureRect.top < 200)
+		{
+			this->textureRect.top += 100;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && this->getKeytime())
+	{
+		if (this->textureRect.top > 0)
+		{
+			this->textureRect.top -= 100;
+		}
+	}
 }
 
 void EditorState::updateButtons()
