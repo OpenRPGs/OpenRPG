@@ -8,7 +8,7 @@
 //Initaillizer functions
 void EditorState::initVariables()
 {
-
+	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 }
 
 void EditorState::initFonts()
@@ -49,6 +49,14 @@ void EditorState::initButtons()
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
+void EditorState::initText()
+{
+	this->cursorText.setFont(this->font);
+	this->cursorText.setCharacterSize(15);
+	this->cursorText.setFillColor(sf::Color::Red);
+	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 30));
+}
+
 void EditorState::initBackground()
 {
 }
@@ -64,10 +72,12 @@ void EditorState::initPauseMenu()
 void EditorState::initGui()
 {
 	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
-
-	this->selectorRect.setFillColor(sf::Color::Transparent);
+	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	this->selectorRect.setOutlineThickness(1.f);
 	this->selectorRect.setOutlineColor(sf::Color::Green);
+
+	this->selectorRect.setTexture(this->tileMap->getTileSheet());
+	this->selectorRect.setTextureRect(this->textureRect);
 }
 
 
@@ -83,11 +93,12 @@ EditorState::EditorState(StateData* state_data)
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
+	this->initText();
 	this->initKeybinds();
 	this->initPauseMenu();
 	this->initButtons();
-	this->initGui();
 	this->initTileMap();
+	this->initGui();
 
 }
 
@@ -118,6 +129,35 @@ void EditorState::updateInput(const float & dt)
 	}
 }
 
+void EditorState::updateEditorInput(const float & dt)
+{
+	//타일 맵 추가하기
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+	{
+		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
+	{
+		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && this->getKeytime())
+	{
+		if (this->textureRect.left < 300)
+		{
+			this->textureRect.left += 100;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && this->getKeytime())
+	{
+		if (this->textureRect.left > 0)
+		{
+			this->textureRect.left -= 100;
+		}
+	}
+}
+
 void EditorState::updateButtons()
 {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
@@ -134,7 +174,13 @@ void EditorState::updateButtons()
 
 void EditorState::updateGui()
 {
-	this->selectorRect.setPosition(this->mousePosView);
+	this->selectorRect.setTextureRect(this->textureRect);
+	this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y* this->stateData->gridSize);
+
+	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 30));
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << '\n' << this->textureRect.left << " " << this->textureRect.top;
+	cursorText.setString(ss.str());
 }
 
 void EditorState::updatePauseMenuButtons()
@@ -155,6 +201,7 @@ void EditorState::update()
 	{
 		this->updateButtons();
 		this->updateGui();
+		this->updateEditorInput(dt);
 	}
 	else
 	{
@@ -174,6 +221,7 @@ void EditorState::renderButtons(sf::RenderTarget & target)
 void EditorState::renderGui(sf::RenderTarget & target)
 {
 	target.draw(this->selectorRect);
+	target.draw(this->cursorText);
 }
 
 void EditorState::render(sf::RenderTarget* target)
@@ -188,13 +236,6 @@ void EditorState::render(sf::RenderTarget* target)
 	if (this->paused) {
 		this->pmenu->render(*target);
 	}
-	//삭제예정. 디버깅용.
-	sf::Text mouseText;
-	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
-	mouseText.setFont(this->font);
-	mouseText.setCharacterSize(15);
-	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y;
-	mouseText.setString(ss.str());
-	target->draw(mouseText);
+
+
 }

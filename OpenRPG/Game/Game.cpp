@@ -10,7 +10,7 @@
 void Game::initVariables() {
 	this->window = NULL;
 	this->StateManager = StateManager::getInstance();
-	this->gridSize = 50.f;
+	this->gridSize = 100.f;
 }
 
 void Game::initWindow() {

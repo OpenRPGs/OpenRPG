@@ -8,12 +8,14 @@ class EditorState : public State {
   private:
 	//변수
 	sf::Font font;
+	sf::Text cursorText;
 	std::map<std::string, gui::Button*> buttons;
 	sf::Texture tx;
 	PauseMenu* pmenu;
 
 	TileMap* tileMap;
 
+	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
 
 	//초기화함수
@@ -21,6 +23,7 @@ class EditorState : public State {
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initText();
 	void initBackground();
 	void initPauseMenu();
 	void initGui();
@@ -32,6 +35,7 @@ class EditorState : public State {
 
 	//업데이트함수
 	void updateInput(const float& dt);
+	void updateEditorInput(const float& dt);
 	void updateButtons();
 	void updateGui();
 	void updatePauseMenuButtons();
