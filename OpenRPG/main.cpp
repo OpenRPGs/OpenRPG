@@ -19,7 +19,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 	}
 #endif
 
-	Game::getInstance()->boot()->run();
+	Game::getInstance()
+		->boot()
+		->run()
+		->Dispose();
 
 #ifdef _DEBUG
 	// 콘솔 해제

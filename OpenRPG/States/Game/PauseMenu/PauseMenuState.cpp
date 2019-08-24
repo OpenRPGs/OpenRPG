@@ -82,7 +82,7 @@ void PauseMenuState::update() {
 
 	if (this->buttons["QUIT"]->isPressed()) {
 		this->endState();
-		StateManager::getInstance()->GoTo(new MainMenuState());
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
 		return;
 	}
 }

@@ -75,7 +75,7 @@ SettingsState::~SettingsState() {}
 
 void SettingsState::updateInput(const float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE")))) {
-		StateManager::getInstance()->GoTo(new MainMenuState());
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
 		return;
 	}
 }
@@ -90,7 +90,7 @@ void SettingsState::updateGui() {
 
 	//게임종료
 	if (this->buttons["BACK"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new MainMenuState());
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
 		return;
 	}
 

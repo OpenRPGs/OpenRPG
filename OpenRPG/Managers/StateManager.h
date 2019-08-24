@@ -26,14 +26,14 @@ class StateManager : public IDisposable {
 	/// <see cref="State"/> 스택에 추가되지 않고 현재 장면을 교체합니다.
 	/// </summary>
 	/// <param name="state">추가할 장면입니다.</param>
-	StateManager* GoTo(State* state);
+	StateManager* GoTo(g::safe<State> state);
 
 	/// <summary>
 	/// 새 장면을 추가합니다.
 	/// 추가된 장면은 <see cref="State"/> 스택에 추가됩니다.
 	/// </summary>
 	/// <param name="state">추가할 장면입니다.</param>
-	StateManager* Push(State* state);
+	StateManager* Push(g::safe<State> state);
 
 	/// <summary>현재 장면을 제거하고 반환합니다.</summary>
 	g::safe<State> Pop();

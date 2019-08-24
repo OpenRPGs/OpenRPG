@@ -198,7 +198,7 @@ Game* Game::boot() {
 	this->initWindow();
 	this->initKeys();
 
-	StateManager::getInstance()->Push(new MainMenuState());
+	StateManager::getInstance()->Push(SafeState(MainMenuState));
 	return this;
 }
 

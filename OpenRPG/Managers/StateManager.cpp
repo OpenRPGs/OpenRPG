@@ -12,8 +12,6 @@ StateManager* StateManager::getInstance() {
 }
 
 StateManager::StateManager() {
-	// vector 공간 예약 할당
-	this->stateStack.reserve(sizeof(State*) * 4);
 }
 
 StateManager::~StateManager() {
@@ -56,7 +54,7 @@ bool StateManager::Empty() {
 #pragma endregion
 
 #pragma region GoTo, Push, Pop, PopUntil
-StateManager* StateManager::GoTo(State* state) {
+StateManager* StateManager::GoTo(g::safe<State> state) {
 	if (this->disposed)
 		throw "ERROR::StateManager::Already Disposed";
 
@@ -65,7 +63,7 @@ StateManager* StateManager::GoTo(State* state) {
 	return this;
 }
 
-StateManager* StateManager::Push(State* state) {
+StateManager* StateManager::Push(g::safe<State> state) {
 	if (this->disposed)
 		throw "ERROR::StateManager::Already Disposed";
 

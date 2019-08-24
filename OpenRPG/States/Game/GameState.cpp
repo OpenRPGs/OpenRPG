@@ -72,7 +72,7 @@ void GameState::updateInput(const float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) &&
 		this->getKeytime()) {
 
-		StateManager::getInstance()->Push(new PauseMenuState());
+		StateManager::getInstance()->Push(SafeState(PauseMenuState));
 	}
 }
 

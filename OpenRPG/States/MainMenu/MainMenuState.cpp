@@ -119,19 +119,19 @@ void MainMenuState::updateButtons() {
 
 	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new GameState());
+		StateManager::getInstance()->GoTo(SafeState(GameState));
 		return;
 	}
 
 	//설정
 	if (this->buttons["SETTING_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new SettingsState());
+		StateManager::getInstance()->GoTo(SafeState(SettingsState));
 		return;
 	}
 
 	//에디터
 	if (this->buttons["EDITOR_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new EditorState(this));
+		StateManager::getInstance()->GoTo(SafeState(EditorState, this));
 		return;
 	}
 

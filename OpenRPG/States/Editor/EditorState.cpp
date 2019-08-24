@@ -58,7 +58,7 @@ void EditorState::initTileMap() {
 	this->tileMap = g::safe<TileMap>(new TileMap(Game::getGridSize(), 10, 10));
 }
 
-EditorState::EditorState(State* parent) : State(parent) {
+EditorState::EditorState(State *parent) : State(parent) {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -81,7 +81,7 @@ void EditorState::updateButtons() {
 	}
 
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(new MainMenuState());
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
 		return;
 	}
 }
