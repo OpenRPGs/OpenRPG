@@ -10,8 +10,8 @@ namespace gui {
 		short unsigned id;
 
 		sf::RectangleShape shape;
-		sf::Texture buttonTexture;
-		sf::Font* font;
+		//sf::Texture buttonTexture;
+		//sf::Font* font;
 		sf::Text text;
 
 		sf::Color textIdleColor;
@@ -29,12 +29,12 @@ namespace gui {
 	public:
 		//텍스쳐버튼생성자
 		Button(float x, float y, float width, float height,
-			sf::Texture* buttonTexture, sf::Font* font, std::wstring text, unsigned character_size,
+			sf::Texture& buttonTexture, sf::Font& font, std::wstring text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 			sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color);
 		//기본버튼생성자
 		Button(float x, float y, float width, float height,
-			sf::Font* font, std::wstring text, unsigned character_size,
+			sf::Font& font, std::wstring text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 			sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
 			sf::Color outline_idle_Color = sf::Color::Transparent, sf::Color outline_hover_Color = sf::Color::Transparent, sf::Color outline_active_Color = sf::Color::Transparent,
@@ -55,7 +55,6 @@ namespace gui {
 		void render(sf::RenderTarget& target);
 
 	};
-
 
 	class DropDownList
 	{

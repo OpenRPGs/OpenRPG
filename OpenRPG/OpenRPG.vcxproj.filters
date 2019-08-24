@@ -111,6 +111,9 @@
     <ClCompile Include="Maps\TileMap.cpp">
       <Filter>Maps</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp">
+      <Filter>리소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="Maps\TileMap.h">
       <Filter>Maps</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsSettings.h">
+      <Filter>리소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

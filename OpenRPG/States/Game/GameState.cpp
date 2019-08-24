@@ -64,14 +64,19 @@ void GameState::initPauseMenu()
 	this->pmenu->addButton("QUIT", 800.f, "Quit", this->btnTexure);
 }
 
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
 void GameState::initPlayers()
 {
 	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"], window_focus);
 }
 
 //Constructors / Destructors
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	:State(window, supportedKeys)
+GameState::GameState(StateData* state_data)
+	:State(state_data)
 {
 	this->initButtons();
 	this->initKeybinds();
@@ -79,12 +84,14 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 	this->initTextures();
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initTileMap();
 }
 
 GameState::~GameState()
 {
 	delete this->player;
 	delete this->pmenu;
+	delete this->tileMap;
 }
 
 
@@ -126,7 +133,7 @@ void GameState::updatePlayerInput(const float & dt)
 
 void GameState::update()
 {
-	auto dt = Game::getInstance()->frameTime();
+	auto dt = Game::getInstance()->deltaTime();
 
 	//윈도우 활성체크
 	window_focus = this->window->hasFocus();
@@ -155,7 +162,7 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-	this->map.render(*target);
+	this->tileMap->render(*target);
 
 	this->player->render(*target);
 

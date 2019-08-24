@@ -163,6 +163,7 @@
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="GUI\Gui.cpp" />
     <ClCompile Include="GUI\PauseMenu.cpp" />
     <ClCompile Include="main.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="GUI\Gui.h" />
     <ClInclude Include="GUI\PauseMenu.h" />
     <ClInclude Include="Managers\SoundManager.h" />

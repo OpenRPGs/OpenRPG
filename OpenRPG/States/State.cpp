@@ -2,13 +2,16 @@
 
 #include "State.h"
 #include "Managers/StateManager.h"
+#include "../Entities/Player.h"
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys) {
-	this->window = window;
-	this->supportedKeys = supportedKeys;
+State::State(StateData* state_data) {
+	this->stateData = state_data;
+	this->window = state_data->window;
+	this->supportedKeys = state_data->supportedKeys;
 	this->paused = false;
 	this->keyTime = 0.f;
 	this->keyTimeMax = 0.1f;
+	this->gridSize = state_data->gridSize;
 }
 
 State::~State() {}
@@ -22,7 +25,7 @@ const bool State::getKeytime() {
 }
 
 //현재 스테이지를 끝내는 것이므로 pop으로 수정.
-void State::endState() { 
+void State::endState() {
 	StateManager::getInstance()->Pop();
 }
 void State::pauseState() {
@@ -41,6 +44,11 @@ void State::updateMousePositions() {
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
+	this->mousePosGrid =
+		sf::Vector2u(
+			static_cast<unsigned>(this->mousePosView.x)/static_cast<unsigned>(this->gridSize),
+			static_cast<unsigned>(this->mousePosView.y/ static_cast<unsigned>(this->gridSize))
+		);
 }
 
 void State::initSounds() {

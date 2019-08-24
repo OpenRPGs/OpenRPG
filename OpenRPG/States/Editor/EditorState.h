@@ -1,30 +1,49 @@
 ﻿#pragma once
 
 #include "GUI/Gui.h"
+#include "GUI/PauseMenu.h"
+#include "../../Maps/TileMap.h"
 
 class EditorState : public State {
   private:
 	//변수
 	sf::Font font;
+	sf::Text cursorText;
 	std::map<std::string, gui::Button*> buttons;
 	sf::Texture tx;
+	PauseMenu* pmenu;
+
+	TileMap* tileMap;
+
+	sf::IntRect textureRect;
+	sf::RectangleShape selectorRect;
 
 	//초기화함수
 	void initVariables();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initText();
 	void initBackground();
+	void initPauseMenu();
+	void initGui();
+	void initTileMap();
 
   public:
-	EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+	EditorState(StateData* state_data);
 	virtual ~EditorState();
 
 	//업데이트함수
 	void updateInput(const float& dt);
+	void updateEditorInput(const float& dt);
 	void updateButtons();
+	void updateGui();
+	void updatePauseMenuButtons();
 	void update();
+
+	//랜더함수
 	void renderButtons(sf::RenderTarget& target);
+	void renderGui(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 
 	// State 이벤트
