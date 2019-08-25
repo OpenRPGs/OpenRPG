@@ -6,12 +6,16 @@
 
 class EditorState : public State {
   private:
-	g::safe<sf::Font> font;
-	g::safe<sf::Texture> tx;
-	g::safemap<gui::Button> buttons;
+	//변수
+	sf::Font font;
+	sf::Text cursorText;
+	std::map<std::string, gui::Button*> buttons;
+	sf::Texture tx;
+	PauseMenu* pmenu;
 
 	g::safe<TileMap> tileMap;
 
+	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
 
 	//초기화함수
@@ -19,6 +23,7 @@ class EditorState : public State {
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initText();
 	void initBackground();
 	void initGui();
 	void initTileMap();
@@ -34,8 +39,8 @@ class EditorState : public State {
 	virtual void onActivated() {}
 	virtual void onDeactivated() {}
 
-	//업데이트함수
-	void updateInput(const float dt);
+	void updateInput(const float& dt);
+	void updateEditorInput(const float& dt);
 	void updateButtons();
 	void updateGui();
 	void update();

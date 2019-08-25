@@ -8,15 +8,20 @@ class TileMap {
 	unsigned gridSizeU;
 	sf::Vector2u maxSize;
 	unsigned layers;
-	std::vector<std::vector<std::vector<Tile>>> map;
+	std::vector<std::vector<std::vector<Tile*>>> map;
+	sf::Texture tileSheet;
 
-  public:
+public:
 	TileMap(float gridSize, unsigned width, unsigned height);
 	virtual ~TileMap();
+	
+	//접근자
+	const sf::Texture* getTileSheet() const;
 
+	//함수
 	void update();
 	void render(sf::RenderTarget* target);
 
-	void addTile();
-	void removeTile();
+	void addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect);
+	void removeTile(const unsigned x, const unsigned y, const unsigned z);
 };

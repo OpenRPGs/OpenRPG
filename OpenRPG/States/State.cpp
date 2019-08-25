@@ -24,7 +24,13 @@ const bool State::getKeytime() {
 
 //현재 스테이지를 끝내는 것이므로 pop으로 수정.
 void State::endState() {
-	StateManager::getInstance()->PopUntil(this);
+	StateManager::getInstance()->Pop();
+}
+void State::pauseState() {
+	this->paused = true;
+}
+void State::unpauseState() {
+	this->paused = false;
 }
 
 void State::updateKeytime(const float dt) {
@@ -34,10 +40,14 @@ void State::updateKeytime(const float dt) {
 
 void State::updateMousePositions() {
 	auto window = Game::getWindow();
-
 	this->mousePosScreen = sf::Mouse::getPosition();
-	this->mousePosWindow = sf::Mouse::getPosition(*window);
-	this->mousePosView = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
+	this->mousePosGrid =
+		sf::Vector2u(
+			static_cast<unsigned>(this->mousePosView.x)/static_cast<unsigned>(this->gridSize),
+			static_cast<unsigned>(this->mousePosView.y/ static_cast<unsigned>(this->gridSize))
+		);
 }
 
 void State::update() {

@@ -5,13 +5,11 @@
 #include "States/State.h"
 #include "Managers/StateManager.h"
 
-#include "EditorState.h"
-#include "States/Game/PauseMenu/PauseMenuState.h"
-#include "States/MainMenu/MainMenuState.h"
-
-// Initaillizer functions
-#pragma region Initializers
-void EditorState::initVariables() {}
+//Initaillizer functions
+void EditorState::initVariables()
+{
+	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+}
 
 void EditorState::initFonts() {
 	this->font = g::safe<sf::Font>(new sf::Font());
@@ -43,15 +41,35 @@ void EditorState::initButtons() {
 		g::Color("#fff"), g::Color("#fff")));
 }
 
-void EditorState::initBackground() {}
-#pragma endregion
+void EditorState::initText()
+{
+	this->cursorText.setFont(this->font);
+	this->cursorText.setCharacterSize(15);
+	this->cursorText.setFillColor(sf::Color::Red);
+	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 30));
+}
 
-void EditorState::initGui() {
-	this->selectorRect.setSize(sf::Vector2f(Game::getGridSize(), Game::getGridSize()));
+void EditorState::initBackground()
+{
+}
 
-	this->selectorRect.setFillColor(sf::Color::Transparent);
+
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+
+	this->pmenu->addButton("QUIT", 800.f, "Quit", this->tx);
+}
+
+void EditorState::initGui()
+{
+	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	this->selectorRect.setOutlineThickness(1.f);
 	this->selectorRect.setOutlineColor(sf::Color::Green);
+
+	this->selectorRect.setTexture(this->tileMap->getTileSheet());
+	this->selectorRect.setTextureRect(this->textureRect);
 }
 
 void EditorState::initTileMap() {
@@ -62,10 +80,24 @@ EditorState::EditorState(State *parent) : State(parent) {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
+	this->initText();
 	this->initKeybinds();
 	this->initButtons();
-	this->initGui();
 	this->initTileMap();
+	this->initGui();
+
+}
+
+EditorState::~EditorState()
+{
+	auto it = this->buttons.begin();
+	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
+	{
+		delete it->second;
+	}
+
+	delete this->pmenu;
+	delete this->tileMap;
 }
 EditorState::~EditorState() {}
 
@@ -74,7 +106,53 @@ void EditorState::updateInput(const float dt) {
 		this->endState();
 }
 
-void EditorState::updateButtons() {
+void EditorState::updateEditorInput(const float & dt)
+{
+	//타일 맵 추가하기
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+	{
+		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
+	{
+		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && this->getKeytime())
+	{
+		if (this->textureRect.left < 300)
+		{
+			this->textureRect.left += 100;
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && this->getKeytime())
+	{
+		if (this->textureRect.left > 0)
+		{
+			this->textureRect.left -= 100;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && this->getKeytime())
+	{
+		if (this->textureRect.top < 200)
+		{
+			this->textureRect.top += 100;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && this->getKeytime())
+	{
+		if (this->textureRect.top > 0)
+		{
+			this->textureRect.top -= 100;
+		}
+	}
+}
+
+void EditorState::updateButtons()
+{
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons) {
 		it.second->update(this->mousePosView);
@@ -86,8 +164,15 @@ void EditorState::updateButtons() {
 	}
 }
 
-void EditorState::updateGui() {
-	this->selectorRect.setPosition(this->mousePosView);
+void EditorState::updateGui()
+{
+	this->selectorRect.setTextureRect(this->textureRect);
+	this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y* this->stateData->gridSize);
+
+	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 30));
+	std::stringstream ss;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << '\n' << this->textureRect.left << " " << this->textureRect.top;
+	cursorText.setString(ss.str());
 }
 
 void EditorState::update() {
@@ -99,15 +184,28 @@ void EditorState::update() {
 	this->updateKeytime(dt);
 	this->updateInput(dt);
 
-	this->updateButtons();
+	if (!this->paused)
+	{
+		this->updateButtons();
+		this->updateGui();
+		this->updateEditorInput(dt);
+	}
+	else
+	{
+		this->pmenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
 }
 
 void EditorState::renderGui(sf::RenderTarget *target) {
 	target->draw(this->selectorRect);
 }
 
-void EditorState::render(sf::RenderTarget *target) {
-	State::render(target);
+void EditorState::renderGui(sf::RenderTarget & target)
+{
+	target.draw(this->selectorRect);
+	target.draw(this->cursorText);
+}
 
 	if (!target)
 		target = Game::getWindow().get();
@@ -116,21 +214,9 @@ void EditorState::render(sf::RenderTarget *target) {
 	this->renderButtons(target);
 	this->renderGui(target);
 
-	//삭제예정. 디버깅용.
-	sf::Text mouseText;
-	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
-	mouseText.setFont(*this->font);
-	mouseText.setCharacterSize(15);
+	if (this->paused) {
+		this->pmenu->render(*target);
+	}
 
-	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y;
-	mouseText.setString(ss.str());
 
-	this->renderButtons(target);
-	target->draw(mouseText);
-}
-
-void EditorState::renderButtons(sf::RenderTarget *target) {
-	for (auto &it : this->buttons)
-		it.second->render(target);
 }

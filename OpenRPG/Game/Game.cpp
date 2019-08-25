@@ -44,7 +44,6 @@ void Game::Dispose() {
 #pragma region Initializers
 void Game::initVariables() {
 	this->gridSize = 50.f;
-}
 
 void Game::initWindow() {
 	if (this->gfxSettings.fullscreen)
