@@ -64,7 +64,7 @@ void EditorState::initGui() {
 	this->selectorRect.setOutlineThickness(1.f);
 	this->selectorRect.setOutlineColor(sf::Color::Green);
 
-	this->selectorRect.setTexture(this->tileMap->getTileSheet());
+	this->selectorRect.setTexture(this->tileMap->getTileSheet().get());
 	this->selectorRect.setTextureRect(this->textureRect);
 }
 
@@ -126,7 +126,7 @@ void EditorState::updateButtons() {
 	}
 
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(SafeState(MainMenuState));
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
 		return;
 	}
 }

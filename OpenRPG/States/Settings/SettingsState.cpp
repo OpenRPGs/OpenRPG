@@ -35,21 +35,19 @@ void SettingsState::initGui() {
 		throw "btn";
 
 	this->buttons["BACK"] = g::safe<gui::Button>(new gui::Button(
-		100, 800, 250, 200, this->tx, this->font, L"뒤로가기", 50, g::Color("#000"),
-		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
-		g::Color("#fff")));
+		100, 800, 250, 200, this->tx, this->font, L"뒤로가기", 50, g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"),
+		g::Color("#fff"), g::Color("#fff"), g::Color("#fff")));
 
 	this->buttons["APPLY"] = g::safe<gui::Button>(new gui::Button(
-		400, 800, 250, 200, this->tx, this->font, L"적용", 50, g::Color("#000"),
-		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
-		g::Color("#fff")));
+		400, 800, 250, 200, this->tx, this->font, L"적용", 50, g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"),
+		g::Color("#fff"), g::Color("#fff"), g::Color("#fff")));
 
 	std::vector<std::wstring> modes_str;
 	for (auto &i : this->modes)
 		modes_str.push_back(std::to_wstring(i.width) + L'x' + std::to_wstring(i.height));
 
-	this->dropDownLists["RESOLUTION"] = g::safe<gui::DropDownList>(
-		new gui::DropDownList(400, 100, 200, 50, font, modes_str.data(), modes_str.size()));
+	this->dropDownLists["RESOLUTION"] =
+		g::safe<gui::DropDownList>(new gui::DropDownList(400, 100, 200, 50, font, modes_str.data(), modes_str.size()));
 }
 
 void SettingsState::initText() {
@@ -97,8 +95,7 @@ void SettingsState::updateGui() {
 	if (this->buttons["APPLY"]->isPressed()) {
 		//삭제예정 테스트용 설정이날아가기때문에 프레임이 솓구칩니다.
 		auto gfxSettings = Game::getGraphicsSettings();
-		gfxSettings->resolution =
-			this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
+		gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
 
 		auto window = Game::getWindow();
 		window->create(gfxSettings->resolution, gfxSettings->title, sf::Style::Default);
@@ -123,13 +120,11 @@ void SettingsState::update() {
 }
 
 void SettingsState::renderGui(sf::RenderTarget *target) {
-	for (auto &it : this->buttons) {
+	for (auto &it : this->buttons)
 		it.second->render(target);
-	}
 
-	for (auto &it : this->dropDownLists) {
+	for (auto &it : this->dropDownLists)
 		it.second->render(target);
-	}
 }
 
 void SettingsState::render(sf::RenderTarget *target) {
