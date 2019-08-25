@@ -77,7 +77,7 @@ void Player::updateAttack() {
 	}
 }
 
-void Player::updateAnimation(const float& dt) {
+void Player::updateAnimation(const float dt) {
 	if (this->attacking) {
 		//바라보는 방향체크
 		if (this->sprite->getScale().x > 0.f) //왼쪽
@@ -130,7 +130,7 @@ void Player::updateAnimation(const float& dt) {
 	}
 }
 
-void Player::update(const float& dt) {
+void Player::update(const float dt) {
 	this->movementComponent->update(dt);
 
 	this->updateAttack();
