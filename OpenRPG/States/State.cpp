@@ -7,12 +7,11 @@
 
 State::State(State* parent) {
 	this->parent = parent;
-	
+
 	this->keyTime = 0.f;
 	this->keyTimeMax = 0.1f;
 }
-State::~State() {
-}
+State::~State() {}
 
 const bool State::getKeytime() {
 	if (this->keyTime >= this->keyTimeMax) {
@@ -24,13 +23,7 @@ const bool State::getKeytime() {
 
 //현재 스테이지를 끝내는 것이므로 pop으로 수정.
 void State::endState() {
-	StateManager::getInstance()->Pop();
-}
-void State::pauseState() {
-	this->paused = true;
-}
-void State::unpauseState() {
-	this->paused = false;
+	StateManager::getInstance()->PopUntil(this);
 }
 
 void State::updateKeytime(const float dt) {
@@ -40,14 +33,14 @@ void State::updateKeytime(const float dt) {
 
 void State::updateMousePositions() {
 	auto window = Game::getWindow();
+	auto gridSize = Game::getGridSize();
+
 	this->mousePosScreen = sf::Mouse::getPosition();
-	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
-	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
-	this->mousePosGrid =
-		sf::Vector2u(
-			static_cast<unsigned>(this->mousePosView.x)/static_cast<unsigned>(this->gridSize),
-			static_cast<unsigned>(this->mousePosView.y/ static_cast<unsigned>(this->gridSize))
-		);
+	this->mousePosWindow = sf::Mouse::getPosition(*window);
+	this->mousePosView = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+	this->mousePosGrid = sf::Vector2u(
+		static_cast<unsigned>(this->mousePosView.x) / static_cast<unsigned>(gridSize),
+		static_cast<unsigned>(this->mousePosView.y / static_cast<unsigned>(gridSize)));
 }
 
 void State::update() {

@@ -5,10 +5,15 @@
 #include "States/State.h"
 #include "Managers/StateManager.h"
 
-//Initaillizer functions
-void EditorState::initVariables()
-{
-	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+#include "EditorState.h"
+#include "States/Game/PauseMenu/PauseMenuState.h"
+#include "States/MainMenu/MainMenuState.h"
+
+// Initaillizer functions
+#pragma region Initializers
+void EditorState::initVariables() {
+	auto gridSize = Game::getGridSize();
+	this->textureRect = sf::IntRect(0, 0, static_cast<int>(gridSize), static_cast<int>(gridSize));
 }
 
 void EditorState::initFonts() {
@@ -41,29 +46,20 @@ void EditorState::initButtons() {
 		g::Color("#fff"), g::Color("#fff")));
 }
 
-void EditorState::initText()
-{
-	this->cursorText.setFont(this->font);
+void EditorState::initText() {
+	this->cursorText.setFont(*this->font);
 	this->cursorText.setCharacterSize(15);
 	this->cursorText.setFillColor(sf::Color::Red);
 	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 30));
 }
 
-void EditorState::initBackground()
-{
-}
+void EditorState::initBackground() {}
+#pragma endregion
 
+void EditorState::initGui() {
+	auto gridSize = Game::getGridSize();
 
-void EditorState::initPauseMenu()
-{
-	this->pmenu = new PauseMenu(*this->window, this->font);
-
-	this->pmenu->addButton("QUIT", 800.f, "Quit", this->tx);
-}
-
-void EditorState::initGui()
-{
-	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
+	this->selectorRect.setSize(sf::Vector2f(gridSize, gridSize));
 	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	this->selectorRect.setOutlineThickness(1.f);
 	this->selectorRect.setOutlineColor(sf::Color::Green);
@@ -85,19 +81,6 @@ EditorState::EditorState(State *parent) : State(parent) {
 	this->initButtons();
 	this->initTileMap();
 	this->initGui();
-
-}
-
-EditorState::~EditorState()
-{
-	auto it = this->buttons.begin();
-	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
-	{
-		delete it->second;
-	}
-
-	delete this->pmenu;
-	delete this->tileMap;
 }
 EditorState::~EditorState() {}
 
@@ -106,72 +89,59 @@ void EditorState::updateInput(const float dt) {
 		this->endState();
 }
 
-void EditorState::updateEditorInput(const float & dt)
-{
+void EditorState::updateEditorInput(const float dt) {
 	//타일 맵 추가하기
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
-	{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime()) {
 		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
-	{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime()) {
 		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && this->getKeytime())
-	{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && this->getKeytime()) {
 		if (this->textureRect.left < 300)
-		{
 			this->textureRect.left += 100;
-		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && this->getKeytime())
-	{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && this->getKeytime()) {
 		if (this->textureRect.left > 0)
-		{
 			this->textureRect.left -= 100;
-		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && this->getKeytime())
-	{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && this->getKeytime()) {
 		if (this->textureRect.top < 200)
-		{
 			this->textureRect.top += 100;
-		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && this->getKeytime())
-	{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && this->getKeytime()) {
 		if (this->textureRect.top > 0)
-		{
 			this->textureRect.top -= 100;
-		}
 	}
 }
 
-void EditorState::updateButtons()
-{
+void EditorState::updateButtons() {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons) {
 		it.second->update(this->mousePosView);
 	}
 
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
+		StateManager::getInstance()->Push(SafeState(MainMenuState));
 		return;
 	}
 }
 
-void EditorState::updateGui()
-{
+void EditorState::updateGui() {
+	auto gridSize = Game::getGridSize();
+
 	this->selectorRect.setTextureRect(this->textureRect);
-	this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y* this->stateData->gridSize);
+	this->selectorRect.setPosition(
+		this->mousePosGrid.x * gridSize, this->mousePosGrid.y * gridSize);
 
 	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 30));
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << '\n' << this->textureRect.left << " " << this->textureRect.top;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << '\n'
+	   << this->textureRect.left << " " << this->textureRect.top;
 	cursorText.setString(ss.str());
 }
 
@@ -184,28 +154,16 @@ void EditorState::update() {
 	this->updateKeytime(dt);
 	this->updateInput(dt);
 
-	if (!this->paused)
-	{
-		this->updateButtons();
-		this->updateGui();
-		this->updateEditorInput(dt);
-	}
-	else
-	{
-		this->pmenu->update(this->mousePosView);
-		this->updatePauseMenuButtons();
-	}
+	this->updateButtons();
 }
 
 void EditorState::renderGui(sf::RenderTarget *target) {
 	target->draw(this->selectorRect);
+	target->draw(this->cursorText);
 }
 
-void EditorState::renderGui(sf::RenderTarget & target)
-{
-	target.draw(this->selectorRect);
-	target.draw(this->cursorText);
-}
+void EditorState::render(sf::RenderTarget *target) {
+	State::render(target);
 
 	if (!target)
 		target = Game::getWindow().get();
@@ -213,10 +171,9 @@ void EditorState::renderGui(sf::RenderTarget & target)
 
 	this->renderButtons(target);
 	this->renderGui(target);
+}
 
-	if (this->paused) {
-		this->pmenu->render(*target);
-	}
-
-
+void EditorState::renderButtons(sf::RenderTarget *target) {
+	for (auto &it : this->buttons)
+		it.second->render(target);
 }

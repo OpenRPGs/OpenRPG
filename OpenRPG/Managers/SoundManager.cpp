@@ -85,25 +85,17 @@ float SoundManager::getVolumeBGM() {
 #pragma endregion
 
 #pragma region BGM, SE
-bool SoundManager::LoadBGM(g::safe<sf::SoundBuffer> buffer) {
+bool SoundManager::LoadBGM(const std::string& path) {
 	if (this->disposed)
 		throw "ERROR::SoundManager::Already Disposed";
 
-	if (!buffer)
-		throw "ERROR:SoundManager::buffer is NULL";
-
-	if (this->BGM) {
-		if (!this->BGM->isSame(buffer))
-			this->BGM->reset(buffer);
-	} else {
-		this->BGM = g::safe<SoundComponent>(new SoundComponent(buffer));
-	}
+	this->BGM = g::safe<MusicComponent>(new MusicComponent(path));
 
 	this->BGM->setVolume(this->volumeBGM);
 	return this->BGM->Loaded();
 }
 
-g::safe<SoundComponent> SoundManager::getBGM() {
+g::safe<MusicComponent> SoundManager::getBGM() {
 	if (this->disposed)
 		throw "ERROR::SoundManager::Already Disposed";
 
