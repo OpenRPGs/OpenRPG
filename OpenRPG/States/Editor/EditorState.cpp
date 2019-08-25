@@ -88,7 +88,6 @@ void EditorState::updateInput(const float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
 		this->endState();
 }
-
 void EditorState::updateEditorInput(const float dt) {
 	//타일 맵 추가하기
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime()) {
@@ -118,7 +117,6 @@ void EditorState::updateEditorInput(const float dt) {
 			this->textureRect.top -= 100;
 	}
 }
-
 void EditorState::updateButtons() {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons) {
@@ -130,7 +128,6 @@ void EditorState::updateButtons() {
 		return;
 	}
 }
-
 void EditorState::updateGui() {
 	auto gridSize = Game::getGridSize();
 
@@ -144,7 +141,6 @@ void EditorState::updateGui() {
 	   << this->textureRect.left << " " << this->textureRect.top;
 	cursorText.setString(ss.str());
 }
-
 void EditorState::update() {
 	State::update();
 
@@ -157,23 +153,19 @@ void EditorState::update() {
 	this->updateButtons();
 }
 
-void EditorState::renderGui(sf::RenderTarget *target) {
+void EditorState::renderGui(sf::RenderTexture *target) {
 	target->draw(this->selectorRect);
 	target->draw(this->cursorText);
 }
-
-void EditorState::render(sf::RenderTarget *target) {
+void EditorState::renderButtons(sf::RenderTexture *target) {
+	for (auto &it : this->buttons)
+		it.second->render(target);
+}
+void EditorState::render(sf::RenderTexture *target) {
 	State::render(target);
 
-	if (!target)
-		target = Game::getWindow().get();
 	this->tileMap->render(target);
 
 	this->renderButtons(target);
 	this->renderGui(target);
-}
-
-void EditorState::renderButtons(sf::RenderTarget *target) {
-	for (auto &it : this->buttons)
-		it.second->render(target);
 }

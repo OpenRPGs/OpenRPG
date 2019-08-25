@@ -72,6 +72,10 @@ PauseMenuState::PauseMenuState() : State() {
 }
 PauseMenuState::~PauseMenuState() {}
 
+void PauseMenuState::updateInput(const float dt) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+		this->endState();
+}
 void PauseMenuState::update() {
 	State::update();
 
@@ -87,16 +91,8 @@ void PauseMenuState::update() {
 	}
 }
 
-void PauseMenuState::updateInput(const float dt) {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
-}
-
-void PauseMenuState::render(sf::RenderTarget* target) {
+void PauseMenuState::render(sf::RenderTexture* target) {
 	State::render(target);
-
-	if (!target)
-		target = Game::getWindow().get();
 
 	target->draw(background);
 	target->draw(container);

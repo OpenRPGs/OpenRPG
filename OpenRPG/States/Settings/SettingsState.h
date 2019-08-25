@@ -45,8 +45,8 @@ class SettingsState : public State {
 	void update();
 
 	//랜더함수
-	void renderGui(sf::RenderTarget* target);
-	void render(sf::RenderTarget* target = NULL);
+	void renderGui(sf::RenderTexture* target);
+	void render(sf::RenderTexture* target);
 
 	// State 이벤트
 	void onActivated() {}

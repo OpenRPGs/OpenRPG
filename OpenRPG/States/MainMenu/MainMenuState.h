@@ -35,8 +35,8 @@ class MainMenuState : public State {
 	//함수
 	void updateInput(const float dt);
 	void updateButtons();
-	void renderButtons(sf::RenderTarget* target);
-
 	void update();
-	void render(sf::RenderTarget* target = NULL);
+
+	void renderButtons(sf::RenderTexture* target);
+	void render(sf::RenderTexture* target);
 };

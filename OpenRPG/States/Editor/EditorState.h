@@ -45,7 +45,7 @@ class EditorState : public State {
 	void update();
 
 	//랜더함수
-	void renderButtons(sf::RenderTarget* target);
-	void renderGui(sf::RenderTarget* target);
-	void render(sf::RenderTarget* target = NULL);
+	void renderButtons(sf::RenderTexture* target);
+	void renderGui(sf::RenderTexture* target);
+	void render(sf::RenderTexture* target);
 };

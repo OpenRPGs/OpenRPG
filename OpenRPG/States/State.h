@@ -42,7 +42,7 @@ class State {
 	virtual void updateMousePositions();
 
 	virtual void update();
-	virtual void render(sf::RenderTarget* target = NULL);
+	virtual void render(sf::RenderTexture* target);
 
   protected:
 	State* parent;
