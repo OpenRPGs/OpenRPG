@@ -28,8 +28,8 @@ class EditorState : public State {
 
   public:
 	const StateFlow flow() {
-		// 렌더링만 가능
-		return StateFlow::FLOW_RENDER;
+		// 흐를 수 없음
+		return StateFlow::FLOW_NONE; 
 	}
 
 	EditorState(State* parent);
