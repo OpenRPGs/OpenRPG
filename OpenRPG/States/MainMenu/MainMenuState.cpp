@@ -96,7 +96,6 @@ MainMenuState::MainMenuState() : State() {
 	this->initButtons();
 	this->initSounds();
 }
-
 MainMenuState::~MainMenuState() {
 	// 메인 화면이 제거될 때 BGM 중지
 	SoundManager::getInstance()->getBGM()->stop();
@@ -106,7 +105,6 @@ void MainMenuState::updateInput(const float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		this->background.setFillColor(sf::Color::Cyan);
 }
-
 void MainMenuState::updateButtons() {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto& it : this->buttons)
@@ -136,7 +134,6 @@ void MainMenuState::updateButtons() {
 		return;
 	}
 }
-
 void MainMenuState::update() {
 	State::update();
 
@@ -148,11 +145,12 @@ void MainMenuState::update() {
 	this->updateButtons();
 }
 
-void MainMenuState::render(sf::RenderTarget* target) {
+void MainMenuState::renderButtons(sf::RenderTexture* target) {
+	for (auto& it : this->buttons)
+		it.second->render(target);
+}
+void MainMenuState::render(sf::RenderTexture* target) {
 	State::render(target);
-
-	if (!target)
-		target = Game::getWindow().get();
 
 	target->draw(this->background);
 	this->renderButtons(target);
@@ -168,9 +166,4 @@ void MainMenuState::render(sf::RenderTarget* target) {
 	mouseText.setString(ss.str());
 
 	target->draw(mouseText);
-}
-
-void MainMenuState::renderButtons(sf::RenderTarget* target) {
-	for (auto& it : this->buttons)
-		it.second->render(target);
 }

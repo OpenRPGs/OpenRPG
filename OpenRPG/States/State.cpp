@@ -47,4 +47,4 @@ void State::update() {
 	auto dt = Game::getInstance()->deltaTime();
 	this->updateKeytime(dt);
 }
-void State::render(sf::RenderTarget* target) {}
+void State::render(sf::RenderTexture* target) {}

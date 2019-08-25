@@ -79,7 +79,6 @@ void GameState::updateInput(const float dt) {
 // Update functions
 
 void GameState::updatePauseButtons() {}
-
 void GameState::updatePlayerInput(const float dt) {
 	if (Game::getFocused()) {
 		//사용자 입력 업데이트
@@ -93,7 +92,6 @@ void GameState::updatePlayerInput(const float dt) {
 			this->player->move(0.f, 2.f, dt);
 	}
 }
-
 void GameState::update() {
 	State::update();
 	auto dt = Game::getInstance()->deltaTime();
@@ -104,11 +102,8 @@ void GameState::update() {
 	}
 }
 
-void GameState::render(sf::RenderTarget* target) {
+void GameState::render(sf::RenderTexture* target) {
 	State::render(target);
-
-	if (!target)
-		target = Game::getWindow().get();
 
 	this->tileMap->render(target);
 	this->player->render(target);

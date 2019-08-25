@@ -37,7 +37,8 @@ class PauseMenuState : public State {
 	void updatePlayerInput(const float dt) {}
 	void updateInput(const float dt);
 	void update();
-	void render(sf::RenderTarget* target = NULL);
+
+	void render(sf::RenderTexture* target);
 
 	// State 이벤트
 	void onActivated() {}

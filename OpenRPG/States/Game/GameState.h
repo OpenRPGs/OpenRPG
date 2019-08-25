@@ -35,10 +35,10 @@ class GameState : public State {
 	void onDeactivated() {}
 
 	//함수
+	void updatePauseButtons();
 	void updatePlayerInput(const float dt);
 	void updateInput(const float dt);
-	void updatePauseButtons();
 	void update();
 
-	void render(sf::RenderTarget* target = NULL);
+	void render(sf::RenderTexture* target);
 };

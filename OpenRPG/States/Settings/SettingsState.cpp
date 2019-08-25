@@ -77,7 +77,6 @@ void SettingsState::updateInput(const float dt) {
 		return;
 	}
 }
-
 void SettingsState::updateGui() {
 	auto dt = Game::getInstance()->deltaTime();
 
@@ -107,7 +106,6 @@ void SettingsState::updateGui() {
 		it.second->update(this->mousePosView, dt);
 	}
 }
-
 void SettingsState::update() {
 	State::update();
 
@@ -119,19 +117,15 @@ void SettingsState::update() {
 	this->updateGui();
 }
 
-void SettingsState::renderGui(sf::RenderTarget *target) {
+void SettingsState::renderGui(sf::RenderTexture *target) {
 	for (auto &it : this->buttons)
 		it.second->render(target);
 
 	for (auto &it : this->dropDownLists)
 		it.second->render(target);
 }
-
-void SettingsState::render(sf::RenderTarget *target) {
+void SettingsState::render(sf::RenderTexture *target) {
 	State::render(target);
-
-	if (!target)
-		target = Game::getWindow().get();
 
 	this->renderGui(target);
 	target->draw(this->optionsText);
