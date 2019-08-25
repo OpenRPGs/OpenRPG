@@ -11,8 +11,7 @@ StateManager* StateManager::getInstance() {
 	return StateManager::Instance;
 }
 
-StateManager::StateManager() {
-}
+StateManager::StateManager() {}
 
 StateManager::~StateManager() {
 	this->Dispose();
@@ -109,23 +108,44 @@ StateManager* StateManager::Update() {
 		throw "ERROR::StateManager::Already Disposed";
 
 	bool update = true, render = true;
+	g::safevector<State>::size_type updateIdx = -1, renderIdx = -1;
 
 	auto stackSize = this->stateStack.size();
 	for (g::safevector<State>::size_type i = stackSize - 1; i >= 0; i--) { // 최상위부터 순서대로 갱신
 		auto item = this->stateStack[i];
 
-		if (update)
-			item->update(); // 장면을 갱신
-		if (render)
-			item->render(); // 장면을 그리기
-
 		// 갱신 또는 그리기가 흐를 수 있는지를 확인
 		update = update && (item->flow() & StateFlow::FLOW_UPDATE);
 		render = render && (item->flow() & StateFlow::FLOW_RENDER);
+
+		// 이 장면에서 갱신 또는 그리기가 더 이상 흐를 수 없는 경우에 인덱스 저장
+		if (!update && updateIdx == -1)
+			updateIdx = i;
+		if (!render && renderIdx == -1)
+			renderIdx = i;
 
 		// 둘 다 할 수 없을 때
 		if (!update && !render)
 			break;
 	}
+
+	// 모든 장면이 갱신되거나 그려질 수 있을 때
+	if (update)
+		updateIdx = 0;
+	if (render)
+		renderIdx = 0;
+
+	// 갱신하거나 그릴 수 있는 장면들 중 가장 아래에 있는 장면부터 시작
+	auto startIdx = std::min(updateIdx, renderIdx);
+	for (g::safevector<State>::size_type i = startIdx; i < stackSize; i++) {
+		auto item = this->stateStack[i];
+
+		if (i >= updateIdx)
+			item->update();
+
+		if (i >= renderIdx)
+			item->render();
+	}
+
 	return this;
 }
