@@ -4,121 +4,84 @@
 #include "Entities/Entity.h"
 #include "Entities/Player.h"
 #include "GUI/Gui.h"
-#include "GUI/PauseMenu.h"
+
 #include "States/State.h"
-#include "GameState.h"	
+#include "Managers/StateManager.h"
 
+#include "GameState.h"
+#include "PauseMenu/PauseMenuState.h"
 
-//Initializer functions
-void GameState::initButtons()
-{
-	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png"))
-	{
+#pragma region Initializers
+void GameState::initButtons() {
+	this->btnTexture = g::safe<sf::Texture>(new sf::Texture());
+	if (!this->btnTexture->loadFromFile("Resources/image/Buttons/btn1.png")) {
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 }
 
-void GameState::initKeybinds()
-{
-	std::ifstream ifs("Config/gamestate_keybinds.ini");
+void GameState::initKeybinds() {
+	auto supportedKeys = Game::getInstance()->getSupportedKeys();
 
-	if (ifs.is_open())
-	{
-		std::string key = "";
-		std::string key2 = "";
-		int key_value = 0;
+	std::ifstream ifs("Config/gamestate_keybinds.ini");
+	if (ifs.is_open()) {
+		std::string key = "", key2 = "";
 		while (ifs >> key >> key2)
-		{
-			this->keybinds[key] = this->supportedKeys->at(key2);
-		}
+			this->keybinds[key] = supportedKeys->at(key2);
 	}
 	ifs.close();
 
-	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("A");
-	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
-	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
-	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
+	this->keybinds["CLOSE"] = supportedKeys->at("Escape");
+	this->keybinds["MOVE_LEFT"] = supportedKeys->at("A");
+	this->keybinds["MOVE_RIGHT"] = supportedKeys->at("D");
+	this->keybinds["MOVE_UP"] = supportedKeys->at("W");
+	this->keybinds["MOVE_DOWN"] = supportedKeys->at("S");
 }
 
-void GameState::initTextures()
-{
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/image/Sprites/Player/PLAYER_SHEET.png"))
-	{
+void GameState::initTextures() {
+	auto texture = this->res.Textures["PLAYER_SHEET"] = g::safe<sf::Texture>(new sf::Texture());
+	if (!texture || !texture->loadFromFile("Resources/image/Sprites/Player/PLAYER_SHEET.png"))
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
-	}
 }
 
-void GameState::initFonts()
-{
-	if (!this->font.loadFromFile("Fonts/R2.ttc"))
-	{
-		throw("메인메뉴 폰트로딩 실패");
-	}
+void GameState::initFonts() {
+	this->font = g::safe<sf::Font>(new sf::Font());
+	if (!this->font->loadFromFile("Fonts/R2.ttc"))
+		throw "메인메뉴 폰트로딩 실패";
 }
 
-void GameState::initPauseMenu()
-{
-	this->pmenu = new PauseMenu(*this->window, this->font);
-
-	this->pmenu->addButton("QUIT", 800.f, "Quit", this->btnTexure);
+void GameState::initPlayers() {
+	this->player = g::safe<Player>(new Player(0, 0, this->res.Textures["PLAYER_SHEET"]));
 }
 
-void GameState::initTileMap()
-{
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+void GameState::initTileMap() {
+	this->tileMap = g::safe<TileMap>(new TileMap(Game::getGridSize(), 10, 10));
 }
+#pragma endregion
 
-void GameState::initPlayers()
-{
-	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"], window_focus);
-}
-
-//Constructors / Destructors
-GameState::GameState(StateData* state_data)
-	:State(state_data)
-{
+GameState::GameState() : State() {
 	this->initButtons();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
-	this->initPauseMenu();
 	this->initPlayers();
 	this->initTileMap();
 }
+GameState::~GameState() {}
 
-GameState::~GameState()
-{
-	delete this->player;
-	delete this->pmenu;
-	delete this->tileMap;
-}
+void GameState::updateInput(const float dt) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) &&
+		this->getKeytime()) {
 
-
-void GameState::updateInput(const float & dt)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
-	{
-		if (!this->paused)
-			this->pauseState();
-		else
-			this->unpauseState();
+		StateManager::getInstance()->Push(SafeState(PauseMenuState));
 	}
 }
 
+// Update functions
 
+void GameState::updatePauseButtons() {}
 
-//Update functions
-
-void GameState::updatePauseButtons()
-{
-	if (this->pmenu->isButtonPressed("QUIT") )
-		this->endState();
-}
-
-void GameState::updatePlayerInput(const float & dt)
-{
-	if (this->window->hasFocus()) {
+void GameState::updatePlayerInput(const float dt) {
+	if (Game::getFocused()) {
 		//사용자 입력 업데이트
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
 			this->player->move(-2.f, 0.f, dt);
@@ -131,44 +94,22 @@ void GameState::updatePlayerInput(const float & dt)
 	}
 }
 
-void GameState::update()
-{
+void GameState::update() {
+	State::update();
 	auto dt = Game::getInstance()->deltaTime();
-
-	//윈도우 활성체크
-	window_focus = this->window->hasFocus();
-
-	this->updateMousePositions(); //일시정지든 아니든 마우스는 사용가능해야함
-	this->updateKeytime(dt);
-	this->updateInput(dt);
-
-	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
-	{
+	if (Game::getInstance()->getFocused()) {
+		this->updateInput(dt);
 		this->updatePlayerInput(dt);
-
 		this->player->update(dt);
-	}
-	else
-	{
-		this->pmenu->update(this->mousePosView);
 	}
 }
 
+void GameState::render(sf::RenderTarget* target) {
+	State::render(target);
 
-//Render
-
-void GameState::render(sf::RenderTarget* target)
-{
 	if (!target)
-		target = this->window;
+		target = Game::getWindow().get();
 
-	this->tileMap->render(*target);
-
-	this->player->render(*target);
-
-	if (this->paused)
-	{
-		this->pmenu->render(*target);
-		this->updatePauseButtons();
-	}
+	this->tileMap->render(target);
+	this->player->render(target);
 }

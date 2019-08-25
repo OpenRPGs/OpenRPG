@@ -1,8 +1,9 @@
 ﻿#pragma once
 
+#include "Defines/IDisposable.h"
 #include "States/State.h"
 
-class StateManager {
+class StateManager : public IDisposable {
   public:
 	/// <summary>
 	/// 싱글톤 인스턴스를 가져옵니다.
@@ -11,28 +12,31 @@ class StateManager {
 	/// <returns><see cref="StateManager"/>의 싱글톤 객체입니다.</returns>
 	static StateManager* getInstance();
 
-	/// <summary>
-	///모든 장면을 정리하고 삭제합니다.
-	///</summary>
+	/// <summary>모든 자원을 해제하고 사용을 중지시킵니다.</summary>
+	void Dispose();
+
+	/// <summary>모든 장면을 정리하고 삭제합니다.</summary>
 	StateManager* Clear();
 
-	/// <summary>
-	///장면 스택에 장면이 존재하지 않는지 검사합니다.
-	///</summary>
+	/// <summary>장면 스택에 장면이 존재하지 않는지 검사합니다.</summary>
 	bool Empty();
 
-	/// <summary>새 장면을 추가합니다. 추가된 장면은 <see cref="State"/> 스택에 추가됩니다.</summary>
+	/// <summary>
+	/// 새 장면으로 이동합니다.
+	/// <see cref="State"/> 스택에 추가되지 않고 현재 장면을 교체합니다.
+	/// </summary>
 	/// <param name="state">추가할 장면입니다.</param>
-	/// <param name="pararell">
-	/// 추가되는 장면이 병렬 처리될지 여부입니다.
-	/// 이 값이 <c>true</c>라면 장면이 최상위에 있지 않더라도 갱신이 이루어질 수 있습니다.
-	/// </param>
-	StateManager* Push(State* state, bool pararell = false);
+	StateManager* GoTo(g::safe<State> state);
 
 	/// <summary>
-	///현재 장면을 제거하고 반환합니다.
-	///</summary>
-	State* Pop();
+	/// 새 장면을 추가합니다.
+	/// 추가된 장면은 <see cref="State"/> 스택에 추가됩니다.
+	/// </summary>
+	/// <param name="state">추가할 장면입니다.</param>
+	StateManager* Push(g::safe<State> state);
+
+	/// <summary>현재 장면을 제거하고 반환합니다.</summary>
+	g::safe<State> Pop();
 
 	/// <summary>
 	/// 전달된 <see cref="State"/>를 찾을 때 까지 <see cref="Pop"/>합니다.
@@ -57,11 +61,9 @@ class StateManager {
 	/// 장면을 관리하는 스택입니다.
 	/// <c>stateStack.back().first</c>는 항상 현재 장면을 가리킵니다.
 	/// </summary>
-	std::vector<std::pair<State*, bool>> stateStack;
+	g::safevector<State> stateStack;
 
-	/// <summary>
-	/// 생성자입니다. private로 지정하여 일반적인 할당을 금지합니다.
-	/// </summary>
+	/// <summary>생성자입니다. private로 지정하여 일반적인 할당을 금지합니다.</summary>
 	StateManager();
 	~StateManager();
 };

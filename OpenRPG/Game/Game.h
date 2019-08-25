@@ -1,26 +1,26 @@
 ﻿#pragma once
 
+#include "Defines/IDisposable.h"
 #include "States/State.h"
-#include "Managers/StateManager.h"
-#include "../GraphicsSettings.h"
-class Game {
-private:
-	
-	//private생성자 소멸자
+
+#include "GraphicsSettings.h"
+
+class Game : public IDisposable {
+  private:
+	// private생성자 소멸자
 	Game();
 	virtual ~Game();
 
 	//변수
 	GraphicsSettings gfxSettings;
-	StateData stateData;
 	static Game* Instance;
-	sf::RenderWindow* window;
+
+	g::safe<sf::RenderWindow> window;
 	sf::Event sfEvent;
-	StateManager* StateManager;
 
 	float gridSize;
 
-	std::map<std::string, int> supportedKeys;
+	g::map<int> supportedKeys;
 	int frameRate;
 
 	//초기화
@@ -28,26 +28,31 @@ private:
 	void initGraphicsSettings();
 	void initWindow();
 	void initKeys();
-	void initStateData();
-	void initState();
 
-public:
+	void updateSFMLEvents();
+
+  public:
 	static Game* getInstance();
+	void Dispose();
 
 	// Regular
 	void endApplication();
 	float deltaTime();
 
 	// Update
-	void updateSFMLEvents();
 	void update();
 
-	// Update + Render
+	// Framerate
 	void setFramerate(int frameRate);
 	int getFramerate();
 
-
+	static g::safe<sf::RenderWindow> getWindow();
+	static g::map<int>* getSupportedKeys();
+	static bool getFocused();
+	static float getGridSize();
+	static GraphicsSettings* getGraphicsSettings();
 
 	// Core
-	void run();
+	Game* boot();
+	Game* run();
 };

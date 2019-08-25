@@ -1,8 +1,7 @@
 ﻿#include "stdafx.h"
 #include "GraphicsSettings.h"
 
-GraphicsSettings::GraphicsSettings()
-{
+GraphicsSettings::GraphicsSettings() {
 	this->title = "Default";
 	this->resolution = sf::VideoMode::getDesktopMode();
 	this->fullscreen = false;
@@ -12,8 +11,7 @@ GraphicsSettings::GraphicsSettings()
 	this->videoModes = sf::VideoMode::getFullscreenModes();
 }
 
-void GraphicsSettings::saveToFile(const std::string path)
-{
+void GraphicsSettings::saveToFile(const std::string path) {
 	std::ofstream ofs(path);
 
 	if (ofs.is_open()) {
@@ -27,8 +25,7 @@ void GraphicsSettings::saveToFile(const std::string path)
 	ofs.close();
 }
 
-void GraphicsSettings::loadFromFile(const std::string path)
-{
+void GraphicsSettings::loadFromFile(const std::string path) {
 	std::ifstream ifs(path);
 
 	if (ifs.is_open()) {
@@ -41,5 +38,3 @@ void GraphicsSettings::loadFromFile(const std::string path)
 	}
 	ifs.close();
 }
-
-

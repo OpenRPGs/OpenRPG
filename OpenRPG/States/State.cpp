@@ -1,20 +1,18 @@
 ﻿#include "stdafx.h"
 
+#include "Game/Game.h"
 #include "State.h"
 #include "Managers/StateManager.h"
-#include "../Entities/Player.h"
+#include "Entities/Player.h"
 
-State::State(StateData* state_data) {
-	this->stateData = state_data;
-	this->window = state_data->window;
-	this->supportedKeys = state_data->supportedKeys;
-	this->paused = false;
+State::State(State* parent) {
+	this->parent = parent;
+	
 	this->keyTime = 0.f;
 	this->keyTimeMax = 0.1f;
-	this->gridSize = state_data->gridSize;
 }
-
-State::~State() {}
+State::~State() {
+}
 
 const bool State::getKeytime() {
 	if (this->keyTime >= this->keyTimeMax) {
@@ -35,12 +33,13 @@ void State::unpauseState() {
 	this->paused = false;
 }
 
-void State::updateKeytime(const float& dt) {
+void State::updateKeytime(const float dt) {
 	if (this->keyTime < this->keyTimeMax)
 		this->keyTime += 0.5f * dt;
 }
 
 void State::updateMousePositions() {
+	auto window = Game::getWindow();
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
@@ -51,8 +50,8 @@ void State::updateMousePositions() {
 		);
 }
 
-void State::initSounds() {
-	if (!this->sounds["BACKGROUND_MUSIC"].loadFromFile("Resources/sound/bgm.wav")) {
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_BGM";
-	}
+void State::update() {
+	auto dt = Game::getInstance()->deltaTime();
+	this->updateKeytime(dt);
 }
+void State::render(sf::RenderTarget* target) {}

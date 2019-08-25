@@ -1,17 +1,17 @@
 ﻿#pragma once
 
+#include "States/State.h"
 #include "GUI/Gui.h"
 
 class MainMenuState : public State {
-private:
+  private:
 	//변수
-
-	sf::Texture backgroundTexture;
-	sf::Texture btnTexure;
+	g::safe<sf::Texture> backgroundTexture;
+	g::safe<sf::Texture> btnTexture;
+	g::safe<sf::Font> font;
 	sf::RectangleShape background;
-	sf::Font font;
 
-	std::map<std::string, gui::Button*> buttons;
+	g::safemap<gui::Button> buttons;
 
 	//함수
 	void initVariables();
@@ -19,22 +19,24 @@ private:
 	void initFonts();
 	void initKeybinds();
 	void initButtons();
+	void initSounds();
 
-public:
-	MainMenuState(StateData* state_Data);
-	virtual ~MainMenuState();
+  public:
+	const StateFlow flow() {
+		// 흐를 수 없음
+		return StateFlow::FLOW_NONE;
+	}
+
+	MainMenuState();
+	~MainMenuState();
+	void onActivated() {}
+	void onDeactivated() {}
 
 	//함수
-
-	void updateInput(const float& dt);
+	void updateInput(const float dt);
 	void updateButtons();
-	void update();
-	void renderButtons(sf::RenderTarget& target);
-	void render(sf::RenderTarget* target = NULL);
+	void renderButtons(sf::RenderTarget* target);
 
-	// State 이벤트
-	void onActivated();
-	void onDeactivated();
-	void onEnter() {}
-	void onLeave() {}
+	void update();
+	void render(sf::RenderTarget* target = NULL);
 };

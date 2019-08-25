@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
+
 #include "Tile.h"
-
-
 
 Tile::Tile(float x, float y, float gridSizeF,const sf::Texture& texture, const sf::IntRect& texture_rect)
 {
@@ -13,18 +12,10 @@ Tile::Tile(float x, float y, float gridSizeF,const sf::Texture& texture, const s
 	this->shap.setTexture(&texture);
 	this->shap.setTextureRect(texture_rect);
 }
+Tile::~Tile() {}
 
+void Tile::update() {}
 
-Tile::~Tile()
-{
-}
-
-void Tile::update()
-{
-
-}
-
-void Tile::render(sf::RenderTarget & target)
-{
-	target.draw(this->shap);
+void Tile::render(sf::RenderTarget* target) {
+	target->draw(this->shap);
 }

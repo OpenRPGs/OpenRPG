@@ -92,15 +92,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\External\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)\External\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-system-d.lib;sfml-audio-d.lib;sfml-window-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -124,7 +124,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\External\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -133,7 +133,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)\External\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-system.lib;sfml-audio.lib;sfml-window.lib;sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -160,18 +160,20 @@
     <ClCompile Include="Components\HitboxComponent.cpp" />
     <ClCompile Include="Components\MovementComponent.cpp" />
     <ClCompile Include="Components\SoundComponent.cpp" />
+    <ClCompile Include="Defines\Animation.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Game\Game.cpp" />
-    <ClCompile Include="GraphicsSettings.cpp" />
-    <ClCompile Include="GUI\Gui.cpp" />
-    <ClCompile Include="GUI\PauseMenu.cpp" />
+    <ClCompile Include="Game\GraphicsSettings.cpp" />
+    <ClCompile Include="GUI\Button\Button.cpp" />
+    <ClCompile Include="GUI\DropDownList\DropdownList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Managers\SoundManager.cpp" />
     <ClCompile Include="Managers\StateManager.cpp" />
     <ClCompile Include="Maps\TileMap.cpp" />
     <ClCompile Include="States\Editor\EditorState.cpp" />
     <ClCompile Include="States\Game\GameState.cpp" />
+    <ClCompile Include="States\Game\PauseMenu\PauseMenuState.cpp" />
     <ClCompile Include="States\MainMenu\MainMenuState.cpp" />
     <ClCompile Include="States\Settings\SettingsState.cpp" />
     <ClCompile Include="States\State.cpp" />
@@ -180,28 +182,36 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Tiles\Tile.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\AnimationComponent.h" />
     <ClInclude Include="Components\HitboxComponent.h" />
     <ClInclude Include="Components\MovementComponent.h" />
     <ClInclude Include="Components\SoundComponent.h" />
+    <ClInclude Include="Defines\Animation.h" />
+    <ClInclude Include="Defines\IDisposable.h" />
+    <ClInclude Include="Defines\ResourceSet.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Game\Game.h" />
-    <ClInclude Include="GraphicsSettings.h" />
+    <ClInclude Include="Game\GraphicsSettings.h" />
+    <ClInclude Include="GUI\Button\Button.h" />
+    <ClInclude Include="GUI\DropDownList\DropDownList.h" />
     <ClInclude Include="GUI\Gui.h" />
-    <ClInclude Include="GUI\PauseMenu.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Managers\SoundManager.h" />
     <ClInclude Include="Managers\StateManager.h" />
     <ClInclude Include="Maps\TileMap.h" />
     <ClInclude Include="States\Editor\EditorState.h" />
     <ClInclude Include="States\Game\GameState.h" />
+    <ClInclude Include="States\Game\PauseMenu\PauseMenuState.h" />
     <ClInclude Include="States\MainMenu\MainMenuState.h" />
     <ClInclude Include="States\Settings\SettingsState.h" />
     <ClInclude Include="States\State.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tiles\Tile.h" />
+    <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,8 @@
 ﻿#pragma once
 
+#include "States/State.h"
 #include "GUI/Gui.h"
-#include "GUI/PauseMenu.h"
-#include "../../Maps/TileMap.h"
+#include "Maps/TileMap.h"
 
 class EditorState : public State {
   private:
@@ -13,7 +13,7 @@ class EditorState : public State {
 	sf::Texture tx;
 	PauseMenu* pmenu;
 
-	TileMap* tileMap;
+	g::safe<TileMap> tileMap;
 
 	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
@@ -25,30 +25,28 @@ class EditorState : public State {
 	void initButtons();
 	void initText();
 	void initBackground();
-	void initPauseMenu();
 	void initGui();
 	void initTileMap();
 
   public:
-	EditorState(StateData* state_data);
-	virtual ~EditorState();
+	const StateFlow flow() {
+		// 흐를 수 없음
+		return StateFlow::FLOW_NONE;
+	}
 
-	//업데이트함수
+	EditorState(State* parent);
+	~EditorState();
+	virtual void onActivated() {}
+	virtual void onDeactivated() {}
+
 	void updateInput(const float& dt);
 	void updateEditorInput(const float& dt);
 	void updateButtons();
 	void updateGui();
-	void updatePauseMenuButtons();
 	void update();
 
 	//랜더함수
-	void renderButtons(sf::RenderTarget& target);
-	void renderGui(sf::RenderTarget& target);
+	void renderButtons(sf::RenderTarget* target);
+	void renderGui(sf::RenderTarget* target);
 	void render(sf::RenderTarget* target = NULL);
-
-	// State 이벤트
-	virtual void onActivated() {}
-	virtual void onDeactivated() {}
-	virtual void onEnter() {}
-	virtual void onLeave() {}
 };

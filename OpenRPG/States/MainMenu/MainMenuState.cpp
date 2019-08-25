@@ -12,125 +12,139 @@
 #include "Managers/SoundManager.h"
 #include "Managers/StateManager.h"
 
-// Initaillizer functions
+#pragma region Initializers
 void MainMenuState::initVariables() {}
 
 void MainMenuState::initBackground() {
-	this->background.setSize(sf::Vector2f(
-		static_cast<float>(this->window->getSize().x),
-		static_cast<float>(this->window->getSize().y)));
-	if (!this->backgroundTexture.loadFromFile("Resources/image/Backgrounds/bg3.png")) {
-		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
-	}
+	auto window = Game::getWindow();
 
-	this->background.setTexture(&this->backgroundTexture);
+	this->backgroundTexture = g::safe<sf::Texture>(new sf::Texture());
+	if (this->backgroundTexture == NULL ||
+		!this->backgroundTexture->loadFromFile("Resources/image/Backgrounds/bg3.png"))
+		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+
+	this->background.setTexture(this->backgroundTexture.get());
+	this->background.setSize(sf::Vector2f(
+		static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
 }
 
 void MainMenuState::initFonts() {
-	if (!this->font.loadFromFile("Fonts/R2.ttc")) {
-		throw("메인메뉴 폰트로딩 실패");
-	}
+	this->font = g::safe<sf::Font>(new sf::Font());
+	if (!this->font->loadFromFile("Fonts/R2.ttc"))
+		throw "메인메뉴 폰트로딩 실패";
 }
 
 void MainMenuState::initKeybinds() {
-	std::ifstream ifs("Config/mainmenuestate_keybinds.ini");
+	auto supportedKeys = Game::getInstance()->getSupportedKeys();
 
+	std::ifstream ifs("Config/mainmenuestate_keybinds.ini");
 	if (ifs.is_open()) {
 		std::string key = "";
 		std::string key2 = "";
 		int key_value = 0;
 		while (ifs >> key >> key2) {
-			this->keybinds[key] = this->supportedKeys->at(key2);
+			this->keybinds[key] = supportedKeys->at(key2);
 		}
 	}
 	ifs.close();
 
-	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("A");
-	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
-	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
-	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
+	this->keybinds["CLOSE"] = supportedKeys->at("Escape");
+	this->keybinds["MOVE_LEFT"] = supportedKeys->at("A");
+	this->keybinds["MOVE_RIGHT"] = supportedKeys->at("D");
+	this->keybinds["MOVE_UP"] = supportedKeys->at("W");
+	this->keybinds["MOVE_DOWN"] = supportedKeys->at("S");
 }
 
 void MainMenuState::initButtons() {
-
-	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png")) {
+	this->btnTexture = g::safe<sf::Texture>(new sf::Texture());
+	if (!btnTexture->loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
-	}
 
-	this->buttons["GAME_STATE"] = new gui::Button(
-		1500, 500, 250, 80, btnTexure, this->font, L"새 게임", 40, sf::Color(0, 0, 0, 255),
-		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	this->buttons["GAME_STATE"] = g::safe<gui::Button>(new gui::Button(
+		1500, 500, 250, 80, this->btnTexture, this->font, L"새 게임", 40, g::Color("#000"),
+		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
+		g::Color("#fff")));
 
-	this->buttons["SETTING_STATE"] = new gui::Button(
-		1500, 600, 250, 80, btnTexure, this->font, L"게임 설정", 40, sf::Color(0, 0, 0, 255),
-		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	this->buttons["SETTING_STATE"] = g::safe<gui::Button>(new gui::Button(
+		1500, 600, 250, 80, this->btnTexture, this->font, L"게임 설정", 40, g::Color("#000"),
+		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
+		g::Color("#fff")));
 
-	this->buttons["EDITOR_STATE"] = new gui::Button(
-		1500, 700, 250, 80, btnTexure, this->font, L"에디터", 40, sf::Color(0, 0, 0, 255),
-		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	this->buttons["EDITOR_STATE"] = g::safe<gui::Button>(new gui::Button(
+		1500, 700, 250, 80, this->btnTexture, this->font, L"에디터", 40, g::Color("#000"),
+		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
+		g::Color("#fff")));
 
-	this->buttons["EXIT_STATE"] = new gui::Button(
-		1500, 900, 250, 80, btnTexure, this->font, L"종 료", 40, sf::Color(0, 0, 0, 255),
-		sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50), sf::Color(255, 255, 255, 255),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	this->buttons["EXIT_STATE"] = g::safe<gui::Button>(new gui::Button(
+		1500, 900, 250, 80, this->btnTexture, this->font, L"종 료", 40, g::Color("#000"),
+		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
+		g::Color("#fff")));
 }
 
-MainMenuState::MainMenuState(StateData* state_Data)
-	:State(state_Data)
-{
+void MainMenuState::initSounds() {
+	auto sound = this->res.Sounds["BACKGROUND_MUSIC"] = g::safe<sf::SoundBuffer>(new sf::SoundBuffer());
+	if (!sound->loadFromFile("Resources/sound/bgm.wav"))
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_BGM";
+}
+#pragma endregion
+
+MainMenuState::MainMenuState() : State() {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
 	this->initSounds();
+
+	// 메인 화면이 생성될 때 BGM 재생
+	auto sm = SoundManager::getInstance();
+	sm->LoadBGM(this->res.Sounds["BACKGROUND_MUSIC"]);
+	sm->getBGM()->setLoop(true)->play();
 }
 
 MainMenuState::~MainMenuState() {
-	auto it = this->buttons.begin();
-	for (it = this->buttons.begin(); it != this->buttons.end(); ++it) {
-		delete it->second;
-	}
+	// 메인 화면이 제거될 때 BGM 중지
+	SoundManager::getInstance()->getBGM()->stop();
 }
 
-void MainMenuState::updateInput(const float& dt) {
-
+void MainMenuState::updateInput(const float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		this->background.setFillColor(sf::Color::Cyan);
 }
 
 void MainMenuState::updateButtons() {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
-	for (auto& it : this->buttons) {
+	for (auto& it : this->buttons)
 		it.second->update(this->mousePosView);
-	}
 
 	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new GameState(this->stateData));
+		StateManager::getInstance()->GoTo(SafeState(GameState));
+		return;
 	}
 
 	//설정
 	if (this->buttons["SETTING_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new SettingsState(this->stateData));
+		StateManager::getInstance()->GoTo(SafeState(SettingsState));
+		return;
 	}
 
 	//에디터
 	if (this->buttons["EDITOR_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new EditorState(this->stateData));
+		StateManager::getInstance()->GoTo(SafeState(EditorState, this));
+		return;
 	}
 
 	//종료
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
 		this->endState();
+		return;
 	}
 }
 
 void MainMenuState::update() {
+	State::update();
+
 	auto dt = Game::getInstance()->deltaTime();
 
 	this->updateMousePositions();
@@ -139,24 +153,21 @@ void MainMenuState::update() {
 	this->updateButtons();
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget& target) {
-	for (auto& it : this->buttons) {
-		it.second->render(target);
-	}
-}
-
 void MainMenuState::render(sf::RenderTarget* target) {
+	State::render(target);
+
 	if (!target)
-		target = this->window;
+		target = Game::getWindow().get();
 
 	target->draw(this->background);
-	this->renderButtons(*target);
+	this->renderButtons(target);
 
 	//삭제예정. 디버깅용.
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
-	mouseText.setFont(this->font);
+	mouseText.setFont(*this->font);
 	mouseText.setCharacterSize(15);
+
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
@@ -164,13 +175,7 @@ void MainMenuState::render(sf::RenderTarget* target) {
 	target->draw(mouseText);
 }
 
-// 메인 화면이 표시될 때 BGM 재생
-void MainMenuState::onActivated() {
-	auto sm = SoundManager::getInstance();
-	sm->LoadBGM(sounds["BACKGROUND_MUSIC"]);
-	sm->getBGM()->setLoop(true)->play();
-}
-// 메인 화면이 숨겨질 때 BGM 중지
-void MainMenuState::onDeactivated() {
-	SoundManager::getInstance()->getBGM()->stop();
+void MainMenuState::renderButtons(sf::RenderTarget* target) {
+	for (auto& it : this->buttons)
+		it.second->render(target);
 }

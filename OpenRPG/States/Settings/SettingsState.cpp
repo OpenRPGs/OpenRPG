@@ -2,190 +2,153 @@
 
 #include "Game/Game.h"
 #include "GUI/Gui.h"
-#include "SettingsState.h"
+#include "Managers/StateManager.h"
 
-void SettingsState::initVariables()
-{
+#include "SettingsState.h"
+#include "States/MainMenu/MainMenuState.h"
+
+void SettingsState::initVariables() {
 	this->modes = sf::VideoMode::getFullscreenModes();
 }
 
-void SettingsState::initFonts()
-{
-	if (!this->font.loadFromFile("Fonts/R2.ttc"))
-	{
-		throw("메인메뉴 폰트로딩 실패");
-	}
+void SettingsState::initFonts() {
+	this->font = g::safe<sf::Font>(new sf::Font());
+	if (!this->font->loadFromFile("Fonts/R2.ttc"))
+		throw "메인메뉴 폰트로딩 실패";
 }
 
-void SettingsState::initKeybinds()
-{
-	std::ifstream ifs("Config/editor_keybinds.ini");
+void SettingsState::initKeybinds() {
+	auto supportedKeys = Game::getInstance()->getSupportedKeys();
 
-	if (ifs.is_open())
-	{
-		std::string key = "";
-		std::string key2 = "";
-		int key_value = 0;
+	std::ifstream ifs("Config/editor_keybinds.ini");
+	if (ifs.is_open()) {
+		std::string key = "", key2 = "";
 		while (ifs >> key >> key2)
-		{
-			this->keybinds[key] = this->supportedKeys->at(key2);
-		}
+			this->keybinds[key] = supportedKeys->at(key2);
 	}
 	ifs.close();
-
 }
 
-void SettingsState::initGui()
-{
-	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
+void SettingsState::initGui() {
+	this->tx = g::safe<sf::Texture>(new sf::Texture());
+	if (!this->tx->loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
-	this->buttons["BACK"] = new gui::Button(
-		100, 800, 250, 80,
-		tx, this->font, L"뒤로가기", 50,
-		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	this->buttons["BACK"] = g::safe<gui::Button>(new gui::Button(
+		100, 800, 250, 200, this->tx, this->font, L"뒤로가기", 50, g::Color("#000"),
+		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
+		g::Color("#fff")));
 
-	this->buttons["APPLY"] = new gui::Button(
-		400, 800, 250, 80,
-		tx, this->font, L"적용", 50,
-		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	this->buttons["APPLY"] = g::safe<gui::Button>(new gui::Button(
+		400, 800, 250, 200, this->tx, this->font, L"적용", 50, g::Color("#000"),
+		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
+		g::Color("#fff")));
 
 	std::vector<std::wstring> modes_str;
 	for (auto &i : this->modes)
-	{
 		modes_str.push_back(std::to_wstring(i.width) + L'x' + std::to_wstring(i.height));
-	}
 
-	this->dropDownLists["RESOLUTION"] = new gui::DropDownList(400, 100, 200, 50, font, modes_str.data(), modes_str.size());
+	this->dropDownLists["RESOLUTION"] = g::safe<gui::DropDownList>(
+		new gui::DropDownList(400, 100, 200, 50, font, modes_str.data(), modes_str.size()));
 }
 
-void SettingsState::initText()
-{
-	this->optionsText.setFont(this->font);
+void SettingsState::initText() {
+	this->optionsText.setFont(*this->font);
 	this->optionsText.setPosition(sf::Vector2f(100.f, 100.f));
-	this->optionsText.setCharacterSize(30.f);
+	this->optionsText.setCharacterSize(30);
 	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
-	
-	this->optionsText.setString(
-		"Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n "
-	);
 
+	this->optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing \n\n ");
 }
 
-void SettingsState::initBackground()
-{
-}
+void SettingsState::initBackground() {}
 
-SettingsState::SettingsState(StateData* state_data)
-	:State(state_data)
-{
+SettingsState::SettingsState() : State() {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initGui();
 	this->initText();
-
 }
+SettingsState::~SettingsState() {}
 
-SettingsState::~SettingsState()
-{
-	auto it = this->buttons.begin();
-	for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
-	{
-		delete it->second;
-	}
-
-	auto it2 = this->dropDownLists.begin();
-	for (it2 = this->dropDownLists.begin(); it2 != this->dropDownLists.end(); ++it2)
-	{
-		delete it2->second;
+void SettingsState::updateInput(const float dt) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE")))) {
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
+		return;
 	}
 }
 
-void SettingsState::updateInput(const float & dt)
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
-}
-
-void SettingsState::updateGui()
-{
+void SettingsState::updateGui() {
 	auto dt = Game::getInstance()->deltaTime();
 
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
-	for (auto &it : this->buttons)
-	{
+	for (auto &it : this->buttons) {
 		it.second->update(this->mousePosView);
 	}
 
-
 	//게임종료
-	if (this->buttons["BACK"]->isPressed())
-	{
-		this->endState();
+	if (this->buttons["BACK"]->isPressed()) {
+		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
+		return;
 	}
 
-	if (this->buttons["APPLY"]->isPressed())
-	{
+	if (this->buttons["APPLY"]->isPressed()) {
 		//삭제예정 테스트용 설정이날아가기때문에 프레임이 솓구칩니다.
-		this->stateData->gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
-		this->window->create(this->stateData->gfxSettings->resolution,this->stateData->gfxSettings->title,sf::Style::Default);
-		this->window->setFramerateLimit(120);
-	}
+		auto gfxSettings = Game::getGraphicsSettings();
+		gfxSettings->resolution =
+			this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
 
+		auto window = Game::getWindow();
+		window->create(gfxSettings->resolution, gfxSettings->title, sf::Style::Default);
+		window->setFramerateLimit(Game::getInstance()->getFramerate());
+	}
 
 	//드랍다운리스트
-	for (auto &it : this->dropDownLists)
-	{
-		it.second->update(this->mousePosView,dt);
+	for (auto &it : this->dropDownLists) {
+		it.second->update(this->mousePosView, dt);
 	}
-
 }
 
-void SettingsState::update()
-{
+void SettingsState::update() {
+	State::update();
+
 	auto dt = Game::getInstance()->deltaTime();
 
 	this->updateMousePositions();
 	this->updateInput(dt);
 
 	this->updateGui();
-
 }
 
-void SettingsState::renderGui(sf::RenderTarget & target)
-{
-	for (auto &it : this->buttons)
-	{
+void SettingsState::renderGui(sf::RenderTarget *target) {
+	for (auto &it : this->buttons) {
 		it.second->render(target);
 	}
 
-	for (auto &it : this->dropDownLists)
-	{
+	for (auto &it : this->dropDownLists) {
 		it.second->render(target);
 	}
-
 }
 
-void SettingsState::render(sf::RenderTarget* target)
-{
+void SettingsState::render(sf::RenderTarget *target) {
+	State::render(target);
+
 	if (!target)
-		target = this->window;
+		target = Game::getWindow().get();
 
-	this->renderGui(*target);
+	this->renderGui(target);
 	target->draw(this->optionsText);
 
 	//삭제예정. 디버깅용. 마우스위에 좌표표시
 	sf::Text mouseText;
 	mouseText.setPosition(sf::Vector2f(this->mousePosView.x, this->mousePosView.y - 15));
-	mouseText.setFont(this->font);
+	mouseText.setFont(*this->font);
 	mouseText.setCharacterSize(15);
+
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y;
 	mouseText.setString(ss.str());
 	target->draw(mouseText);
-
 }

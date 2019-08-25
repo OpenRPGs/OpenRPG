@@ -1,7 +1,7 @@
 ﻿#pragma once
-class GraphicsSettings
-{
-public:
+
+class GraphicsSettings {
+  public:
 	GraphicsSettings();
 
 	//변수

@@ -1,6 +1,5 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "TileMap.h"
-
 
 TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 {
@@ -27,6 +26,7 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 		throw "TileMap load failed";
 }
 
+TileMap::~TileMap() {}
 
 TileMap::~TileMap()
 {

@@ -1,22 +1,19 @@
 ﻿#pragma once
 
+#include "States/State.h"
 #include "Entities/Player.h"
-#include "GUI/PauseMenu.h"
 
-#include "../../Maps/TileMap.h"
+#include "Maps/TileMap.h"
 
 class GameState : public State {
   private:
-	int window_focus;
+	g::safe<sf::Font> font;
+	g::safe<sf::Texture> btnTexture;
 
-	sf::Font font;
-	PauseMenu* pmenu;
-	sf::Texture btnTexure;
+	g::safe<sf::Texture> texture;
+	g::safe<Player> player;
 
-	Player* player;
-	sf::Texture texture;
-
-	TileMap* tileMap;
+	g::safe<TileMap> tileMap;
 
 	//함수
 	void initButtons();
@@ -24,23 +21,24 @@ class GameState : public State {
 	void initTextures();
 	void initPlayers();
 	void initFonts();
-	void initPauseMenu();
 	void initTileMap();
 
   public:
-	GameState(StateData* state_data);
-	virtual ~GameState();
+	const StateFlow flow() {
+		// 흐를 수 없음
+		return StateFlow::FLOW_NONE;
+	}
 
-	//함수
-	void updatePlayerInput(const float& dt);
-	void updateInput(const float& dt);
-	void updatePauseButtons();
-	void update();
-	void render(sf::RenderTarget* target = NULL);
-
-	// State 이벤트
+	GameState();
+	~GameState();
 	void onActivated() {}
 	void onDeactivated() {}
-	void onEnter() {}
-	void onLeave() {}
+
+	//함수
+	void updatePlayerInput(const float dt);
+	void updateInput(const float dt);
+	void updatePauseButtons();
+	void update();
+
+	void render(sf::RenderTarget* target = NULL);
 };

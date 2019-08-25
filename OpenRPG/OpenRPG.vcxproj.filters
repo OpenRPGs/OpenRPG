@@ -46,8 +46,23 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{a57fa6c6-5b3a-4fa4-b29d-292000092236}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\Game\PauseMenuState">
+      <UniqueIdentifier>{c00c9442-2baa-4d00-bc14-51a4977e8a6f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Maps">
       <UniqueIdentifier>{2c3a9c0c-1c7b-4cbd-83e2-bd92987e7a34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{34e163ce-28da-49b2-9793-4aa163439871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Button">
+      <UniqueIdentifier>{65524bc4-5781-4c43-bbb6-b451c342939f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\DropDownList">
+      <UniqueIdentifier>{0439a521-8088-41b5-ae07-ad9d8d98536e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Defines">
+      <UniqueIdentifier>{f2bfde9e-1be6-4238-9cb3-1e5cb321ffb9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +89,6 @@
     </ClCompile>
     <ClCompile Include="Entities\Entity.cpp">
       <Filter>Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\PauseMenu.cpp">
-      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Managers\SoundManager.cpp">
       <Filter>Managers</Filter>
@@ -105,14 +117,26 @@
     <ClCompile Include="Managers\StateManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\Gui.cpp">
-      <Filter>GUI</Filter>
+    <ClCompile Include="States\Game\PauseMenu\PauseMenuState.cpp">
+      <Filter>States\Game\PauseMenuState</Filter>
     </ClCompile>
     <ClCompile Include="Maps\TileMap.cpp">
       <Filter>Maps</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsSettings.cpp">
-      <Filter>리소스 파일</Filter>
+    <ClCompile Include="Utils\Utils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Button\Button.cpp">
+      <Filter>GUI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\DropDownList\DropdownList.cpp">
+      <Filter>GUI\DropDownList</Filter>
+    </ClCompile>
+    <ClCompile Include="Defines\Animation.cpp">
+      <Filter>Defines</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GraphicsSettings.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,9 +160,6 @@
     </ClInclude>
     <ClInclude Include="Entities\Player.h">
       <Filter>Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\PauseMenu.h">
-      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Managers\SoundManager.h">
       <Filter>Managers</Filter>
@@ -170,11 +191,35 @@
     <ClInclude Include="GUI\Gui.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="States\Game\PauseMenu\PauseMenuState.h">
+      <Filter>States\Game\PauseMenuState</Filter>
+    </ClInclude>
     <ClInclude Include="Maps\TileMap.h">
       <Filter>Maps</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsSettings.h">
-      <Filter>리소스 파일</Filter>
+    <ClInclude Include="Utils\Utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Button\Button.h">
+      <Filter>GUI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\DropDownList\DropDownList.h">
+      <Filter>GUI\DropDownList</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines\Animation.h">
+      <Filter>Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines\IDisposable.h">
+      <Filter>Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines\ResourceSet.h">
+      <Filter>Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GraphicsSettings.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>Defines</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
