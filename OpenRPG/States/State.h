@@ -50,7 +50,6 @@ class State {
 	g::map<int> keybinds;
 	float keyTime;
 	float keyTimeMax;
-	float gridSize;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;

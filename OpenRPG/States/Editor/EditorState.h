@@ -6,13 +6,11 @@
 
 class EditorState : public State {
   private:
-	//변수
-	sf::Font font;
-	sf::Text cursorText;
-	std::map<std::string, gui::Button*> buttons;
-	sf::Texture tx;
-	PauseMenu* pmenu;
+	g::safe<sf::Font> font;
+	g::safe<sf::Texture> tx;
+	g::safemap<gui::Button> buttons;
 
+	sf::Text cursorText;
 	g::safe<TileMap> tileMap;
 
 	sf::IntRect textureRect;
@@ -30,8 +28,8 @@ class EditorState : public State {
 
   public:
 	const StateFlow flow() {
-		// 흐를 수 없음
-		return StateFlow::FLOW_NONE;
+		// 렌더링만 가능
+		return StateFlow::FLOW_RENDER;
 	}
 
 	EditorState(State* parent);
@@ -39,8 +37,9 @@ class EditorState : public State {
 	virtual void onActivated() {}
 	virtual void onDeactivated() {}
 
-	void updateInput(const float& dt);
-	void updateEditorInput(const float& dt);
+	//업데이트함수
+	void updateInput(const float dt);
+	void updateEditorInput(const float dt);
 	void updateButtons();
 	void updateGui();
 	void update();

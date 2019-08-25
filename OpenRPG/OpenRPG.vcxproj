@@ -159,6 +159,7 @@
     <ClCompile Include="Components\AnimationComponent.cpp" />
     <ClCompile Include="Components\HitboxComponent.cpp" />
     <ClCompile Include="Components\MovementComponent.cpp" />
+    <ClCompile Include="Components\MusicComponent.cpp" />
     <ClCompile Include="Components\SoundComponent.cpp" />
     <ClCompile Include="Defines\Animation.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Components\AnimationComponent.h" />
     <ClInclude Include="Components\HitboxComponent.h" />
     <ClInclude Include="Components\MovementComponent.h" />
+    <ClInclude Include="Components\MusicComponent.h" />
     <ClInclude Include="Components\SoundComponent.h" />
     <ClInclude Include="Defines\Animation.h" />
     <ClInclude Include="Defines\IDisposable.h" />

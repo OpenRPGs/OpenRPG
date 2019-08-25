@@ -2,7 +2,6 @@
 
 #include "Game/Game.h"
 #include "GUI/Gui.h"
-#include "Components/SoundComponent.h"
 #include "States/State.h"
 #include "States/MainMenu/MainMenuState.h"
 #include "States/Game/GameState.h"
@@ -82,9 +81,10 @@ void MainMenuState::initButtons() {
 }
 
 void MainMenuState::initSounds() {
-	auto sound = this->res.Sounds["BACKGROUND_MUSIC"] = g::safe<sf::SoundBuffer>(new sf::SoundBuffer());
-	if (!sound->loadFromFile("Resources/sound/bgm.wav"))
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_BGM";
+	// 메인 화면이 생성될 때 BGM 재생
+	auto sm = SoundManager::getInstance();
+	sm->LoadBGM("Resources/sound/bgm.wav");
+	sm->getBGM()->setLoop(true)->play();
 }
 #pragma endregion
 
@@ -95,11 +95,6 @@ MainMenuState::MainMenuState() : State() {
 	this->initKeybinds();
 	this->initButtons();
 	this->initSounds();
-
-	// 메인 화면이 생성될 때 BGM 재생
-	auto sm = SoundManager::getInstance();
-	sm->LoadBGM(this->res.Sounds["BACKGROUND_MUSIC"]);
-	sm->getBGM()->setLoop(true)->play();
 }
 
 MainMenuState::~MainMenuState() {
