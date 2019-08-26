@@ -68,3 +68,21 @@ void SubSubState::update() {
 	// ...
 }
 ```
+
+### 5. StateManager
+`State`를 `StateManage`에 `Push`하거나 `GoTo`를 통해서 추가할 경우에, `State` 또는 `State*`를 전달할 수 없습니다.
+
+메모리 관리를 위해서 스마트 포인터로 전달되어야 하며, 이는 다음과 같은 표현으로 사용할 수 있습니다.
+```c++
+StateManager::getInstance()->Push(std::shared_ptr<State>(new EditorMeunState(this)));
+```
+
+이는 `Utils.h`에 정의되어있는 표현을 통해서 `std::shared_ptr<T>`는 다음과 같이 축약될 수 있습니다.
+```c++
+StateManager::getInstance()->Push(g::safe<State>(new EditorMeunState(this)));
+```
+
+`new`를 통해서 새 `State`를 추가하는 경우에는 더욱 축약될 수 있습니다.
+```c++
+StateManager::getInstance()->Push(SafeState(PauseMenuState, this));
+```
