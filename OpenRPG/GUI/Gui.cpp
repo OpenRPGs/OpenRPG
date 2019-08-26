@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Gui.h"
+#include "../Game/Game.h"
 
 gui::Button::Button(float x, float y, float width, float height,
 	sf::Texture& buttonTexture, sf::Font& font, std::wstring text, unsigned character_size,
@@ -279,12 +280,24 @@ void gui::DropDownList::render(sf::RenderTarget & target)
 ////Gui 텍스쳐셀렉터 메뉴////
 ////////////////////////////
 
-gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture * texture_sheet, sf::Font& font, std::wstring text)
+const bool gui::TextureSelector::getKeytime() 
+{
+	if (this->keytime >= this->keytimeMax)
+	{
+		this->keytime = 0.f;
+		return true;
+	}
+	return false;
+}
+
+gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize,
+	const sf::Texture * texture_sheet, sf::Font& font, std::wstring text)
+	:keytime(0.f), keytimeMax(2.f)
 {
 	this->gridSize = gridSize;
 	this->active = false;
 	this->hidden = false;
-	float offset = 80.f;
+	float offset = 800.f;
 
 	this->bounds.setSize(sf::Vector2f(width, height));
 	this->bounds.setPosition(x + offset, y);
@@ -335,11 +348,22 @@ const sf::IntRect & gui::TextureSelector::getTextureRect() const
 	return this->textureRect;
 }
 
+void gui::TextureSelector::updateKeytime(const float & dt)
+{
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f*dt;
+}
+
 void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
 {
+
+	float dt = Game::getInstance()->deltaTime();
+
+	this->updateKeytime(dt);
+
 	this->hide_button->update(static_cast<sf::Vector2f>(mousePosWindow));
 
-	if (this->hide_button->isPressed())
+	if (this->hide_button->isPressed() && this->getKeytime() || (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab) && this->getKeytime()))
 	{
 		if (this->hidden)
 			this->hidden = false;

@@ -15,9 +15,11 @@ class EditorState : public State {
 
 	TileMap* tileMap;
 
+	sf::RectangleShape sidebar;
+
 	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
-	
+
 	gui::TextureSelector* textureSelector;
 
 	//초기화함수

@@ -71,6 +71,11 @@ void EditorState::initPauseMenu()
 
 void EditorState::initGui()
 {
+	this->sidebar.setSize(sf::Vector2f(100.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
+	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
+	this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
+	this->sidebar.setOutlineThickness(1.f);
+
 	this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
 	this->selectorRect.setFillColor(sf::Color(255, 255, 255, 150));
 	this->selectorRect.setOutlineThickness(1.f);
@@ -137,7 +142,7 @@ void EditorState::updateEditorInput(const float & dt)
 	//타일 맵 추가하기
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
 	{
-		if (!this->textureSelector->getActive())
+		if (!this->textureSelector->getActive() )
 		{
 			this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
 		}
@@ -265,6 +270,8 @@ void EditorState::renderGui(sf::RenderTarget & target)
 
 	this->textureSelector->render(target);
 	target.draw(this->cursorText);
+
+	target.draw(this->sidebar);
 }
 
 void EditorState::render(sf::RenderTarget* target)
