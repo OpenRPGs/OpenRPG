@@ -42,11 +42,11 @@ void EditorState::initButtons()
 	if (!tx.loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
 
-	this->buttons["EXIT_STATE"] = new gui::Button(
-		250, 100, 1250, 80,
-		tx, this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
-		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
+	//this->buttons["EXIT_STATE"] = new gui::Button(
+	//	250, 100, 1250, 80,
+	//	tx, this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
+	//	sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+	//	sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
 void EditorState::initText()
@@ -78,7 +78,7 @@ void EditorState::initGui()
 
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
-	this->textureSelector = new gui::TextureSelector(20.f, 20.f, 500.f, 500.f, this->tileMap->getTileSheet());
+	this->textureSelector = new gui::TextureSelector(20.f, 20.f, 500.f, 500.f, this->stateData->gridSize, this->tileMap->getTileSheet());
 }
 
 
@@ -178,16 +178,16 @@ void EditorState::updateEditorInput(const float & dt)
 
 void EditorState::updateButtons()
 {
-	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
-	for (auto &it : this->buttons)
-	{
-		it.second->update(this->mousePosView);
-	}
+	////모든 버튼들의 상태를 기능에맞게 업데이트해줌
+	//for (auto &it : this->buttons)
+	//{
+	//	it.second->update(this->mousePosView);
+	//}
 
-	if (this->buttons["EXIT_STATE"]->isPressed())
-	{
-		this->endState();
-	}
+	//if (this->buttons["EXIT_STATE"]->isPressed())
+	//{
+	//	this->endState();
+	//}
 }
 
 void EditorState::updateGui()
@@ -202,7 +202,7 @@ void EditorState::updateGui()
 		'\n' << this->textureRect.left << " " << this->textureRect.top;
 	cursorText.setString(ss.str());
 
-	this->textureSelector->update();
+	this->textureSelector->update(this->mousePosWindow);
 }
 
 void EditorState::updatePauseMenuButtons()
