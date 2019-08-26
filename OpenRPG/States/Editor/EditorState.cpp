@@ -41,7 +41,7 @@ void EditorState::initButtons() {
 		throw "btn";
 
 	this->buttons["EXIT_STATE"] = g::safe<gui::Button>(new gui::Button(
-		250, 100, 1250, 80, tx, this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
+		250, 80, 1250, 80, tx, this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
 		g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"),
 		g::Color("#fff"), g::Color("#fff")));
 }
@@ -145,6 +145,9 @@ void EditorState::update() {
 	State::update();
 
 	auto dt = Game::getInstance()->deltaTime();
+
+	this->updateGui();
+	this->updateEditorInput(dt);
 
 	this->updateMousePositions();
 	this->updateKeytime(dt);

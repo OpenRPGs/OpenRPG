@@ -54,7 +54,7 @@ void PauseMenuState::initButtons() {
 	float x = this->container.getPosition().x + this->container.getSize().x / 2.f - 250.f / 2.f;
 	float y = 800.f;
 	this->buttons["QUIT"] = g::safe<gui::Button>(new gui::Button(
-		x, y, 250, 160, this->btnTexture, this->font, L"Quit", 40, g::Color("#000"),
+		x, y, 250, 80, this->btnTexture, this->font, L"Quit", 40, g::Color("#000"),
 		g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"), g::Color("#fff"),
 		g::Color("#fff")));
 }

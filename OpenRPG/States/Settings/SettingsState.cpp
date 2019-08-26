@@ -35,11 +35,11 @@ void SettingsState::initGui() {
 		throw "btn";
 
 	this->buttons["BACK"] = g::safe<gui::Button>(new gui::Button(
-		100, 800, 250, 200, this->tx, this->font, L"뒤로가기", 50, g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"),
+		100, 800, 250, 80, this->tx, this->font, L"뒤로가기", 50, g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"),
 		g::Color("#fff"), g::Color("#fff"), g::Color("#fff")));
 
 	this->buttons["APPLY"] = g::safe<gui::Button>(new gui::Button(
-		400, 800, 250, 200, this->tx, this->font, L"적용", 50, g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"),
+		400, 800, 250, 80, this->tx, this->font, L"적용", 50, g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"),
 		g::Color("#fff"), g::Color("#fff"), g::Color("#fff")));
 
 	std::vector<std::wstring> modes_str;
