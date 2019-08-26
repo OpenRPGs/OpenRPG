@@ -77,7 +77,7 @@ void SubSubState::update() {
 StateManager::getInstance()->Push(std::shared_ptr<State>(new EditorMeunState(this)));
 ```
 
-이는 `Utils.h`에 정의되어있는 표현을 통해서 `std::shared_ptr<T>`는 다음과 같이 축약될 수 있습니다.
+`Utils.h`에 정의되어있는 표현을 통해서 `std::shared_ptr<T>`는 다음과 같이 축약될 수 있습니다.
 ```c++
 StateManager::getInstance()->Push(g::safe<State>(new EditorMeunState(this)));
 ```
