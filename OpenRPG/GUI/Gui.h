@@ -93,7 +93,8 @@ namespace gui {
 	private:
 		bool active;
 		float gridSize;
-
+		bool hidden;
+		gui::Button* hide_button;
 
 		sf::RectangleShape bounds;
 		sf::Sprite sheet;
@@ -104,7 +105,7 @@ namespace gui {
 
 
 	public:
-		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* texture_sheet);
+		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* texture_sheet, sf::Font& font, std::wstring text);
 		~TextureSelector();
 
 		const bool& getActive() const;
