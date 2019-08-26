@@ -136,12 +136,26 @@ void EditorState::updateEditorInput(const float & dt)
 	//타일 맵 추가하기
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
 	{
-		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+		if (!this->textureSelector->getActive())
+		{
+			this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+		}
+		else
+		{
+			this->textureRect = this->textureSelector->getTextureRect();
+		}
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
 	{
-		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+		if (!this->textureSelector->getActive())
+		{
+			this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+		}
+		else
+		{
+
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && this->getKeytime())
@@ -192,17 +206,20 @@ void EditorState::updateButtons()
 
 void EditorState::updateGui()
 {
-	this->selectorRect.setTextureRect(this->textureRect);
-	this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y* this->stateData->gridSize);
+	this->textureSelector->update(this->mousePosWindow);
+
+	if (!this->textureSelector->getActive())
+	{
+		this->selectorRect.setTextureRect(this->textureRect);
+		this->selectorRect.setPosition(this->mousePosGrid.x * this->stateData->gridSize, this->mousePosGrid.y* this->stateData->gridSize);
+	}
 
 	this->cursorText.setPosition(sf::Vector2f(this->mousePosView.x + 100.f, this->mousePosView.y - 30));
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y <<
-		'\n'<<this->mousePosGrid.x << " " << this->mousePosGrid.y <<
+		'\n' << this->mousePosGrid.x << " " << this->mousePosGrid.y <<
 		'\n' << this->textureRect.left << " " << this->textureRect.top;
 	cursorText.setString(ss.str());
-
-	this->textureSelector->update(this->mousePosWindow);
 }
 
 void EditorState::updatePauseMenuButtons()
@@ -242,7 +259,9 @@ void EditorState::renderButtons(sf::RenderTarget & target)
 
 void EditorState::renderGui(sf::RenderTarget & target)
 {
-	target.draw(this->selectorRect);
+	if (!this->textureSelector->getActive())
+		target.draw(this->selectorRect);
+
 	this->textureSelector->render(target);
 	target.draw(this->cursorText);
 }

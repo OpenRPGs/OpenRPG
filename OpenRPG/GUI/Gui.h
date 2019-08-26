@@ -108,6 +108,7 @@ namespace gui {
 		~TextureSelector();
 
 		const bool& getActive() const;
+		const sf::IntRect& getTextureRect() const;
 
 		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget& target);

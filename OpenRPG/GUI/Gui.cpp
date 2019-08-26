@@ -307,6 +307,9 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	this->selector.setFillColor(sf::Color::Transparent);
 	this->selector.setOutlineThickness(1.f);
 	this->selector.setOutlineColor(sf::Color::Red);
+
+	this->textureRect.width = static_cast<int>(gridSize);
+	this->textureRect.height = static_cast<int>(gridSize);
 }
 
 gui::TextureSelector::~TextureSelector()
@@ -317,6 +320,11 @@ gui::TextureSelector::~TextureSelector()
 const bool & gui::TextureSelector::getActive() const
 {
 	return this->active;
+}
+
+const sf::IntRect & gui::TextureSelector::getTextureRect() const
+{
+	return this->textureRect;
 }
 
 void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
@@ -336,11 +344,18 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
 			this->bounds.getPosition().y + this->mousePosGird.y*this->gridSize
 		);
 	}
+
+	//선택해서 텍스쳐교체하기.
+	this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
+	this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+
 }
 
 void gui::TextureSelector::render(sf::RenderTarget & target)
 {
 	target.draw(this->bounds);
 	target.draw(this->sheet);
-	target.draw(this->selector);
+
+	if (this->active)
+		target.draw(this->selector);
 }
