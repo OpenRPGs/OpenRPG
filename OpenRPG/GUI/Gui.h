@@ -55,6 +55,10 @@ namespace gui {
 		void render(sf::RenderTarget& target);
 
 	};
+	
+	
+	////////////////////////////////////////
+
 
 	class DropDownList
 	{
@@ -79,5 +83,24 @@ namespace gui {
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2f& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);
+	};
+
+
+	//////////////////////////////////////////////
+
+	class TextureSelector
+	{
+	private:
+		sf::RectangleShape bounds;
+		sf::Sprite sheet;
+
+	public:
+		TextureSelector(float x, float y, float width, float height,const sf::Texture* texture_sheet);
+		~TextureSelector();
+
+		void update();
+		void render(sf::RenderTarget& target);
+
+
 	};
 }

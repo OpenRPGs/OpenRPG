@@ -17,6 +17,8 @@ class EditorState : public State {
 
 	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
+	
+	gui::TextureSelector* textureSelector;
 
 	//초기화함수
 	void initVariables();
