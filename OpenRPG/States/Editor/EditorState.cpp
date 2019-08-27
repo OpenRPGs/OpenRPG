@@ -107,8 +107,8 @@ EditorState::EditorState(StateData* state_data)
 	this->initFonts();
 	this->initText();
 	this->initKeybinds();
-	this->initPauseMenu();
 	this->initButtons();
+	this->initPauseMenu();
 	this->initTileMap();
 	this->initGui();
 
