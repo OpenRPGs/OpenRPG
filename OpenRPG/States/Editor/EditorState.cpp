@@ -66,7 +66,10 @@ void EditorState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
 
-	this->pmenu->addButton("QUIT", 800.f, "Quit", this->tx);
+	this->pmenu->addButton("QUIT", 800.f, L"메인으로", this->tx);
+
+	this->pmenu->addButton("SAVE", 600.f, L"저 장", this->tx);
+
 }
 
 void EditorState::initGui()
@@ -90,7 +93,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10,"Resources/map/sheet.png");
 }
 
 
@@ -236,6 +239,9 @@ void EditorState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
 		this->endState();
+
+	if (this->pmenu->isButtonPressed("SAVE"))
+		this->tileMap->saveToFile("text.slmp");
 }
 
 void EditorState::update()

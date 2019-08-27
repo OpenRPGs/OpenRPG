@@ -23,7 +23,7 @@ public:
 
 	//Functions
 	const bool isButtonPressed(const std::string key);
-	void addButton(const std::string key, float y, const std::string text, sf::Texture& btnTexure);
+	void addButton(const std::string key, float y, const std::wstring text, sf::Texture& btnTexure);
 	void update(const sf::Vector2f& mousePos);
 	void render(sf::RenderTarget& target);
 };

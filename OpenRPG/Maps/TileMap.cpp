@@ -2,13 +2,14 @@
 #include "TileMap.h"
 
 
-TileMap::TileMap(float gridSize, unsigned width, unsigned height)
+TileMap::TileMap(float gridSize, unsigned width, unsigned height, std::string texture_file)
 {
 	this->gridSizeF = gridSize;
 	this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
 	this->maxSize.x = width;
 	this->maxSize.y = height;
 	this->layers = 1;
+	this->textureFile = texture_file;
 
 	this->map.resize(this->maxSize.x, std::vector<std::vector<Tile*>>());
 	for (size_t x = 0; x < maxSize.x; x++)
@@ -18,12 +19,12 @@ TileMap::TileMap(float gridSize, unsigned width, unsigned height)
 			this->map[x].push_back(std::vector<Tile*>());
 			for (size_t z = 0; z < this->layers; z++)
 			{
-				this->map[x][y].resize(this->layers,NULL);
+				this->map[x][y].resize(this->layers, NULL);
 			}
 		}
 	}
 
-	if (!this->tileSheet.loadFromFile("Resources/map/sheet.png"))
+	if (!this->tileSheet.loadFromFile(texture_file))
 		throw "TileMap load failed";
 }
 
@@ -96,4 +97,57 @@ void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
 			std::cout << "DEBUG: 타일이 삭제되었습니다!" << std::endl;
 		}
 	}
+}
+
+void TileMap::saveToFile(const std::string fileName)
+{
+	//타일맵을 텍스트파일로 저장한다.
+	/*
+	Format:
+	Basic:
+	Size x y
+	girdSize
+	layers
+	texture file
+
+	All tiles:
+	gridPos x y, Texture rect x y collision type
+	*/
+
+	std::ofstream out_file;
+
+	out_file.open(fileName);
+
+	if (out_file.is_open())
+	{
+		out_file << this->maxSize.x << this->maxSize.y << '\n'
+			<< this->gridSizeU << '\n'
+			<< this->layers << '\n'
+			<< this->textureFile << '\n';
+
+
+		for (size_t x = 0; x < maxSize.x; x++)
+		{
+			for (size_t y = 0; y < maxSize.y; y++)
+			{
+				for (size_t z = 0; z < this->layers; z++)
+				{
+					if (this->map[x][y][z])
+						out_file << this->map[x][y][z]->getAsString() << " ";//남은 공간은 저장하지않도록 처리할예정.
+				}
+			}
+		}
+
+	}
+	else
+	{
+		std::cout << "ERROR::TILEMAP::COULD NOT SAVE TO FILE::FILNAME: " << fileName << std::endl;
+	}
+
+	out_file.close();
+}
+
+void TileMap::loadFromFile(const std::string fileName)
+{
+
 }

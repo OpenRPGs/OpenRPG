@@ -62,12 +62,12 @@ void GameState::initPauseMenu()
 {
 	this->pmenu = new PauseMenu(*this->window, this->font);
 
-	this->pmenu->addButton("QUIT", 800.f, "Quit", this->btnTexure);
+	this->pmenu->addButton("QUIT", 800.f, L"메인으로", this->btnTexure);
 }
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/map/sheet.png");
 }
 
 void GameState::initPlayers()
