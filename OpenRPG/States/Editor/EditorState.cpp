@@ -70,6 +70,8 @@ void EditorState::initPauseMenu()
 
 	this->pmenu->addButton("SAVE", 600.f, L"저 장", this->tx);
 
+	this->pmenu->addButton("LOAD", 450.f, L"불러오기", this->tx);
+
 }
 
 void EditorState::initGui()
@@ -242,6 +244,9 @@ void EditorState::updatePauseMenuButtons()
 
 	if (this->pmenu->isButtonPressed("SAVE"))
 		this->tileMap->saveToFile("text.slmp");
+
+	if (this->pmenu->isButtonPressed("LOAD"))
+		this->tileMap->loadFromFile("text.slmp");
 }
 
 void EditorState::update()

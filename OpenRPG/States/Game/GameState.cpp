@@ -68,6 +68,7 @@ void GameState::initPauseMenu()
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/map/sheet.png");
+	this->tileMap->loadFromFile("text.slmp");
 }
 
 void GameState::initPlayers()
