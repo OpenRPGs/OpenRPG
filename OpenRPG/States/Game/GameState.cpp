@@ -43,7 +43,8 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/image/Sprites/Player/PLAYER_SHEET.png"))
+	//초록색 : walk_sprite  중세시대기사 : PLAYER_SHEET
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/image/Sprites/Player/walk_sprite.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
 	}

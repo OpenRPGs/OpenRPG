@@ -140,27 +140,31 @@ void EditorState::updateInput(const float & dt)
 void EditorState::updateEditorInput(const float & dt)
 {
 	//타일 맵 추가하기
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
+	if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 	{
-		if (!this->textureSelector->getActive() )
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) )
 		{
-			this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+			if (!this->textureSelector->getActive())
+			{
+				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+			}
+			else
+			{
+				this->textureRect = this->textureSelector->getTextureRect();
+			}
 		}
-		else
-		{
-			this->textureRect = this->textureSelector->getTextureRect();
-		}
-	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
-	{
-		if (!this->textureSelector->getActive())
-		{
-			this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
-		}
-		else
-		{
 
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		{
+			if (!this->textureSelector->getActive())
+			{
+				this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
+			}
+			else
+			{
+
+			}
 		}
 	}
 
@@ -265,8 +269,11 @@ void EditorState::renderButtons(sf::RenderTarget & target)
 
 void EditorState::renderGui(sf::RenderTarget & target)
 {
-	if (!this->textureSelector->getActive())
-		target.draw(this->selectorRect);
+	if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
+	{
+		if (!this->textureSelector->getActive())
+			target.draw(this->selectorRect);
+	}
 
 	this->textureSelector->render(target);
 	target.draw(this->cursorText);

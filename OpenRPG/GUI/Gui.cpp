@@ -327,10 +327,10 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
 	this->textureRect.height = static_cast<int>(gridSize);
 
 	this->hide_button = new gui::Button(
-		x, y, 50.f, 50.f,
-		font, text, 40,
-		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
-		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+		x-10, y, 80.f, 80.f,
+		font, text, 20,
+		sf::Color(255, 255, 255, 255), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 50));
 }
 
 gui::TextureSelector::~TextureSelector()
