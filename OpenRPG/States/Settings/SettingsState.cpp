@@ -96,9 +96,8 @@ void SettingsState::updateGui() {
 		auto gfxSettings = Game::getGraphicsSettings();
 		gfxSettings->resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
 
-		auto window = Game::getWindow();
-		window->create(gfxSettings->resolution, gfxSettings->title, sf::Style::Default);
-		window->setFramerateLimit(Game::getInstance()->getFramerate());
+		// 다시 세팅
+		Game::getInstance()->setupWindow();
 	}
 
 	//드랍다운리스트

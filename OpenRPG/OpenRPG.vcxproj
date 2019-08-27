@@ -165,6 +165,7 @@
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Graphics.cpp" />
     <ClCompile Include="Game\GraphicsSettings.cpp" />
     <ClCompile Include="GUI\Button\Button.cpp" />
     <ClCompile Include="GUI\DropDownList\DropdownList.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Player.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Graphics.h" />
     <ClInclude Include="Game\GraphicsSettings.h" />
     <ClInclude Include="GUI\Button\Button.h" />
     <ClInclude Include="GUI\DropDownList\DropDownList.h" />

@@ -1,7 +1,10 @@
 ﻿#include "stdafx.h"
+
 #include "Game.h"
+
 #include "States/State.h"
 #include "States/MainMenu/MainMenuState.h"
+
 
 #include "Managers/StateManager.h"
 #include "Managers/SoundManager.h"
@@ -47,17 +50,7 @@ void Game::initVariables() {
 }
 
 void Game::initWindow() {
-	if (this->gfxSettings.fullscreen)
-		this->window = g::safe<sf::RenderWindow>(new sf::RenderWindow(
-			this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Fullscreen,
-			this->gfxSettings.contextSettings));
-	else
-		this->window = g::safe<sf::RenderWindow>(new sf::RenderWindow(
-			this->gfxSettings.resolution, this->gfxSettings.title,
-			sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings));
-
-	this->setFramerate(this->gfxSettings.frameRateLimit);
-	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+	this->setupWindow();
 }
 
 void Game::initKeys() {
@@ -110,6 +103,22 @@ float Game::deltaTime() {
 }
 #pragma endregion
 
+void Game::setupWindow() {
+	if (this->gfxSettings.fullscreen)
+		this->window = g::safe<sf::RenderWindow>(new sf::RenderWindow(
+			this->gfxSettings.resolution, this->gfxSettings.title, sf::Style::Fullscreen,
+			this->gfxSettings.contextSettings));
+	else
+		this->window = g::safe<sf::RenderWindow>(new sf::RenderWindow(
+			this->gfxSettings.resolution, this->gfxSettings.title,
+			sf::Style::Titlebar | sf::Style::Close, this->gfxSettings.contextSettings));
+
+	this->setFramerate(this->gfxSettings.frameRateLimit);
+	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+
+	this->graphics->resetBackBuffer(this->gfxSettings.resolution.width, this->gfxSettings.resolution.height);
+}
+
 #pragma region Getters
 g::safe<sf::RenderWindow> Game::getWindow() {
 	auto obj = Game::getInstance();
@@ -149,6 +158,14 @@ GraphicsSettings* Game::getGraphicsSettings() {
 		throw "ERROR::Game::Already Disposed";
 
 	return &obj->gfxSettings;
+}
+
+g::safe< Graphics> Game::Graphics() {
+	auto obj = Game::getInstance();
+	if (obj->disposed)
+		throw "ERROR::Game::Already Disposed";
+
+	return obj->graphics;
 }
 #pragma endregion
 
