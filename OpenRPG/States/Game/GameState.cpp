@@ -8,6 +8,19 @@
 #include "States/State.h"
 #include "GameState.h"	
 
+void GameState::initVariable()
+{
+	this->fadInFlag = true;
+	this->backGroundColor = 255.f;
+}
+
+void GameState::initBackground() {
+	this->background.setSize(sf::Vector2f(
+		static_cast<float>(this->window->getSize().x),
+		static_cast<float>(this->window->getSize().y)));
+
+	this->background.setFillColor(sf::Color::Transparent);
+}
 
 //Initializer functions
 void GameState::initButtons()
@@ -65,6 +78,13 @@ void GameState::initPauseMenu()
 	this->pmenu->addButton("QUIT", 800.f, L"메인으로", this->btnTexure);
 }
 
+void GameState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+		this->endState();
+}
+
+
 void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/map/sheet.png");
@@ -80,6 +100,7 @@ void GameState::initPlayers()
 GameState::GameState(StateData* state_data)
 	:State(state_data)
 {
+	this->initVariable();
 	this->initButtons();
 	this->initKeybinds();
 	this->initFonts();
@@ -87,6 +108,7 @@ GameState::GameState(StateData* state_data)
 	this->initPauseMenu();
 	this->initPlayers();
 	this->initTileMap();
+	this->initBackground();
 }
 
 GameState::~GameState()
@@ -114,8 +136,23 @@ void GameState::updateInput(const float & dt)
 
 void GameState::updatePauseButtons()
 {
-	if (this->pmenu->isButtonPressed("QUIT") )
+	if (this->pmenu->isButtonPressed("QUIT"))
 		this->endState();
+}
+
+void GameState::updateFadeIn(const float & dt)
+{
+	if (fadInFlag)
+	{
+		std::cout << backGroundColor << std::endl;
+		this->backGroundColor -= (dt * 50);
+		this->background.setFillColor(sf::Color(0.f, 0.f, 0.f, this->backGroundColor));
+		if (backGroundColor < 0.f)
+		{
+			fadInFlag = false;
+			backGroundColor = 255.f;
+		}
+	}
 }
 
 void GameState::updatePlayerInput(const float & dt)
@@ -143,6 +180,8 @@ void GameState::update()
 	this->updateMousePositions(); //일시정지든 아니든 마우스는 사용가능해야함
 	this->updateKeytime(dt);
 	this->updateInput(dt);
+	this->updateFadeIn(dt);
+	this->updatePauseButtons();
 
 	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
 	{
@@ -161,12 +200,16 @@ void GameState::update()
 
 void GameState::render(sf::RenderTarget* target)
 {
+
 	if (!target)
 		target = this->window;
+
 
 	this->tileMap->render(*target);
 
 	this->player->render(*target);
+
+	target->draw(this->background);
 
 	if (this->paused)
 	{

@@ -13,7 +13,10 @@
 #include "Managers/StateManager.h"
 
 // Initaillizer functions
-void MainMenuState::initVariables() {}
+void MainMenuState::initVariables() {
+	this->backGroundColor = 255.f;
+	this->fadeOutFlag = false;
+}
 
 void MainMenuState::initBackground() {
 	this->background.setSize(sf::Vector2f(
@@ -111,7 +114,8 @@ void MainMenuState::updateButtons() {
 
 	//게임시작
 	if (this->buttons["GAME_STATE"]->isPressed()) {
-		StateManager::getInstance()->Push(new GameState(this->stateData));
+		//StateManager::getInstance()->Push(new GameState(this->stateData));
+		this->fadeOutFlag= true;
 	}
 
 	//설정
@@ -130,12 +134,33 @@ void MainMenuState::updateButtons() {
 	}
 }
 
+void MainMenuState::updateFadeout(const float dt)
+{
+	if (this->fadeOutFlag)
+	{
+		this->backGroundColor -= (dt * 200);
+		this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
+		std::cout << backGroundColor << std::endl;
+		if (backGroundColor < 0)
+		{
+			StateManager::getInstance()->Push(new GameState(this->stateData));
+			this->fadeOutFlag = false;
+			backGroundColor = 255.f;
+			this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
+		}
+	}
+}
+
+void MainMenuState::updateFadeIn(const float dt)
+{
+}
+
 void MainMenuState::update() {
 	auto dt = Game::getInstance()->deltaTime();
 
 	this->updateMousePositions();
 	this->updateInput(dt);
-
+	this->updateFadeout(dt);
 	this->updateButtons();
 }
 

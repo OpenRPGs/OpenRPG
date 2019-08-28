@@ -24,9 +24,9 @@ const bool State::getKeytime() {
 	return false;
 }
 
-//현재 스테이지를 끝내는 것이므로 pop으로 수정.
+//현재 스테이지를 끝내는 것이므로 pop으로 수정. //재수정
 void State::endState() {
-	StateManager::getInstance()->Pop();
+	StateManager::getInstance()->PopUntil(this);
 }
 void State::pauseState() {
 	this->paused = true;
