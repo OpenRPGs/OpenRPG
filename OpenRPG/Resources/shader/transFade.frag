@@ -1,14 +1,13 @@
 /* Fade in/out style transition */
 
-uniform sampler2D frozenScene;
-uniform sampler2D currentScene;
+uniform sampler2D frozenScreen;
+uniform sampler2D currentScreen;
 uniform float prog;
 
-varying vec2 v_texCoord;
-
 void main() {
-	vec4 newPixel = texture2D(currentScene, v_texCoord);
-	vec4 oldPixel = texture2D(frozenScene, v_texCoord);
+	vec2 v_texCoord = gl_TexCoord[0].xy;
+	vec4 newPixel = texture2D(currentScreen, v_texCoord);
+	vec4 oldPixel = texture2D(frozenScreen, v_texCoord);
 
-	gl_FragColor = mix(oldPixel, newPixel, prog);
+	gl_FragColor = mix(newPixel, oldPixel, prog);
 }

@@ -59,7 +59,10 @@ void PauseMenuState::initButtons() {
 		g::Color("#fff")));
 }
 
-void PauseMenuState::initKeybinds() {}
+void PauseMenuState::initKeybinds() {
+	auto supportedKeys = Game::getInstance()->getSupportedKeys();
+	this->keybinds["CLOSE"] = supportedKeys->at("Backspace");
+}
 #pragma endregion
 
 PauseMenuState::PauseMenuState() : State() {
@@ -79,12 +82,18 @@ void PauseMenuState::updateInput(const float dt) {
 void PauseMenuState::update() {
 	State::update();
 
+	auto dt = Game::getInstance()->deltaTime();
+
 	this->updateMousePositions();
+	this->updateInput(dt);
 
 	for (auto& it : this->buttons)
 		it.second->update(this->mousePosView);
 
 	if (this->buttons["QUIT"]->isPressed()) {
+		Game::Graphics()->Freeze();
+		Game::Graphics()->FadeOut(1.f);
+
 		this->endState();
 		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
 		return;

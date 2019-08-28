@@ -33,6 +33,8 @@ class Game : public IDisposable {
 
 	void updateSFMLEvents();
 
+	friend class Graphics;
+
   public:
 	static Game* getInstance();
 	void Dispose();

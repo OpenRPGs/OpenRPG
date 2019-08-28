@@ -46,6 +46,7 @@ void Game::Dispose() {
 
 #pragma region Initializers
 void Game::initVariables() {
+	this->graphics = g::safe<class Graphics>(new class Graphics());
 	this->gridSize = 50.f;
 }
 
@@ -204,8 +205,12 @@ void Game::update() {
 	// 갱신 및 그리기 작업
 	stateManager->Update();
 
-	// 그린 결과물을 화면에 표시
-	this->window->display();
+	// 완성된(모든 장면의 내용을 담은) 텍스쳐를 실제 화면에 그리기
+	this->graphics->Present();
+
+	// 트랜지션 또는 페이딩이 있다면 진행
+	this->graphics->TransitionCore();
+	this->graphics->FadeCore();
 }
 
 Game* Game::boot() {
