@@ -36,9 +36,7 @@ void EditorState::initKeybinds() {
 }
 
 void EditorState::initButtons() {
-	this->tx = g::safe<sf::Texture>(new sf::Texture());
-	if (!this->tx->loadFromFile("Resources/image/Buttons/btn1.png"))
-		throw "btn";
+
 }
 
 void EditorState::initText() {
@@ -114,14 +112,14 @@ void EditorState::updateEditorInput(const float dt) {
 }
 void EditorState::updateButtons() {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
-	for (auto &it : this->buttons) {
-		it.second->update(this->mousePosView);
-	}
+	//for (auto &it : this->buttons) {
+	//	it.second->update(this->mousePosView);
+	//}
 
-	if (this->buttons["EXIT_STATE"]->isPressed()) {
-		StateManager::getInstance()->GoTo(SafeState(MainMenuState));
-		return;
-	}
+	//if (this->buttons["EXIT_STATE"]->isPressed()) {
+	//	StateManager::getInstance()->GoTo(SafeState(MainMenuState));
+	//	return;
+	//}
 }
 void EditorState::updateGui() {
 	auto gridSize = Game::getGridSize();
@@ -156,8 +154,8 @@ void EditorState::renderGui(sf::RenderTexture *target) {
 	target->draw(this->cursorText);
 }
 void EditorState::renderButtons(sf::RenderTexture *target) {
-	for (auto &it : this->buttons)
-		it.second->render(target);
+	//for (auto &it : this->buttons)
+	//	it.second->render(target);
 }
 void EditorState::render(sf::RenderTexture *target) {
 	State::render(target);

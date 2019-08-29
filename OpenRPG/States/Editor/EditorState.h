@@ -7,8 +7,8 @@
 class EditorState : public State {
   private:
 	g::safe<sf::Font> font;
-	g::safe<sf::Texture> tx;
-	g::safemap<gui::Button> buttons;
+//	g::safe<sf::Texture> tx;
+//	g::safemap<gui::Button> buttons;
 
 	sf::Text cursorText;
 	g::safe<TileMap> tileMap;
