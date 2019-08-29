@@ -9,6 +9,8 @@
 void EditorState::initVariables()
 {
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+	this->collision = false;
+	this->type = TileTypes::DEFAILT;
 }
 
 void EditorState::initFonts()
@@ -95,7 +97,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10,"Resources/map/sheet.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/map/sheet.png");
 }
 
 
@@ -147,11 +149,11 @@ void EditorState::updateEditorInput(const float & dt)
 	//타일 맵 추가하기
 	if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 	{
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			if (!this->textureSelector->getActive())
 			{
-				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
 			}
 			else
 			{
@@ -203,11 +205,33 @@ void EditorState::updateEditorInput(const float & dt)
 			this->textureRect.top -= 100;
 		}
 	}
+
+	//Toggle collision
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_COLLISION"))) && this->getKeytime())
+	{
+		if (this->collision)
+		{
+			this->collision = false;
+		}
+		else
+			this->collision = true;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("INCREASE_TYPE"))) && this->getKeytime())
+	{
+		++this->type;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DECREASE_TYPE"))) && this->getKeytime())
+	{
+		if (this->type > 0)
+			--this->type;
+	}
 }
+
+
 
 void EditorState::updateButtons()
 {
-	////모든 버튼들의 상태를 기능에맞게 업데이트해줌
+	//////모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	//for (auto &it : this->buttons)
 	//{
 	//	it.second->update(this->mousePosView);
@@ -233,7 +257,11 @@ void EditorState::updateGui()
 	std::stringstream ss;
 	ss << this->mousePosView.x << " " << this->mousePosView.y <<
 		'\n' << this->mousePosGrid.x << " " << this->mousePosGrid.y <<
-		'\n' << this->textureRect.left << " " << this->textureRect.top;
+		'\n' << this->textureRect.left << " " << this->textureRect.top <<
+		'\n' << "Collision : " << this->collision <<
+		'\n' << " Type : " << this->type
+		;
+
 	cursorText.setString(ss.str());
 }
 

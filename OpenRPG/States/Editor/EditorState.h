@@ -22,6 +22,9 @@ class EditorState : public State {
 
 	gui::TextureSelector* textureSelector;
 
+	bool collision;
+	short type;
+
 	//초기화함수
 	void initVariables();
 	void initFonts();

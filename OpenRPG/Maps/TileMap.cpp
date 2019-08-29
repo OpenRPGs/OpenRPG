@@ -79,7 +79,7 @@ void TileMap::render(sf::RenderTarget & target)
 	}
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect)
+void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect, const bool& collision, const short& type)
 {
 	if (x < this->maxSize.x && x >= 0 &&
 		y < this->maxSize.y && y >= 0 &&
@@ -87,7 +87,7 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, cons
 	{
 		if (this->map[x][y][z] == NULL) //비어있을때만 타일을 삽입한다.
 		{
-			this->map[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileSheet, texture_rect);
+			this->map[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileSheet, texture_rect, collision, type);
 			std::cout << "DEBUG: 타일이 추가되었습니다!" << std::endl;
 		}
 	}
@@ -121,8 +121,8 @@ void TileMap::saveToFile(const std::string fileName)
 
 	All tiles:
 	gridPos x y layers
-	Texture rect x y 
-	collision 
+	Texture rect x y
+	collision
 	type
 	*/
 
@@ -145,8 +145,8 @@ void TileMap::saveToFile(const std::string fileName)
 				for (size_t z = 0; z < this->layers; z++)
 				{
 					if (this->map[x][y][z])
-						out_file << x << " " << y << " " << z << " " << 
-						this->map[x][y][z]->getAsString() 
+						out_file << x << " " << y << " " << z << " " <<
+						this->map[x][y][z]->getAsString()
 						<< " ";//남은 공간은 저장하지않도록 처리할예정.
 				}
 			}
@@ -215,8 +215,8 @@ void TileMap::loadFromFile(const std::string fileName)
 		{
 			this->map[x][y][z] = new Tile(
 				x, y,
-				this->gridSizeF, 
-				this->tileSheet, 
+				this->gridSizeF,
+				this->tileSheet,
 				sf::IntRect(trX, trY, this->gridSizeU, this->gridSizeU),
 				collision,
 				type);
