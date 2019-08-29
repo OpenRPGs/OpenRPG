@@ -39,11 +39,6 @@ void EditorState::initButtons() {
 	this->tx = g::safe<sf::Texture>(new sf::Texture());
 	if (!this->tx->loadFromFile("Resources/image/Buttons/btn1.png"))
 		throw "btn";
-
-	this->buttons["EXIT_STATE"] = g::safe<gui::Button>(new gui::Button(
-		250, 80, 1250, 80, tx, this->font, L"(에디터) 맵수정, 캐릭터배치 등등 ", 50,
-		g::Color("#000"), g::Color("#969696fa"), g::Color("#14141432"), g::Color("#fff"),
-		g::Color("#fff"), g::Color("#fff")));
 }
 
 void EditorState::initText() {
@@ -90,11 +85,11 @@ void EditorState::updateInput(const float dt) {
 }
 void EditorState::updateEditorInput(const float dt) {
 	//타일 맵 추가하기
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime()) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime()) {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
 		this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
 	}
 

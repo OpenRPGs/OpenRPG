@@ -43,7 +43,7 @@ void Game::Dispose() {
 
 #pragma region Initializers
 void Game::initVariables() {
-	this->gridSize = 50.f;
+	this->gridSize = 100.f;
 }
 
 void Game::initWindow() {
