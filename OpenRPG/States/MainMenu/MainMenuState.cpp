@@ -89,6 +89,9 @@ void MainMenuState::initSounds() {
 #pragma endregion
 
 MainMenuState::MainMenuState() : State() {
+	Game::Graphics()->setBrightness(0);
+	Game::Graphics()->FadeIn(1.f);
+
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
@@ -130,6 +133,9 @@ void MainMenuState::updateButtons() {
 
 	//종료
 	if (this->buttons["EXIT_STATE"]->isPressed()) {
+		Game::Graphics()->Freeze();
+		Game::Graphics()->FadeOut(1.f);
+
 		this->endState();
 		return;
 	}

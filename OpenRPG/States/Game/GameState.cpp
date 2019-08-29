@@ -59,6 +59,23 @@ void GameState::initTileMap() {
 #pragma endregion
 
 GameState::GameState() : State() {
+	Game::Graphics()->Freeze();
+
+	Game::Graphics()->Transition("Resources/image/Transitions/t1.png"); // 작은 마름모 반복 페이딩 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t2.png"); // 유리창 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t2_i.png"); // 유리창 스타일 (거꾸로)
+	// Game::Graphics()->Transition("Resources/image/Transitions/t3.png"); // 시계 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t4.png"); // 측면 페이딩 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t5.png"); // 상하 펼침 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t6.png"); // 큰 마름모 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t7.png", 2, 0); // 포켓몬스터 스타일
+	// Game::Graphics()->Transition("Resources/image/Transitions/t8_16_9.png"); // 랜덤 스타일 스타일
+
+	// Game::Graphics()->Transition(""); // 단순 페이딩
+
+	Game::Graphics()->Freeze();
+	Game::Graphics()->FadeIn(1.f);
+
 	this->initButtons();
 	this->initKeybinds();
 	this->initFonts();

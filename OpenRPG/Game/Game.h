@@ -3,6 +3,7 @@
 #include "Defines/IDisposable.h"
 #include "States/State.h"
 
+#include "Graphics.h"
 #include "GraphicsSettings.h"
 
 class Game : public IDisposable {
@@ -16,6 +17,7 @@ class Game : public IDisposable {
 	static Game* Instance;
 
 	g::safe<sf::RenderWindow> window;
+	g::safe<Graphics> graphics;
 	sf::Event sfEvent;
 
 	float gridSize;
@@ -30,6 +32,8 @@ class Game : public IDisposable {
 	void initKeys();
 
 	void updateSFMLEvents();
+
+	friend class Graphics;
 
   public:
 	static Game* getInstance();
@@ -46,11 +50,14 @@ class Game : public IDisposable {
 	void setFramerate(int frameRate);
 	int getFramerate();
 
+	void setupWindow();
+
 	static g::safe<sf::RenderWindow> getWindow();
 	static g::map<int>* getSupportedKeys();
 	static bool getFocused();
 	static float getGridSize();
 	static GraphicsSettings* getGraphicsSettings();
+	static g::safe< Graphics> Graphics();
 
 	// Core
 	Game* boot();

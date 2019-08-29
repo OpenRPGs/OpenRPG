@@ -1,9 +1,8 @@
 ﻿![license](https://img.shields.io/crates/l/crate)
 ![commit](https://img.shields.io/github/last-commit/OpenRPGs/OpenRPG)
-![build](https://img.shields.io/badge/Build-FAILED-red)
+![build](https://img.shields.io/badge/Build-SUCCESS-blue)
 <center><img src="./Image/head.PNG" width="600" height="300"></center> 
  
-merge에러 수정중 (master브랜치나, develop2브랜치참고해주세요) 
  
 ## OpenRPG 
 

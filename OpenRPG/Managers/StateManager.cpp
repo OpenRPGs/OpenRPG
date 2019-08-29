@@ -137,10 +137,7 @@ StateManager* StateManager::Update() {
 	if (render)
 		renderIdx = 0;
 
-	// 렌더 타깃 텍스쳐를 생성
-	auto resolution = Game::getGraphicsSettings()->resolution;
-	sf::RenderTexture renderTarget;
-	renderTarget.create(resolution.width, resolution.height);
+	auto renderTarget = Game::Graphics()->getBackBuffer();
 
 	// 갱신하거나 그릴 수 있는 장면들 중 가장 아래에 있는 장면부터 시작
 	auto startIdx = std::min(updateIdx, renderIdx);
@@ -151,16 +148,12 @@ StateManager* StateManager::Update() {
 			item->update();
 
 		if (i >= renderIdx) {
-			item->render(&renderTarget);
+			item->render(renderTarget.get());
 
 			// 내부 실제 텍스쳐에 반영?
-			renderTarget.display();
+			renderTarget->display();
 		}
 	}
-
-	// 완성된(모든 장면의 내용을 담은) 텍스쳐를 실제 화면에 그리기
-	sf::Sprite renderTargetSprite(renderTarget.getTexture());
-	Game::getWindow()->draw(renderTargetSprite);
 
 	return this;
 }
