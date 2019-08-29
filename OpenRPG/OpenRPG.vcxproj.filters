@@ -141,6 +141,9 @@
     <ClCompile Include="Components\MusicComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Graphics.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="Components\MusicComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Graphics.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
