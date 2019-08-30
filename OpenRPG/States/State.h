@@ -63,7 +63,7 @@ public:
 
 	virtual void updateInput(const float& dt) = 0;
 	virtual void updateKeytime(const float& dt);
-	virtual void updateMousePositions();
+	virtual void updateMousePositions(sf::View* view = NULL);
 	virtual void update() = 0;
 	virtual void render(sf::RenderTarget* target = NULL) = 0;
 };

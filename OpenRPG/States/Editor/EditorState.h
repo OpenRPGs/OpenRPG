@@ -13,6 +13,8 @@ class EditorState : public State {
 	sf::Texture tx;
 	PauseMenu* pmenu;
 
+	sf::View mainView;
+
 	TileMap* tileMap;
 
 	sf::RectangleShape sidebar;
@@ -27,6 +29,7 @@ class EditorState : public State {
 
 	//초기화함수
 	void initVariables();
+	void initView();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();

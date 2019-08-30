@@ -13,6 +13,21 @@ void EditorState::initVariables()
 	this->type = TileTypes::DEFAILT;
 }
 
+void EditorState::initView()
+{
+	this->mainView.setSize(
+		sf::Vector2f(
+			this->stateData->gfxSettings->resolution.width,
+			this->stateData->gfxSettings->resolution.height
+		)
+	);
+
+	this->mainView.setCenter(
+		this->stateData->gfxSettings->resolution.width / 2.f,
+		this->stateData->gfxSettings->resolution.height / 2.f
+	);
+}
+
 void EditorState::initFonts()
 {
 	if (!this->font.loadFromFile("Fonts/R2.ttc"))
@@ -105,6 +120,7 @@ EditorState::EditorState(StateData* state_data)
 	:State(state_data)
 {
 	this->initVariables();
+	this->initView();
 	this->initBackground();
 	this->initFonts();
 	this->initText();
@@ -175,35 +191,34 @@ void EditorState::updateEditorInput(const float & dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && this->getKeytime())
+	//타일맵 이동코드. 삭제예정.
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && this->getKeytime())
+	//{
+	//	if (this->textureRect.left > 0)
+	//	{
+	//		this->textureRect.left -= 100;
+	//	}
+	//}
+
+
+	//카메라이동 입력(하드코딩되어있음. 수정예정)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 	{
-		if (this->textureRect.left < 300)
-		{
-			this->textureRect.left += 100;
-		}
+		this->mainView.move(-10.f, 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && this->getKeytime())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 	{
-		if (this->textureRect.left > 0)
-		{
-			this->textureRect.left -= 100;
-		}
+		this->mainView.move(10.f, 0);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && this->getKeytime())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 	{
-		if (this->textureRect.top < 200)
-		{
-			this->textureRect.top += 100;
-		}
+		this->mainView.move(0.f, -10.f);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && this->getKeytime())
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 	{
-		if (this->textureRect.top > 0)
-		{
-			this->textureRect.top -= 100;
-		}
+		this->mainView.move(0.f, 10.f);
 	}
 
 	//Toggle collision
@@ -324,8 +339,11 @@ void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
+	target->setView(this->mainView);
 	this->tileMap->render(*target);
 
+
+	this->window->setView(this->window->getDefaultView());
 	this->renderButtons(*target);
 	this->renderGui(*target);
 
