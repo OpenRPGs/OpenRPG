@@ -11,6 +11,7 @@ void EditorState::initVariables()
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 	this->collision = false;
 	this->type = TileTypes::DEFAILT;
+	this->cameraSpeed = 100.f;
 }
 
 void EditorState::initView()
@@ -202,24 +203,25 @@ void EditorState::updateEditorInput(const float & dt)
 
 
 	//카메라이동 입력(하드코딩되어있음. 수정예정)
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_UP"))))
 	{
-		this->mainView.move(-10.f, 0);
+		this->mainView.move(0.f, -this->cameraSpeed * dt);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_DOWN"))))
 	{
-		this->mainView.move(10.f, 0);
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-	{
-		this->mainView.move(0.f, -10.f);
+		this->mainView.move(0.f, this->cameraSpeed * dt);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_LEFT"))))
 	{
-		this->mainView.move(0.f, 10.f);
+		this->mainView.move(-this->cameraSpeed * dt, 0.f);
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_RIGHT"))))
+	{
+		this->mainView.move(this->cameraSpeed * dt, 0.f);
+	}
+
+
 
 	//Toggle collision
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_COLLISION"))) && this->getKeytime())
@@ -296,7 +298,7 @@ void EditorState::update()
 {
 	auto dt = Game::getInstance()->deltaTime();
 
-	this->updateMousePositions();
+	this->updateMousePositions(&this->mainView);
 	this->updateKeytime(dt);
 	this->updateInput(dt);
 
@@ -308,7 +310,7 @@ void EditorState::update()
 	}
 	else
 	{
-		this->pmenu->update(this->mousePosView);
+		this->pmenu->update(this->mousePosWindow);
 		this->updatePauseMenuButtons();
 	}
 }
@@ -325,29 +327,35 @@ void EditorState::renderGui(sf::RenderTarget & target)
 {
 	if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
 	{
-		if (!this->textureSelector->getActive())
-			target.draw(this->selectorRect);
+		target.setView(this->mainView);
+		target.draw(this->selectorRect);
 	}
 
+	target.setView(this->window->getDefaultView());
 	this->textureSelector->render(target);
+	target.draw(this->sidebar);
+
+	target.setView(this->mainView);
 	target.draw(this->cursorText);
 
-	target.draw(this->sidebar);
 }
 
 void EditorState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
+
 	target->setView(this->mainView);
+
 	this->tileMap->render(*target);
 
+	target->setView(this->window->getDefaultView());
 
-	this->window->setView(this->window->getDefaultView());
 	this->renderButtons(*target);
 	this->renderGui(*target);
 
 	if (this->paused) {
+		this->window->setView(this->window->getDefaultView());
 		this->pmenu->render(*target);
 	}
 

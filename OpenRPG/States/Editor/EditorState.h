@@ -14,6 +14,7 @@ class EditorState : public State {
 	PauseMenu* pmenu;
 
 	sf::View mainView;
+	float cameraSpeed;
 
 	TileMap* tileMap;
 

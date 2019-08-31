@@ -109,7 +109,7 @@ void MainMenuState::updateInput(const float& dt) {
 void MainMenuState::updateButtons() {
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto& it : this->buttons) {
-		it.second->update(this->mousePosView);
+		it.second->update(this->mousePosWindow);
 	}
 
 	//게임시작
@@ -138,7 +138,7 @@ void MainMenuState::updateFadeout(const float dt)
 {
 	if (this->fadeOutFlag)
 	{
-		this->backGroundColor -= (dt * 200);
+		this->backGroundColor -= (dt * 400);
 		this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
 		std::cout << backGroundColor << std::endl;
 		if (backGroundColor < 0)

@@ -78,6 +78,11 @@ void GameState::initPauseMenu()
 	this->pmenu->addButton("QUIT", 800.f, L"메인으로", this->btnTexure);
 }
 
+void GameState::updateView(const float& dt)
+{
+	this->view.setCenter(this->player->getPosition());
+}
+
 void GameState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
@@ -89,6 +94,24 @@ void GameState::initTileMap()
 {
 	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/map/sheet.png");
 	this->tileMap->loadFromFile("text.slmp");
+}
+
+void GameState::initView()
+{
+	this->view.setSize(
+		sf::Vector2f(
+			this->stateData->gfxSettings->resolution.width,
+			this->stateData->gfxSettings->resolution.height
+		)
+	);
+
+	this->view.setCenter(
+		sf::Vector2f(
+			this->stateData->gfxSettings->resolution.width / 2.f,
+			this->stateData->gfxSettings->resolution.height / 2.f
+		)
+	);
+
 }
 
 void GameState::initPlayers()
@@ -109,6 +132,7 @@ GameState::GameState(StateData* state_data)
 	this->initPlayers();
 	this->initTileMap();
 	this->initBackground();
+	this->initView();
 }
 
 GameState::~GameState()
@@ -177,7 +201,7 @@ void GameState::update()
 	//윈도우 활성체크
 	window_focus = this->window->hasFocus();
 
-	this->updateMousePositions(); //일시정지든 아니든 마우스는 사용가능해야함
+	this->updateMousePositions(&this->view); //일시정지든 아니든 마우스는 사용가능해야함
 	this->updateKeytime(dt);
 	this->updateInput(dt);
 	this->updateFadeIn(dt);
@@ -185,13 +209,15 @@ void GameState::update()
 
 	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
 	{
+		this->updateView(dt);
+
 		this->updatePlayerInput(dt);
 
 		this->player->update(dt);
 	}
 	else
 	{
-		this->pmenu->update(this->mousePosView);
+		this->pmenu->update(this->mousePosWindow);
 	}
 }
 
@@ -204,7 +230,7 @@ void GameState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 
-
+	target->setView(this->view);
 	this->tileMap->render(*target);
 
 	this->player->render(*target);
@@ -213,6 +239,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	if (this->paused)
 	{
+		target->setView(this->window->getDefaultView());
 		this->pmenu->render(*target);
 		this->updatePauseButtons();
 	}

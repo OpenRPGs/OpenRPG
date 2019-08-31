@@ -7,6 +7,10 @@
 
 class GameState : public State {
 private:
+	sf::View view;
+	sf::RenderTexture renderTexture;
+	sf::Sprite renderSprite;
+
 	int window_focus;
 
 	sf::RectangleShape background;
@@ -34,12 +38,14 @@ private:
 	void initFonts();
 	void initPauseMenu();
 	void initTileMap();
+	void initView();
 
 public:
 	GameState(StateData* state_data);
 	virtual ~GameState();
 
 	//함수
+	void updateView(const float& dt);
 	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
