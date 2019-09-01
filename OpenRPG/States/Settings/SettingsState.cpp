@@ -118,7 +118,7 @@ void SettingsState::updateGui()
 	//모든 버튼들의 상태를 기능에맞게 업데이트해줌
 	for (auto &it : this->buttons)
 	{
-		it.second->update(this->mousePosView);
+		it.second->update(this->mousePosWindow);
 	}
 
 
@@ -140,7 +140,7 @@ void SettingsState::updateGui()
 	//드랍다운리스트
 	for (auto &it : this->dropDownLists)
 	{
-		it.second->update(this->mousePosView,dt);
+		it.second->update(this->mousePosWindow,dt);
 	}
 
 }

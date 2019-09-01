@@ -5,7 +5,8 @@
 class MainMenuState : public State {
 private:
 	//변수
-
+	bool fadeOutFlag;
+	float backGroundColor;
 	sf::Texture backgroundTexture;
 	sf::Texture btnTexure;
 	sf::RectangleShape background;
@@ -28,6 +29,8 @@ public:
 
 	void updateInput(const float& dt);
 	void updateButtons();
+	void updateFadeout(const float dt);
+	void updateFadeIn(const float dt);
 	void update();
 	void renderButtons(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);

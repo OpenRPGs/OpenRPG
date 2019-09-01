@@ -1,5 +1,6 @@
 ﻿![license](https://img.shields.io/crates/l/crate)
 ![commit](https://img.shields.io/github/last-commit/OpenRPGs/OpenRPG)
+![lang](https://img.shields.io/github/languages/top/openrpgs/openrpg)
 <center><img src="./Image/head.PNG" width="600" height="300"></center> 
 
 ## OpenRPG 
@@ -91,3 +92,8 @@
 - 19년 8월 21일 설정화면 기능추가 --> 해상도조절이 가능해졌습니다.  타일맵 작업진행 시작 
 - 19년 8월 22일 타일맵셀렉터기능 추가, 에디터에서 맵수정이 가능하도록 기능 구현 중 
 - 19년 8월 24일 타일맵을 고르고 입력이 가능하도록 업데이트되었습니다. 
+- 19년 8월 26일 타일맵 숨김 기능 추가, 사이드바 제작 
+- 19년 8월 27일 타일맵 저장 & 불러오기 기능 구현완료 및 게임스테이트에 적용구현완료 
+- 19년 8월 31일 카메라 이동 구현 완료 
+
+

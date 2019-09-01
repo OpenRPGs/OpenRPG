@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Gui.h"
+#include "../Game/Game.h"
 
 gui::Button::Button(float x, float y, float width, float height,
 	sf::Texture& buttonTexture, sf::Font& font, std::wstring text, unsigned character_size,
@@ -35,11 +36,11 @@ gui::Button::Button(float x, float y, float width, float height,
 }
 
 gui::Button::Button(
-	float x, float y, float width, float height, 
-	sf::Font& font, std::wstring text, unsigned character_size, 
-	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, 
+	float x, float y, float width, float height,
+	sf::Font& font, std::wstring text, unsigned character_size,
+	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 	sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
-	sf::Color outline_idle_Color , sf::Color outline_hover_Color, sf::Color outline_active_Color ,
+	sf::Color outline_idle_Color, sf::Color outline_hover_Color, sf::Color outline_active_Color,
 	short unsigned id)
 {
 	this->buttonState = BTN_IDLE;
@@ -113,14 +114,14 @@ void gui::Button::setId(const short unsigned id)
 
 //함수
 
-void gui::Button::update(const sf::Vector2f& mousePos)
+void gui::Button::update(const sf::Vector2i& mousePosWindow)
 {
 	//Update the booleans for hover and pressed
 
 	this->buttonState = BTN_IDLE;
 
 	//Hover
-	if (this->shape.getGlobalBounds().contains(mousePos))
+	if (this->shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
 	{
 		this->buttonState = BTN_HOVER;
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -177,7 +178,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 {
 
 	this->activeElement = new gui::Button(
-		x, y , width, height,
+		x, y, width, height,
 		this->font, list[default_index], 20,
 		sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 200), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 200), sf::Color(155, 155, 155, 200), sf::Color(25, 25, 25, 200),
@@ -188,7 +189,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 	{
 		this->list.push_back(
 			new gui::Button(
-				x, y + (i+1) * height, width, height,
+				x, y + (i + 1) * height, width, height,
 				this->font, list[i], 20,
 				sf::Color(255, 255, 255, 150), sf::Color(255, 255, 255, 255), sf::Color(20, 20, 20, 50),
 				sf::Color(70, 70, 70, 200), sf::Color(155, 155, 155, 200), sf::Color(25, 25, 25, 200),
@@ -196,7 +197,7 @@ gui::DropDownList::DropDownList(float x, float y, float width, float height,
 				i
 			)
 		);
-	}	
+	}
 }
 
 gui::DropDownList::~DropDownList()
@@ -229,11 +230,11 @@ void gui::DropDownList::updateKeytime(const float& dt)
 		this->keytime += 10.f*dt;
 }
 
-void gui::DropDownList::update(const sf::Vector2f & mousePos, const float& dt)
+void gui::DropDownList::update(const sf::Vector2i & mousePosWindow, const float& dt)
 {
 	this->updateKeytime(dt);
 
-	this->activeElement->update(mousePos);
+	this->activeElement->update(mousePosWindow);
 
 
 	//드랍다운구현부분
@@ -249,7 +250,7 @@ void gui::DropDownList::update(const sf::Vector2f & mousePos, const float& dt)
 	{
 		for (auto &i : this->list)
 		{
-			i->update(mousePos);
+			i->update(mousePosWindow);
 
 			if (i->isPressed() && this->getKeytime())
 			{
@@ -272,4 +273,136 @@ void gui::DropDownList::render(sf::RenderTarget & target)
 			i->render(target);
 		}
 	}
+}
+
+
+/////////////////////////////
+////Gui 텍스쳐셀렉터 메뉴////
+////////////////////////////
+
+const bool gui::TextureSelector::getKeytime() 
+{
+	if (this->keytime >= this->keytimeMax)
+	{
+		this->keytime = 0.f;
+		return true;
+	}
+	return false;
+}
+
+gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize,
+	const sf::Texture * texture_sheet, sf::Font& font, std::wstring text)
+	:keytime(0.f), keytimeMax(2.f)
+{
+	this->gridSize = gridSize;
+	this->active = false;
+	this->hidden = false;
+	float offset = 800.f;
+
+	this->bounds.setSize(sf::Vector2f(width, height));
+	this->bounds.setPosition(x + offset, y);
+	this->bounds.setFillColor(sf::Color(50, 50, 50, 100));
+	this->bounds.setOutlineThickness(1.f);
+	this->bounds.setOutlineColor(sf::Color(255, 255, 255, 200));
+
+	this->sheet.setTexture(*texture_sheet);
+	this->sheet.setPosition(x + offset, y);
+
+	if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
+	{
+		this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
+	}
+	if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
+	{
+		this->sheet.setTextureRect(sf::IntRect(0, 0, this->sheet.getGlobalBounds().width, this->bounds.getGlobalBounds().height));
+	}
+
+	this->selector.setPosition(x + offset, y);
+	this->selector.setSize(sf::Vector2f(gridSize, gridSize));
+	this->selector.setFillColor(sf::Color::Transparent);
+	this->selector.setOutlineThickness(1.f);
+	this->selector.setOutlineColor(sf::Color::Red);
+
+	this->textureRect.width = static_cast<int>(gridSize);
+	this->textureRect.height = static_cast<int>(gridSize);
+
+	this->hide_button = new gui::Button(
+		x-10, y, 80.f, 80.f,
+		font, text, 20,
+		sf::Color(255, 255, 255, 255), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
+		sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 200), sf::Color(20, 20, 20, 50));
+}
+
+gui::TextureSelector::~TextureSelector()
+{
+	delete this->hide_button;
+}
+
+const bool & gui::TextureSelector::getActive() const
+{
+	return this->active;
+}
+
+const sf::IntRect & gui::TextureSelector::getTextureRect() const
+{
+	return this->textureRect;
+}
+
+void gui::TextureSelector::updateKeytime(const float & dt)
+{
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f*dt;
+}
+
+void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
+{
+
+	float dt = Game::getInstance()->deltaTime();
+
+	this->updateKeytime(dt);
+
+	this->hide_button->update(mousePosWindow);
+
+	if (this->hide_button->isPressed() && this->getKeytime() || (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab) && this->getKeytime()))
+	{
+		if (this->hidden)
+			this->hidden = false;
+		else
+			this->hidden = true;
+	}
+
+	if (!this->hidden)
+	{
+		if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
+			this->active = true;
+		else
+			this->active = false;
+
+		if (this->active)
+		{
+			this->mousePosGird.x = ((mousePosWindow.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->gridSize));
+			this->mousePosGird.y = ((mousePosWindow.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->gridSize));
+
+			this->selector.setPosition(
+				this->bounds.getPosition().x + this->mousePosGird.x*this->gridSize,
+				this->bounds.getPosition().y + this->mousePosGird.y*this->gridSize
+			);
+		}
+
+		//선택해서 텍스쳐교체하기.
+		this->textureRect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
+		this->textureRect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+	}
+}
+
+void gui::TextureSelector::render(sf::RenderTarget & target)
+{
+	if (!this->hidden) {
+		target.draw(this->bounds);
+		target.draw(this->sheet);
+		if (this->active)
+			target.draw(this->selector);
+	}
+
+	this->hide_button->render(target);
 }

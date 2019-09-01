@@ -51,10 +51,14 @@ namespace gui {
 
 
 		//함수
-		void update(const sf::Vector2f& mousePos);
+		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget& target);
 
 	};
+
+
+	////////////////////////////////////////
+
 
 	class DropDownList
 	{
@@ -77,7 +81,44 @@ namespace gui {
 		//함수
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
-		void update(const sf::Vector2f& mousePos, const float& dt);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
+	};
+
+
+	//////////////////////////////////////////////
+
+	class TextureSelector
+	{
+	private:
+		float keytime;
+		float keytimeMax;
+		bool active;
+		float gridSize;
+		bool hidden;
+		gui::Button* hide_button;
+
+		sf::RectangleShape bounds;
+		sf::Sprite sheet;
+
+		sf::Vector2u mousePosGird;
+		sf::RectangleShape selector;
+		sf::IntRect	textureRect;
+
+
+	public:
+		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* texture_sheet, sf::Font& font, std::wstring text);
+		~TextureSelector();
+
+		const bool getKeytime();
+		const bool& getActive() const;
+		const sf::IntRect& getTextureRect() const;
+
+		void updateKeytime(const float& dt);
+		void update(const sf::Vector2i& mousePosWindow);
+
+		void render(sf::RenderTarget& target);
+
+
 	};
 }

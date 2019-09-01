@@ -13,13 +13,24 @@ class EditorState : public State {
 	sf::Texture tx;
 	PauseMenu* pmenu;
 
+	sf::View mainView;
+	float cameraSpeed;
+
 	TileMap* tileMap;
+
+	sf::RectangleShape sidebar;
 
 	sf::IntRect textureRect;
 	sf::RectangleShape selectorRect;
 
+	gui::TextureSelector* textureSelector;
+
+	bool collision;
+	short type;
+
 	//초기화함수
 	void initVariables();
+	void initView();
 	void initFonts();
 	void initKeybinds();
 	void initButtons();

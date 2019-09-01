@@ -62,23 +62,23 @@ const bool PauseMenu::isButtonPressed(const std::string key)
 	return this->buttons[key]->isPressed();
 }
 
-void PauseMenu::addButton(const std::string key, float y, const std::string text, sf::Texture& btnTexure)
+void PauseMenu::addButton(const std::string key, float y, const std::wstring text, sf::Texture& btnTexure)
 {
 	float width = 250.f;
 	float height = 50.f;
 	float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
-	this->buttons["QUIT"] = new gui::Button(
+	this->buttons[key] = new gui::Button(
 		x, y, 250, 80,
-		btnTexure, this->font, L"새 게임", 40,
-		sf::Color(0, 0, 0, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
+		btnTexure, this->font, text, 40,
+		sf::Color(200, 200, 200, 255), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255));
 }
 
-void PauseMenu::update(const sf::Vector2f& mousePos)
+void PauseMenu::update(const sf::Vector2i& mousePosWindow)
 {
 	for (auto &i : this->buttons)
 	{
-		i.second->update(mousePos);
+		i.second->update(mousePosWindow);
 	}
 }
 

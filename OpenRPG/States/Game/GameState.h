@@ -6,8 +6,18 @@
 #include "../../Maps/TileMap.h"
 
 class GameState : public State {
-  private:
+private:
+	sf::View view;
+	sf::RenderTexture renderTexture;
+	sf::Sprite renderSprite;
+
 	int window_focus;
+
+	sf::RectangleShape background;
+	sf::Texture backgroundTexture;
+
+	bool fadInFlag;
+	float backGroundColor;
 
 	sf::Font font;
 	PauseMenu* pmenu;
@@ -19,6 +29,8 @@ class GameState : public State {
 	TileMap* tileMap;
 
 	//함수
+	void initVariable();
+	void initBackground();
 	void initButtons();
 	void initKeybinds();
 	void initTextures();
@@ -26,15 +38,19 @@ class GameState : public State {
 	void initFonts();
 	void initPauseMenu();
 	void initTileMap();
+	void initView();
 
-  public:
+public:
 	GameState(StateData* state_data);
 	virtual ~GameState();
 
 	//함수
+	void updateView(const float& dt);
+	void updatePauseMenuButtons();
 	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
 	void updatePauseButtons();
+	void updateFadeIn(const float& dt);
 	void update();
 	void render(sf::RenderTarget* target = NULL);
 
