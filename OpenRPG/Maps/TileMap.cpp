@@ -72,12 +72,12 @@ void TileMap::updateCollision(Entity * entity)
 	//월드맵 경계처리
 	if (entity->getPosition().x < 0.f)
 		entity->setPositions(0.f, entity->getPosition().y);
-	else if (entity->getPosition().x > this->maxSizeWorldF.x)
-		entity->setPositions(this->maxSizeWorldF.x, entity->getPosition().y);
+	else if (entity->getPosition().x + entity->getGlobalBounds().width > this->maxSizeWorldF.x)
+		entity->setPositions(this->maxSizeWorldF.x -entity->getGlobalBounds().width , entity->getPosition().y);
 	if (entity->getPosition().y < 0.f)
 		entity->setPositions(entity->getPosition().x, 0.f);
-	else if (entity->getPosition().y > this->maxSizeWorldF.y)
-		entity->setPositions(entity->getPosition().x, this->maxSizeWorldF.y);
+	else if (entity->getPosition().y + entity->getGlobalBounds().height > this->maxSizeWorldF.y)
+		entity->setPositions(entity->getPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
 
 	//타일 경계처리
 }

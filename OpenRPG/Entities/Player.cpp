@@ -25,7 +25,7 @@ Player::Player(float x, float y, sf::Texture& texture_sheet, int& window_focus)
 
 #pragma region GreenCharacter
 	//초록색 캐주얼케릭터 설정
-	this->createMovementComponent(200.f, 500.f, 50.f); 
+	this->createMovementComponent(280.f, 500.f, 50.f); 
 	this->createAnimationComponent(texture_sheet);
 
 	this->createHitboxComponent(this->sprite, 32.f, 28.f, 64.f, 74.f);
@@ -169,5 +169,12 @@ void Player::update(const float & dt)
 	this->updateAnimation(dt);
 
 	this->hitboxComponent->update();
+}
+
+void Player::render(sf::RenderTarget & target)
+{
+	target.draw(this->sprite);
+
+	this->hitboxComponent->render(target);
 }
 
