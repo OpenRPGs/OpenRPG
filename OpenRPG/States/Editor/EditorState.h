@@ -25,6 +25,7 @@ class EditorState : public State {
 
 	gui::TextureSelector* textureSelector;
 
+
 	bool collision;
 	short type;
 

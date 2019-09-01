@@ -29,6 +29,7 @@ private:
 	TileMap* tileMap;
 
 	//함수
+	void initDeferredRender();
 	void initVariable();
 	void initBackground();
 	void initButtons();
@@ -50,7 +51,8 @@ public:
 	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
 	void updatePauseButtons();
-	void updateFadeIn(const float& dt);
+	void updateTileMap(const float& dt);
+	void updateFadeIn(float time);
 	void update();
 	void render(sf::RenderTarget* target = NULL);
 

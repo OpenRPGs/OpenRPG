@@ -138,15 +138,14 @@ void MainMenuState::updateFadeout(const float dt)
 {
 	if (this->fadeOutFlag)
 	{
-		this->backGroundColor -= (dt * 400);
+		this->backGroundColor -= (dt * 300);
 		this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
-		std::cout << backGroundColor << std::endl;
 		if (backGroundColor < 0)
 		{
 			StateManager::getInstance()->Push(new GameState(this->stateData));
 			this->fadeOutFlag = false;
 			backGroundColor = 255.f;
-			this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
+			//this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
 		}
 	}
 }
@@ -191,6 +190,7 @@ void MainMenuState::render(sf::RenderTarget* target) {
 
 // 메인 화면이 표시될 때 BGM 재생
 void MainMenuState::onActivated() {
+	this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
 	auto sm = SoundManager::getInstance();
 	sm->LoadBGM(sounds["BACKGROUND_MUSIC"]);
 	sm->getBGM()->setLoop(true)->play();

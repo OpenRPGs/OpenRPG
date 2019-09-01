@@ -48,7 +48,7 @@ void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, flo
 	hitboxComponent = sharedPtr<HitboxComponent>(new HitboxComponent(sprite, offset_x, offset_y, width, height));
 }
 
-const sf::Vector2f Entity::getPosition() const
+const sf::Vector2f& Entity::getPosition() const
 {
 	return this->sprite.getPosition();
 }

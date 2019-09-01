@@ -17,6 +17,8 @@ public:
 	virtual ~Tile();
 
 	const std::string getAsString() const;
+	const sf::Vector2f& getPosition() const;
+	const bool & getCollision() const;
 
 	void update();
 	void render(sf::RenderTarget& target);

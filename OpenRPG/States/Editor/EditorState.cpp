@@ -11,7 +11,7 @@ void EditorState::initVariables()
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
 	this->collision = false;
 	this->type = TileTypes::DEFAILT;
-	this->cameraSpeed = 100.f;
+	this->cameraSpeed = 800.f;
 }
 
 void EditorState::initView()
@@ -108,6 +108,8 @@ void EditorState::initGui()
 	this->selectorRect.setTextureRect(this->textureRect);
 	this->textureSelector = new gui::TextureSelector(20.f, 20.f, 500.f, 500.f, this->stateData->gridSize,
 		this->tileMap->getTileSheet(), this->font, L"타일");
+
+
 }
 
 
@@ -205,20 +207,20 @@ void EditorState::updateEditorInput(const float & dt)
 	//카메라이동 입력(하드코딩되어있음. 수정예정)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_UP"))))
 	{
-		this->mainView.move(0.f, -this->cameraSpeed * dt);
+		this->mainView.move(0.f, -std::floor(this->cameraSpeed * dt));
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_DOWN"))))
 	{
-		this->mainView.move(0.f, this->cameraSpeed * dt);
+		this->mainView.move(0.f, std::floor(this->cameraSpeed * dt));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_LEFT"))))
 	{
-		this->mainView.move(-this->cameraSpeed * dt, 0.f);
+		this->mainView.move(-std::floor(this->cameraSpeed * dt), 0.f);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_CAMERA_RIGHT"))))
 	{
-		this->mainView.move(this->cameraSpeed * dt, 0.f);
+		this->mainView.move(std::floor(this->cameraSpeed * dt), 0.f);
 	}
 
 

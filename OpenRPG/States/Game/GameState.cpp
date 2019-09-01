@@ -8,6 +8,22 @@
 #include "States/State.h"
 #include "GameState.h"	
 
+void GameState::initDeferredRender()
+{
+	this->renderTexture.create(
+		this->stateData->gfxSettings->resolution.width,
+		this->stateData->gfxSettings->resolution.height
+	);
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	this->renderSprite.setTextureRect(
+		sf::IntRect(
+			0, 0,
+			this->stateData->gfxSettings->resolution.width,
+			this->stateData->gfxSettings->resolution.height)
+	);
+}
+
 void GameState::initVariable()
 {
 	this->fadInFlag = true;
@@ -80,7 +96,7 @@ void GameState::initPauseMenu()
 
 void GameState::updateView(const float& dt)
 {
-	this->view.setCenter(this->player->getPosition());
+	this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
 }
 
 void GameState::updatePauseMenuButtons()
@@ -123,6 +139,8 @@ void GameState::initPlayers()
 GameState::GameState(StateData* state_data)
 	:State(state_data)
 {
+	this->initDeferredRender();
+	this->initView();
 	this->initVariable();
 	this->initButtons();
 	this->initKeybinds();
@@ -132,7 +150,6 @@ GameState::GameState(StateData* state_data)
 	this->initPlayers();
 	this->initTileMap();
 	this->initBackground();
-	this->initView();
 }
 
 GameState::~GameState()
@@ -164,12 +181,19 @@ void GameState::updatePauseButtons()
 		this->endState();
 }
 
-void GameState::updateFadeIn(const float & dt)
+void GameState::updateTileMap(const float & dt)
 {
+	this->tileMap->update();
+	this->tileMap->updateCollision(this->player);
+}
+
+void GameState::updateFadeIn(float time)
+{
+	auto dt = Game::getInstance()->deltaTime();
 	if (fadInFlag)
 	{
 		std::cout << backGroundColor << std::endl;
-		this->backGroundColor -= (dt * 50);
+		this->backGroundColor -= (dt * time);
 		this->background.setFillColor(sf::Color(0.f, 0.f, 0.f, this->backGroundColor));
 		if (backGroundColor < 0.f)
 		{
@@ -204,7 +228,7 @@ void GameState::update()
 	this->updateMousePositions(&this->view); //일시정지든 아니든 마우스는 사용가능해야함
 	this->updateKeytime(dt);
 	this->updateInput(dt);
-	this->updateFadeIn(dt);
+	this->updateFadeIn(100.f);
 	this->updatePauseButtons();
 
 	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
@@ -214,10 +238,13 @@ void GameState::update()
 		this->updatePlayerInput(dt);
 
 		this->player->update(dt);
+
+		this->updateTileMap(dt);
 	}
 	else
 	{
 		this->pmenu->update(this->mousePosWindow);
+		this->updatePauseButtons();
 	}
 }
 
@@ -229,18 +256,24 @@ void GameState::render(sf::RenderTarget* target)
 
 	if (!target)
 		target = this->window;
+	this->renderTexture.clear();
 
-	target->setView(this->view);
-	this->tileMap->render(*target);
+	this->renderTexture.setView(this->view);
+	this->tileMap->render(this->renderTexture);
 
-	this->player->render(*target);
-
-	target->draw(this->background);
+	this->player->render(this->renderTexture);
 
 	if (this->paused)
 	{
-		target->setView(this->window->getDefaultView());
-		this->pmenu->render(*target);
-		this->updatePauseButtons();
+		this->renderTexture.setView(this->renderTexture.getDefaultView());
+		this->pmenu->render(this->renderTexture);
+		
 	}
+
+	 //최종랜더링
+	this->renderTexture.display();
+	//this->renderSprite.setTexture(this->renderTexture.getTexture());
+	target->draw(this->renderSprite);
+	target->draw(this->background);//페이드인효과
 }
+

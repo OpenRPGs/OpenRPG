@@ -32,7 +32,7 @@ public:
 	void createAnimationComponent(sf::Texture& texture_sheet);
 	void createHitboxComponent(sf::Sprite& sprite,const float offset_x, float offset_y, float width, float height);
 
-	virtual const sf::Vector2f getPosition() const;
+	virtual const sf::Vector2f& getPosition() const;
 
 	//함수들
 	virtual void setPositions(const float x, const float y);
