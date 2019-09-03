@@ -3,6 +3,8 @@
 ![lang](https://img.shields.io/github/languages/top/openrpgs/openrpg)
 <center><img src="./Image/head.PNG" width="600" height="300"></center> 
 
+## 공지 : 이 브랜치는 버그가 많습니다. 폴더정리도 되어있지않습니다. 기능테스트 후 삭제할 예정입니다.
+## 추가된 기능 : 쉐이더, 충돌처리, 몬스터추가, 텍스쳐 업데이트, 플레이어UI구현 
 ## OpenRPG 
 
 
