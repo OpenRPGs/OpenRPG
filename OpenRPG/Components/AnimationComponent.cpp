@@ -1,41 +1,42 @@
 ﻿#include "stdafx.h"
 #include "AnimationComponent.h"
-
 AnimationComponent::AnimationComponent(sf::Sprite& sprite, sf::Texture& texture_sheet)
 	:sprite(sprite), textureSheet(texture_sheet), lastAnimation(NULL), priorityAnimation(NULL)
 {
+
 }
 
-//Accessors
-const bool & AnimationComponent::isDone(std::string key) 
-{
-	return this->animations[key]->isDone();
-	// TODO: 여기에 반환 구문을 삽입합니다.
-}
-
-//Functions
 AnimationComponent::~AnimationComponent()
 {
 	for (auto &i : this->animations)
+	{
 		delete i.second;
+	}
 }
 
+//Accessors
+const bool & AnimationComponent::isDone(const std::string key)
+{
+	return this->animations[key]->isDone();
+}
 
-
+//Functions
 void AnimationComponent::addAnimation(
 	const std::string key,
-	float animation_Timer,
-	int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height)
+	float animation_timer,
+	int start_frame_x, int start_frame_y, int frames_x, int frames_y, int width, int height
+)
 {
-	this->animations[key] = new Animation(this->sprite, this->textureSheet, animation_Timer, start_frame_x, start_frame_y,
-		frames_x, frames_y, width, height
+	this->animations[key] = new Animation(
+		this->sprite, this->textureSheet,
+		animation_timer,
+		start_frame_x, start_frame_y, frames_x, frames_y, width, height
 	);
 }
 
 const bool& AnimationComponent::play(const std::string key, const float & dt, const bool priority)
 {
-
-	if (this->priorityAnimation) // 만약 우선순위인 애니메이션이있다면
+	if (this->priorityAnimation) //If there is a priority animation
 	{
 		if (this->priorityAnimation == this->animations[key])
 		{
@@ -49,6 +50,7 @@ const bool& AnimationComponent::play(const std::string key, const float & dt, co
 					this->lastAnimation = this->animations[key];
 				}
 			}
+
 			//If the priority animation is done, remove it
 			if (this->animations[key]->play(dt))
 			{
@@ -56,12 +58,14 @@ const bool& AnimationComponent::play(const std::string key, const float & dt, co
 			}
 		}
 	}
-	else {
+	else //Play animation of no other priority animation is set
+	{
+		//If this is a priority animation, set it.
 		if (priority)
 		{
 			this->priorityAnimation = this->animations[key];
 		}
-		//To DO : Coustomizing Animations More Smooth.. (19/08/16 bugfix Done!!)
+
 		if (this->lastAnimation != this->animations[key])
 		{
 			if (this->lastAnimation == NULL)
@@ -72,14 +76,16 @@ const bool& AnimationComponent::play(const std::string key, const float & dt, co
 				this->lastAnimation = this->animations[key];
 			}
 		}
+
 		this->animations[key]->play(dt);
 	}
+
 	return this->animations[key]->isDone();
 }
 
-const bool& AnimationComponent::play(const std::string key, const float & dt, const float & modifier, const float & modifier_max, const bool priority)
+const bool& AnimationComponent::play(const std::string key, const float & dt, const float& modifier, const float& modifier_max, const bool priority)
 {
-	if (this->priorityAnimation) // 만약 우선순위인 애니메이션이있다면
+	if (this->priorityAnimation) //If there is a priority animation
 	{
 		if (this->priorityAnimation == this->animations[key])
 		{
@@ -101,8 +107,14 @@ const bool& AnimationComponent::play(const std::string key, const float & dt, co
 			}
 		}
 	}
-	else
+	else //Play animation of no other priority animation is set
 	{
+		//If this is a priority animation, set it.
+		if (priority)
+		{
+			this->priorityAnimation = this->animations[key];
+		}
+
 		if (this->lastAnimation != this->animations[key])
 		{
 			if (this->lastAnimation == NULL)
@@ -113,8 +125,9 @@ const bool& AnimationComponent::play(const std::string key, const float & dt, co
 				this->lastAnimation = this->animations[key];
 			}
 		}
+
 		this->animations[key]->play(dt, abs(modifier / modifier_max));
 	}
+
 	return this->animations[key]->isDone();
 }
-

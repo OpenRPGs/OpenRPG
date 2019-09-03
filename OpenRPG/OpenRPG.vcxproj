@@ -157,19 +157,32 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Components\AnimationComponent.cpp" />
+    <ClCompile Include="Components\AttributeComponent.cpp" />
     <ClCompile Include="Components\HitboxComponent.cpp" />
     <ClCompile Include="Components\MovementComponent.cpp" />
+    <ClCompile Include="Components\SkillComponent.cpp" />
     <ClCompile Include="Components\SoundComponent.cpp" />
+    <ClCompile Include="DefaultEditorMode.cpp" />
+    <ClCompile Include="EditorMode.cpp" />
+    <ClCompile Include="EnemyEditorMode.cpp" />
+    <ClCompile Include="EnemySpawnerTile.cpp" />
+    <ClCompile Include="Entities\Enemy.cpp" />
+    <ClCompile Include="Entities\EnemySystem.cpp" />
     <ClCompile Include="Entities\Entity.cpp" />
     <ClCompile Include="Entities\Player.cpp" />
+    <ClCompile Include="Entities\Rat.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="GUI\Gui.cpp" />
     <ClCompile Include="GUI\PauseMenu.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Managers\SoundManager.cpp" />
     <ClCompile Include="Managers\StateManager.cpp" />
     <ClCompile Include="Maps\TileMap.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="PlayerGUI.cpp" />
+    <ClCompile Include="RegularTile.cpp" />
     <ClCompile Include="States\Editor\EditorState.cpp" />
     <ClCompile Include="States\Game\GameState.cpp" />
     <ClCompile Include="States\MainMenu\MainMenuState.cpp" />
@@ -179,28 +192,44 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Tiles\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\AnimationComponent.h" />
+    <ClInclude Include="Components\AttributeComponent.h" />
     <ClInclude Include="Components\HitboxComponent.h" />
     <ClInclude Include="Components\MovementComponent.h" />
+    <ClInclude Include="Components\SkillComponent.h" />
     <ClInclude Include="Components\SoundComponent.h" />
+    <ClInclude Include="DefaultEditorMode.h" />
+    <ClInclude Include="EditorMode.h" />
+    <ClInclude Include="EditorModes.h" />
+    <ClInclude Include="EnemyEditorMode.h" />
+    <ClInclude Include="EnemySpawnerTile.h" />
+    <ClInclude Include="Entities\Enemy.h" />
+    <ClInclude Include="Entities\EnemySystem.h" />
     <ClInclude Include="Entities\Entity.h" />
     <ClInclude Include="Entities\Player.h" />
+    <ClInclude Include="Entities\Rat.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="GUI\Gui.h" />
     <ClInclude Include="GUI\PauseMenu.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Managers\SoundManager.h" />
     <ClInclude Include="Managers\StateManager.h" />
     <ClInclude Include="Maps\TileMap.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="PlayerGUI.h" />
+    <ClInclude Include="RegularTile.h" />
     <ClInclude Include="States\Editor\EditorState.h" />
     <ClInclude Include="States\Game\GameState.h" />
     <ClInclude Include="States\MainMenu\MainMenuState.h" />
     <ClInclude Include="States\Settings\SettingsState.h" />
     <ClInclude Include="States\State.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Sword.h" />
     <ClInclude Include="Tiles\Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,13 +3,14 @@
 #include "States/State.h"
 #include "GUI/Gui.h"
 
-class SettingsState : public State {
+class SettingsState :
+	public State
+{
 private:
+	//Variables
 	sf::Texture backgroundTexture;
-	sf::Texture btnTexure;
 	sf::RectangleShape background;
 	sf::Font font;
-	sf::Texture tx;
 
 	std::map<std::string, gui::Button*> buttons;
 	std::map<std::string, gui::DropDownList*> dropDownLists;
@@ -18,27 +19,23 @@ private:
 
 	std::vector<sf::VideoMode> modes;
 
-	//초기화 함수
+	//Functions
 	void initVariables();
-	void initBackground();
 	void initFonts();
 	void initKeybinds();
 	void initGui();
-	void initText();
-	// void initMusic();
+	void resetGui();
 
 public:
 	SettingsState(StateData* state_data);
 	virtual ~SettingsState();
 
-	//접근자
+	//Accessors
 
-	//업데이트함수
+	//Functions
 	void updateInput(const float& dt);
-	void updateGui();
+	void updateGui(const float& dt);
 	void update();
-
-	//랜더함수
 	void renderGui(sf::RenderTarget& target);
 	void render(sf::RenderTarget* target = NULL);
 

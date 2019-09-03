@@ -22,7 +22,7 @@ void MainMenuState::initBackground() {
 	this->background.setSize(sf::Vector2f(
 		static_cast<float>(this->window->getSize().x),
 		static_cast<float>(this->window->getSize().y)));
-	if (!this->backgroundTexture.loadFromFile("Resources/image/Backgrounds/bg3.png")) {
+	if (!this->backgroundTexture.loadFromFile("Resources/images/Backgrounds/bg3.png")) {
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
@@ -57,7 +57,7 @@ void MainMenuState::initKeybinds() {
 
 void MainMenuState::initButtons() {
 
-	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png")) {
+	if (!btnTexure.loadFromFile("Resources/images/Buttons/btn1.png")) {
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
@@ -156,7 +156,6 @@ void MainMenuState::updateFadeIn(const float dt)
 
 void MainMenuState::update() {
 	auto dt = Game::getInstance()->deltaTime();
-
 	this->updateMousePositions();
 	this->updateInput(dt);
 	this->updateFadeout(dt);

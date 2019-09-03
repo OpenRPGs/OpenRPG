@@ -1,8 +1,13 @@
 ﻿#pragma once
 
-enum button_state { BTN_IDLE = 0, BTN_ACTIVE, BTN_HOVER };
+enum button_states { BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE };
 
-namespace gui {
+namespace gui
+{
+	const float p2pX(const float perc, const sf::VideoMode& vm);
+	const float p2pY(const float perc, const sf::VideoMode& vm);
+	const unsigned calcCharSize(const sf::VideoMode& vm, const unsigned modifier = 60);
+
 	class Button
 	{
 	private:
@@ -10,8 +15,7 @@ namespace gui {
 		short unsigned id;
 
 		sf::RectangleShape shape;
-		//sf::Texture buttonTexture;
-		//sf::Font* font;
+		sf::Font* font;
 		sf::Text text;
 
 		sf::Color textIdleColor;
@@ -27,98 +31,116 @@ namespace gui {
 		sf::Color outlineActiveColor;
 
 	public:
+		Button(float x, float y, float width, float height,
+			sf::Font* font, std::string text, unsigned character_size,
+			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+			sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent, sf::Color outline_active_color = sf::Color::Transparent,
+			short unsigned id = 0);
+
 		//텍스쳐버튼생성자
 		Button(float x, float y, float width, float height,
 			sf::Texture& buttonTexture, sf::Font& font, std::wstring text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 			sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color);
-		//기본버튼생성자
-		Button(float x, float y, float width, float height,
-			sf::Font& font, std::wstring text, unsigned character_size,
-			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-			sf::Color idle_Color, sf::Color hover_Color, sf::Color active_Color,
-			sf::Color outline_idle_Color = sf::Color::Transparent, sf::Color outline_hover_Color = sf::Color::Transparent, sf::Color outline_active_Color = sf::Color::Transparent,
-			short unsigned id = 0);
 
 		~Button();
-		//접근자
+
+		//Accessors
 		const bool isPressed() const;
 		const std::string getText() const;
 		const short unsigned& getId() const;
 
+		//Modifiers
 		void setText(const std::string text);
 		void setId(const short unsigned id);
 
-
-		//함수
+		//Functions
 		void update(const sf::Vector2i& mousePosWindow);
 		void render(sf::RenderTarget& target);
-
 	};
-
-
-	////////////////////////////////////////
-
 
 	class DropDownList
 	{
 	private:
 		float keytime;
 		float keytimeMax;
+
 		sf::Font& font;
 		gui::Button* activeElement;
 		std::vector<gui::Button*> list;
 		bool showList;
 
 	public:
-		//생성자 소멸자
-		DropDownList(float x, float y, float width, float height, sf::Font& font, std::wstring list[], unsigned numOfElements, const unsigned default_index = 0);
+		DropDownList(float x, float y, float width, float height,
+			sf::Font& font, std::string list[],
+			unsigned nrOfElements, unsigned default_index = 0);
 		~DropDownList();
 
-
+		//Accessors
 		const unsigned short& getActiveElementId() const;
 
-		//함수
+		//Functions
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
 	};
 
-
-	//////////////////////////////////////////////
-
 	class TextureSelector
 	{
 	private:
 		float keytime;
-		float keytimeMax;
-		bool active;
+		const float keytimeMax;
 		float gridSize;
+		bool active;
 		bool hidden;
-		gui::Button* hide_button;
-
+		gui::Button* hide_btn;
 		sf::RectangleShape bounds;
 		sf::Sprite sheet;
-
-		sf::Vector2u mousePosGird;
 		sf::RectangleShape selector;
-		sf::IntRect	textureRect;
-
+		sf::Vector2u mousePosGrid;
+		sf::IntRect textureRect;
 
 	public:
-		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* texture_sheet, sf::Font& font, std::wstring text);
+		TextureSelector(float x, float y, float width, float height,
+			float gridSize, const sf::Texture* texture_sheet,
+			sf::Font& font, std::string text);
 		~TextureSelector();
 
-		const bool getKeytime();
+		//Accessors
 		const bool& getActive() const;
 		const sf::IntRect& getTextureRect() const;
 
+		//Functions
+		const bool getKeytime();
 		void updateKeytime(const float& dt);
-		void update(const sf::Vector2i& mousePosWindow);
-
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
+	};
 
+	class ProgressBar
+	{
+	private:
+		std::string barString;
+		sf::Text text;
+		float maxWidth;
+		int maxValue;
+		sf::RectangleShape back;
+		sf::RectangleShape inner;
 
+	public:
+		ProgressBar(float x, float y, float width, float height, int max_value,
+			sf::Color inner_color, unsigned character_size,
+			sf::VideoMode& vm, sf::Font* font = NULL);
+		~ProgressBar();
+
+		//Accessors
+
+		//Modifiers
+
+		//Functions
+		void update(const int current_value);
+		void render(sf::RenderTarget & target);
 	};
 }

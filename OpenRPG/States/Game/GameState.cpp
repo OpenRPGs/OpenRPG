@@ -18,33 +18,30 @@ void GameState::initDeferredRender()
 	this->renderSprite.setTexture(this->renderTexture.getTexture());
 	this->renderSprite.setTextureRect(
 		sf::IntRect(
-			0, 0,
+			0,
+			0,
 			this->stateData->gfxSettings->resolution.width,
-			this->stateData->gfxSettings->resolution.height)
+			this->stateData->gfxSettings->resolution.height
+		)
 	);
 }
 
-void GameState::initVariable()
-{
-	this->fadInFlag = true;
-	this->backGroundColor = 255.f;
-}
-
-void GameState::initBackground() {
-	this->background.setSize(sf::Vector2f(
-		static_cast<float>(this->window->getSize().x),
-		static_cast<float>(this->window->getSize().y)));
-
-	this->background.setFillColor(sf::Color::Transparent);
-}
-
 //Initializer functions
-void GameState::initButtons()
+void GameState::initView()
 {
-	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png"))
-	{
-		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
-	}
+	this->view.setSize(
+		sf::Vector2f(
+			static_cast<float>(this->stateData->gfxSettings->resolution.width),
+			static_cast<float>(this->stateData->gfxSettings->resolution.height)
+		)
+	);
+
+	this->view.setCenter(
+		sf::Vector2f(
+			static_cast<float>(this->stateData->gfxSettings->resolution.width) / 2.f,
+			static_cast<float>(this->stateData->gfxSettings->resolution.height) / 2.f
+		)
+	);
 }
 
 void GameState::initKeybinds()
@@ -55,110 +52,140 @@ void GameState::initKeybinds()
 	{
 		std::string key = "";
 		std::string key2 = "";
-		int key_value = 0;
+
 		while (ifs >> key >> key2)
 		{
 			this->keybinds[key] = this->supportedKeys->at(key2);
 		}
 	}
+
 	ifs.close();
-
-	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("A");
-	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
-	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
-	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
-}
-
-void GameState::initTextures()
-{
-	//초록색 : walk_sprite  중세시대기사 : PLAYER_SHEET
-	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/image/Sprites/Player/walk_sprite.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
-	}
 }
 
 void GameState::initFonts()
 {
-	if (!this->font.loadFromFile("Fonts/R2.ttc"))
+	if (!this->font.loadFromFile("Fonts/Regular.ttf"))
 	{
-		throw("메인메뉴 폰트로딩 실패");
+		throw("ERROR::MAINMENUSTATE::COULD NOT LOAD FONT");
+	}
+}
+
+void GameState::initTextures()
+{
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/PLAYER_SHEET2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE";
+	}
+
+	if (!this->textures["RAT1_SHEET"].loadFromFile("Resources/Images/Sprites/Enemy/rat1_60x64.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_RAT1_TEXTURE";
 	}
 }
 
 void GameState::initPauseMenu()
 {
-	this->pmenu = new PauseMenu(*this->window, this->font);
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+	this->pmenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->font);
 
-	this->pmenu->addButton("QUIT", 800.f, L"메인으로", this->btnTexure);
+	this->pmenu->addButton("QUIT", gui::p2pY(74.f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
-void GameState::updateView(const float& dt)
+void GameState::initShaders()
 {
-	this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
-}
-
-void GameState::updatePauseMenuButtons()
-{
-	if (this->pmenu->isButtonPressed("QUIT"))
-		this->endState();
-}
-
-
-void GameState::initTileMap()
-{
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/map/sheet.png");
-	this->tileMap->loadFromFile("text.slmp");
-}
-
-void GameState::initView()
-{
-	this->view.setSize(
-		sf::Vector2f(
-			this->stateData->gfxSettings->resolution.width,
-			this->stateData->gfxSettings->resolution.height
-		)
-	);
-
-	this->view.setCenter(
-		sf::Vector2f(
-			this->stateData->gfxSettings->resolution.width / 2.f,
-			this->stateData->gfxSettings->resolution.height / 2.f
-		)
-	);
-
+	if (!this->core_shader.loadFromFile("vertex_shader.vert", "fragment_shader.frag"))
+	{
+		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
+	}
 }
 
 void GameState::initPlayers()
 {
-	this->player = new Player(0, 0, this->textures["PLAYER_SHEET"], window_focus);
+	this->player = new Player(220, 220, this->textures["PLAYER_SHEET"]);
+}
+
+void GameState::initPlayerGUI()
+{
+	this->playerGUI = new PlayerGUI(this->player, this->stateData->gfxSettings->resolution);
+}
+
+void GameState::initEnemySystem()
+{
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+}
+
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap("text.slmp");
 }
 
 //Constructors / Destructors
 GameState::GameState(StateData* state_data)
-	:State(state_data)
+	: State(state_data)
 {
 	this->initDeferredRender();
 	this->initView();
-	this->initVariable();
-	this->initButtons();
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
 	this->initPauseMenu();
+	this->initShaders();
+
 	this->initPlayers();
+	this->initPlayerGUI();
+	this->initEnemySystem();
 	this->initTileMap();
-	this->initBackground();
 }
 
 GameState::~GameState()
 {
-	delete this->player;
 	delete this->pmenu;
+	delete this->player;
+	delete this->playerGUI;
+	delete this->enemySystem;
 	delete this->tileMap;
+
+	for (size_t i = 0; i < this->activeEnemies.size(); i++)
+	{
+		delete this->activeEnemies[i];
+	}
 }
 
+//Functions
+void GameState::updateView(const float & dt)
+{
+	this->view.setCenter(
+		std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width / 2)) / 10.f),
+		std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 10.f)
+	);
+
+	if (this->tileMap->getMaxSizeF().x >= this->view.getSize().x)
+	{
+		if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
+		{
+			this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
+		}
+		else if (this->view.getCenter().x + this->view.getSize().x / 2.f > this->tileMap->getMaxSizeF().x)
+		{
+			this->view.setCenter(this->tileMap->getMaxSizeF().x - this->view.getSize().x / 2.f, this->view.getCenter().y);
+		}
+	}
+
+	if (this->tileMap->getMaxSizeF().y >= this->view.getSize().y)
+	{
+		if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
+		{
+			this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
+		}
+		else if (this->view.getCenter().y + this->view.getSize().y / 2.f > this->tileMap->getMaxSizeF().y)
+		{
+			this->view.setCenter(this->view.getCenter().x, this->tileMap->getMaxSizeF().y - this->view.getSize().y / 2.f);
+		}
+	}
+
+	this->viewGridPosition.x = static_cast<int>(this->view.getCenter().x) / static_cast<int>(this->stateData->gridSize);
+	this->viewGridPosition.y = static_cast<int>(this->view.getCenter().y) / static_cast<int>(this->stateData->gridSize);
+}
 
 void GameState::updateInput(const float & dt)
 {
@@ -171,11 +198,29 @@ void GameState::updateInput(const float & dt)
 	}
 }
 
+void GameState::updatePlayerInput(const float & dt)
+{
+	//Update player input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
+		this->player->move(-1.f, 0.f, dt);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
+		this->player->move(1.f, 0.f, dt);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
+	{
+		this->player->move(0.f, -1.f, dt);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
+	{
+		this->player->move(0.f, 1.f, dt);
+	}
+}
 
+void GameState::updatePlayerGUI(const float & dt)
+{
+	this->playerGUI->update(dt);
+}
 
-//Update functions
-
-void GameState::updatePauseButtons()
+void GameState::updatePauseMenuButtons()
 {
 	if (this->pmenu->isButtonPressed("QUIT"))
 		this->endState();
@@ -183,97 +228,98 @@ void GameState::updatePauseButtons()
 
 void GameState::updateTileMap(const float & dt)
 {
-	this->tileMap->update();
-	this->tileMap->updateCollision(this->player);
-}
+	this->tileMap->updateWorldBoundsCollision(this->player, dt);
+	this->tileMap->updateTileCollision(this->player, dt);
+	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
 
-void GameState::updateFadeIn(float time)
-{
-	auto dt = Game::getInstance()->deltaTime();
-	if (fadInFlag)
+	for (auto *i : this->activeEnemies)
 	{
-		std::cout << backGroundColor << std::endl;
-		this->backGroundColor -= (dt * time);
-		this->background.setFillColor(sf::Color(0.f, 0.f, 0.f, this->backGroundColor));
-		if (backGroundColor < 0.f)
-		{
-			fadInFlag = false;
-			backGroundColor = 255.f;
-		}
+		this->tileMap->updateWorldBoundsCollision(i, dt);
+		this->tileMap->updateTileCollision(i, dt);
 	}
 }
 
-void GameState::updatePlayerInput(const float & dt)
+void GameState::updatePlayer(const float & dt)
 {
-	if (this->window->hasFocus()) {
-		//사용자 입력 업데이트
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
-			this->player->move(-2.f, 0.f, dt);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_RIGHT"))))
-			this->player->move(2.f, 0.f, dt);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_UP"))))
-			this->player->move(0.f, -2.f, dt);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
-			this->player->move(0.f, 2.f, dt);
-	}
+
+}
+
+void GameState::updateEnemies(const float & dt)
+{
+
+	//this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["RAT1_SHEET"]));
 }
 
 void GameState::update()
 {
 	auto dt = Game::getInstance()->deltaTime();
-
-	//윈도우 활성체크
-	window_focus = this->window->hasFocus();
-
-	this->updateMousePositions(&this->view); //일시정지든 아니든 마우스는 사용가능해야함
+	this->updateMousePositions(&this->view);
 	this->updateKeytime(dt);
 	this->updateInput(dt);
-	this->updateFadeIn(100.f);
-	this->updatePauseButtons();
 
-	if (!this->paused) // 일시정지가 걸려있지않으면 모두 업데이트를 진행한다.
+	if (!this->paused) //Unpaused update
 	{
 		this->updateView(dt);
 
 		this->updatePlayerInput(dt);
 
-		this->player->update(dt);
-
 		this->updateTileMap(dt);
+
+		this->player->update(dt, this->mousePosView);
+
+		this->playerGUI->update(dt);
+
+		for (auto *i : this->activeEnemies)
+		{
+			i->update(dt, this->mousePosView);
+		}
 	}
-	else
+	else //Paused update
 	{
 		this->pmenu->update(this->mousePosWindow);
-		this->updatePauseButtons();
+		this->updatePauseMenuButtons();
 	}
 }
 
-
-//Render
-
 void GameState::render(sf::RenderTarget* target)
 {
-
 	if (!target)
 		target = this->window;
+
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture);
 
-	this->player->render(this->renderTexture);
+	this->tileMap->render(
+		this->renderTexture,
+		this->viewGridPosition,
+		&this->core_shader,
+		this->player->getCenter(),
+		false
+	);
 
-	if (this->paused)
+	for (auto *i : this->activeEnemies)
 	{
-		this->renderTexture.setView(this->renderTexture.getDefaultView());
-		this->pmenu->render(this->renderTexture);
-		
+		i->render(this->renderTexture, &this->core_shader, this->player->getCenter(), false);
 	}
 
-	 //최종랜더링
+	this->player->render(this->renderTexture, &this->core_shader, this->player->getCenter(), false);
+
+	this->tileMap->renderDeferred(this->renderTexture, &this->core_shader, this->player->getCenter());
+
+	//Render GUI
+	this->renderTexture.setView(this->renderTexture.getDefaultView());
+	this->playerGUI->render(this->renderTexture);
+
+	if (this->paused) //Pause menu render
+	{
+		//this->renderTexture.setView(this->renderTexture.getDefaultView());
+		this->pmenu->render(this->renderTexture);
+	}
+
+	//FINAL RENDER
 	this->renderTexture.display();
 	//this->renderSprite.setTexture(this->renderTexture.getTexture());
 	target->draw(this->renderSprite);
-	target->draw(this->background);//페이드인효과
 }
 
