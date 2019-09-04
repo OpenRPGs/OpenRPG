@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Entity.h"
-#include "EnemySpawnerTile.h"
+#include "../Tiles/EnemySpawnerTile.h"
 
 class Entity;
 class EnemySpawnerTile;

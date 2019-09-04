@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 #include "EditorState.h"
 #include "../../Game/Game.h"
-#include "../../DefaultEditorMode.h"
-#include "../../EnemyEditorMode.h"
+#include "../../Mode/DefaultEditorMode.h"
+#include "../../Mode/EditorModes.h"
 //Initializer functions
 void EditorState::initVariables()
 {

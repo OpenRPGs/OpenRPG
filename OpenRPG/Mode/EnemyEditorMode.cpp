@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "EnemyEditorMode.h"
-#include "States/State.h"
+#include "../States/State.h"
 void EnemyEditorMode::initVariables()
 {
 	type = 0;

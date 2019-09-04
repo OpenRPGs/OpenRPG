@@ -1,9 +1,9 @@
 ﻿#ifndef EDITORMODE_H
 #define EDITORMODE_H
 
-#include "States/State.h"
-#include "Maps/TileMap.h"
-#include "GUI/Gui.h"
+#include "../States/State.h"
+#include "../Maps/TileMap.h"
+#include "../GUI/Gui.h"
 
 class State;
 class StateData;

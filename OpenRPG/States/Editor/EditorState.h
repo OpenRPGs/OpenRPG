@@ -5,7 +5,7 @@
 #include "../../GUI/Gui.h"
 #include "../../GUI/PauseMenu.h"
 #include "../../Maps/TileMap.h"
-#include "../../EditorMode.h"
+#include "../../Mode/EditorMode.h"
 
 class State;
 class StateData;

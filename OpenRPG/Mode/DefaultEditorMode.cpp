@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 #include "DefaultEditorMode.h"
-#include "Tiles/Tile.h"
-#include "States/State.h"
-#include "Maps/TileMap.h"
+#include "../Tiles/Tile.h"
+#include "../States/State.h"
+#include "../Maps/TileMap.h"
 void DefaultEditorMode::initVariables()
 {
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));

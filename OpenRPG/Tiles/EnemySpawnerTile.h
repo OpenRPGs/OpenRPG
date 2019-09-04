@@ -1,7 +1,7 @@
 ﻿#ifndef ENEMYSPAWNERTILE_H
 #define ENEMYSPAWNERTILE_H
 
-#include "Tiles/Tile.h"
+#include "Tile.h"
 
 class Tile;
 

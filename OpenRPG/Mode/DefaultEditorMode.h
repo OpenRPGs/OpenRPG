@@ -2,7 +2,7 @@
 #define DEFAULTEDITORMODE_H
 
 #include "EditorMode.h"
-#include "GUI/Gui.h"
+#include "../GUI/Gui.h"
 
 class State;
 class StateData;

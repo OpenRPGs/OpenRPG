@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../EnemySpawnerTile.h"
+#include "../Tiles/EnemySpawnerTile.h"
 #include "Rat.h"
 
 enum EnemyTypes {RAT = 0};

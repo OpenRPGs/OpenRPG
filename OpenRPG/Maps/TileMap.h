@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "../Tiles/Tile.h"
 #include "../Entities/Entity.h"
-#include "../EnemySpawnerTile.h"
-#include "../RegularTile.h"
+#include "../Tiles/EnemySpawnerTile.h"
+#include "../Tiles/RegularTile.h"
 #include "../Entities/EnemySystem.h"
 
 class TileMap

@@ -4,7 +4,7 @@
 #include "GUI/PauseMenu.h"
 
 #include "../../Maps/TileMap.h"
-#include "../../PlayerGUI.h"
+#include "../../Gui/PlayerGUI.h"
 
 class GameState :
 	public State

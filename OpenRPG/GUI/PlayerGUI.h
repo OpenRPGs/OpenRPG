@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "Entities/Player.h"
-#include "GUI/Gui.h"
+#include "../Entities/Player.h"
+#include "../GUI/Gui.h"
 
 class Player;
 class sf::RectangleShape;
