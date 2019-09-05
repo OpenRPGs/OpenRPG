@@ -4,6 +4,7 @@
 #include "Managers/StateManager.h"
 #include "../Entities/Player.h"
 
+std::map<std::string, sf::SoundBuffer> State::sounds;
 State::State(StateData* state_data)
 {
 	this->stateData = state_data;
@@ -20,6 +21,11 @@ State::State(StateData* state_data)
 State::~State()
 {
 
+}
+
+void State::destroy()
+{
+	sounds.clear();
 }
 
 //Accessors
@@ -84,5 +90,9 @@ void State::updateKeytime(const float& dt)
 void State::initSounds() {
 	if (!this->sounds["BACKGROUND_MUSIC"].loadFromFile("Resources/sound/bgm.ogg")) {
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_BGM";
+	}
+	else
+	{
+		atexit(destroy);
 	}
 }

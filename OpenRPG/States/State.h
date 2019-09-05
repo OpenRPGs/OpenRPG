@@ -44,7 +44,7 @@ protected:
 
 	//Resources
 	std::map<std::string, sf::Texture> textures;
-	std::map<std::string, sf::SoundBuffer> sounds;
+	static std::map<std::string, sf::SoundBuffer> sounds;
 
 	//Functions
 	virtual void initKeybinds() = 0;
@@ -52,7 +52,7 @@ protected:
 public:
 	State(StateData* state_data);
 	virtual ~State();
-
+	static void destroy();
 	//Accessors
 	const bool& getQuit() const;
 	const bool getKeytime();
