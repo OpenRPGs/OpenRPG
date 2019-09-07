@@ -1,5 +1,4 @@
-﻿#ifndef REGULARTILE_H
-#define REGULARTILE_H
+﻿#pragma once
 
 #include "Tile.h"
 class RegularTile :
@@ -23,4 +22,3 @@ public:
 	virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());
 };
 
-#endif //!REGULARTILE_H

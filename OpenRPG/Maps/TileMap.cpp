@@ -80,8 +80,9 @@ TileMap::TileMap(const std::string file_name)
 	this->loadFromFile(file_name);
 
 	this->collisionBox.setSize(sf::Vector2f(this->gridSizeF, this->gridSizeF));
-	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
-	this->collisionBox.setOutlineColor(sf::Color::Red);
+	//enemy타일 테투리 , 내부색상
+	this->collisionBox.setFillColor(sf::Color(0, 0, 0, 0));
+	this->collisionBox.setOutlineColor(sf::Color::Transparent);
 	this->collisionBox.setOutlineThickness(1.f);
 }
 

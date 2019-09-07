@@ -1,5 +1,4 @@
-﻿#ifndef ENEMYSPAWNERTILE_H
-#define ENEMYSPAWNERTILE_H
+﻿#pragma once	
 
 #include "Tile.h"
 
@@ -31,5 +30,3 @@ public:
 	void update();
 	void render(sf::RenderTarget & target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());
 };
-
-#endif //!ENEMYSPAWNERTTILE_H

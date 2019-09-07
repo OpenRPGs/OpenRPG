@@ -1,10 +1,11 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Rat.h"
 
 //Initializer functions
 void Rat::initVariables()
 {
-
+	this->x = 0.f;
+	this->y = 0.f;
 }
 
 void Rat::initAnimations()
@@ -24,7 +25,7 @@ Rat::Rat(float x, float y, sf::Texture& texture_sheet)
 	this->initVariables();
 
 	this->createHitboxComponent(this->sprite, 13.f, 39.f, 30.f, 30.f);
-	this->createMovementComponent(50.f, 1600.f, 1000.f);
+	this->createMovementComponent(500.f, 1600.f, 1000.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->setPosition(x, y);
@@ -70,6 +71,36 @@ void Rat::update(const float & dt, sf::Vector2f& mouse_pos_view)
 	this->updateAnimation(dt);
 
 	this->hitboxComponent->update();
+
+	updatePositon(dt);
+}
+
+//테스트용.
+void Rat::updatePositon(const float & dt)
+{
+	//std::cout <<  getPosition().x << std::endl;
+	if (this->getPosition().x > 1000)
+	{
+		x = -1.f;
+		std::cout << x << std::endl;
+	}
+	if (this->getPosition().x < 200.f)
+	{
+		x = 1.f;
+	}
+
+	if (this->getPosition().y > 1000)
+	{
+		y = -1.f;
+		std::cout << x << std::endl;
+	}
+	if (this->getPosition().y < 200.f)
+	{
+		y = 1.f;
+	}
+
+
+	this->movementComponent->move(x, y, dt);
 }
 
 void Rat::render(sf::RenderTarget & target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
