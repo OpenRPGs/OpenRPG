@@ -49,6 +49,12 @@
     <Filter Include="Maps">
       <UniqueIdentifier>{2c3a9c0c-1c7b-4cbd-83e2-bd92987e7a34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{88e6a998-f4ea-4747-9b8f-ddefb3b0d22d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mode">
+      <UniqueIdentifier>{5eb424a7-e724-4f93-9372-58a55af053a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,6 +120,51 @@
     <ClCompile Include="GraphicsSettings.cpp">
       <Filter>리소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Components\AttributeComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\SkillComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Enemy.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\EnemySystem.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entities\Rat.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\EditorMode.cpp">
+      <Filter>Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\EnemyEditorMode.cpp">
+      <Filter>Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="Mode\DefaultEditorMode.cpp">
+      <Filter>Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\PlayerGUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\Item.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\MeleeWeapon.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\RangedWeapon.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item\Sword.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\EnemySpawnerTile.cpp">
+      <Filter>Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles\RegularTile.cpp">
+      <Filter>Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -175,6 +226,54 @@
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
       <Filter>리소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AttributeComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SkillComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Enemy.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\EnemySystem.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entities\Rat.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\DefaultEditorMode.h">
+      <Filter>Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\EditorMode.h">
+      <Filter>Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\EditorModes.h">
+      <Filter>Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="Mode\EnemyEditorMode.h">
+      <Filter>Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\PlayerGUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Item.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\MeleeWeapon.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\RangedWeapon.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item\Sword.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\EnemySpawnerTile.h">
+      <Filter>Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles\RegularTile.h">
+      <Filter>Tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

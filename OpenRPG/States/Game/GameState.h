@@ -4,59 +4,61 @@
 #include "GUI/PauseMenu.h"
 
 #include "../../Maps/TileMap.h"
+#include "../../Gui/PlayerGUI.h"
 
-class GameState : public State {
+class GameState :
+	public State
+{
 private:
 	sf::View view;
+	sf::Vector2i viewGridPosition;
 	sf::RenderTexture renderTexture;
 	sf::Sprite renderSprite;
 
-	int window_focus;
-
-	sf::RectangleShape background;
-	sf::Texture backgroundTexture;
-
-	bool fadInFlag;
-	float backGroundColor;
-
 	sf::Font font;
 	PauseMenu* pmenu;
-	sf::Texture btnTexure;
+
+	sf::Shader core_shader;
 
 	Player* player;
+	PlayerGUI* playerGUI;
 	sf::Texture texture;
+
+	std::vector<Enemy*> activeEnemies;
+	EnemySystem *enemySystem;
 
 	TileMap* tileMap;
 
-	//함수
-	void initVariable();
-	void initBackground();
-	void initButtons();
-	void initKeybinds();
-	void initTextures();
-	void initPlayers();
-	void initFonts();
-	void initPauseMenu();
-	void initTileMap();
+	//Functions
+	void initDeferredRender();
 	void initView();
+	void initKeybinds();
+	void initFonts();
+	void initTextures();
+	void initPauseMenu();
+	void initShaders();
+	void initPlayers();
+	void initPlayerGUI();
+	void initEnemySystem();
+	void initTileMap();
 
 public:
 	GameState(StateData* state_data);
 	virtual ~GameState();
 
-	//함수
+	//Functions
 	void updateView(const float& dt);
-	void updatePauseMenuButtons();
-	void updatePlayerInput(const float& dt);
 	void updateInput(const float& dt);
-	void updatePauseButtons();
-	void updateFadeIn(const float& dt);
+	void updatePlayerInput(const float& dt);
+	void updatePlayerGUI(const float& dt);
+	void updatePauseMenuButtons();
+	void updateTileMap(const float& dt);
+	void updatePlayer(const float& dt);
+	void updateEnemies(const float& dt);
 	void update();
 	void render(sf::RenderTarget* target = NULL);
-
-	// State 이벤트
-	void onActivated() {}
-	void onDeactivated() {}
+	void onActivated() {};
+	void onDeactivated() {};
 	void onEnter() {}
 	void onLeave() {}
 };

@@ -22,7 +22,7 @@ void MainMenuState::initBackground() {
 	this->background.setSize(sf::Vector2f(
 		static_cast<float>(this->window->getSize().x),
 		static_cast<float>(this->window->getSize().y)));
-	if (!this->backgroundTexture.loadFromFile("Resources/image/Backgrounds/bg3.png")) {
+	if (!this->backgroundTexture.loadFromFile("Resources/images/Backgrounds/bg3.png")) {
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
@@ -57,7 +57,7 @@ void MainMenuState::initKeybinds() {
 
 void MainMenuState::initButtons() {
 
-	if (!btnTexure.loadFromFile("Resources/image/Buttons/btn1.png")) {
+	if (!btnTexure.loadFromFile("Resources/images/Buttons/btn1.png")) {
 		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
 	}
 
@@ -138,15 +138,14 @@ void MainMenuState::updateFadeout(const float dt)
 {
 	if (this->fadeOutFlag)
 	{
-		this->backGroundColor -= (dt * 400);
+		this->backGroundColor -= (dt * 300);
 		this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
-		std::cout << backGroundColor << std::endl;
 		if (backGroundColor < 0)
 		{
 			StateManager::getInstance()->Push(new GameState(this->stateData));
 			this->fadeOutFlag = false;
 			backGroundColor = 255.f;
-			this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
+			//this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
 		}
 	}
 }
@@ -157,7 +156,6 @@ void MainMenuState::updateFadeIn(const float dt)
 
 void MainMenuState::update() {
 	auto dt = Game::getInstance()->deltaTime();
-
 	this->updateMousePositions();
 	this->updateInput(dt);
 	this->updateFadeout(dt);
@@ -191,6 +189,7 @@ void MainMenuState::render(sf::RenderTarget* target) {
 
 // 메인 화면이 표시될 때 BGM 재생
 void MainMenuState::onActivated() {
+	this->background.setFillColor(sf::Color(255.f, 255.f, 255.f, this->backGroundColor));
 	auto sm = SoundManager::getInstance();
 	sm->LoadBGM(sounds["BACKGROUND_MUSIC"]);
 	sm->getBGM()->setLoop(true)->play();

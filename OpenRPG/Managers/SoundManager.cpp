@@ -9,6 +9,7 @@ SoundManager* SoundManager::Instance = NULL;
 SoundManager* SoundManager::getInstance() {
 	if (SoundManager::Instance == NULL) {
 		SoundManager::Instance = new SoundManager();
+		atexit(destroy);
 	}
 	return SoundManager::Instance;
 }
@@ -37,6 +38,10 @@ SoundManager::~SoundManager() {
 		if (back != NULL)
 			delete back;
 	}
+}
+void SoundManager::destroy()
+{
+	delete Instance;
 }
 #pragma endregion
 

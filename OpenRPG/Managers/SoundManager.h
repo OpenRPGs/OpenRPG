@@ -68,4 +68,5 @@ class SoundManager {
 	/// </summary>
 	SoundManager();
 	~SoundManager();
+	static void destroy();
 };
