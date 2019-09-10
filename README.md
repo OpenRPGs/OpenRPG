@@ -62,12 +62,16 @@
 - 메인화면추가, 텍스쳐처리 완료 
  
 ## 2차 업데이트 
-![screen](Image/screen.gif)
+<center><img src="Image/screen.gif" width="600" height="300"></center> 
 - 메인화면업데이트, 버튼 텍스쳐처리완료, 히트박스시스템추가, 애니메이션 기능 추가 
 
 ## 3차 업데이트 
-![screen](Image/screen2.gif)
+<center><img src="Image/screen2.gif" width="600" height="300"></center> 
 - 에디터기능 추가, 일시정지기능 추가, 사운드매니저 추가 및 bgm적용, 설정화면 추가 및 기능 구현
+
+## 4차 업데이트 
+<center><img src="Image/screen3.gif" width="600" height="300"></center> 
+- 텍스처교체, Enemy구현, Player GUI추가, 버그 수정 및 코드리펙토링
  
 ## 엔진 설명서
 - 장면(state scene) 추가 
