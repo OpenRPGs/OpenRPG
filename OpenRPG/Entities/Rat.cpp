@@ -82,7 +82,6 @@ void Rat::updatePositon(const float & dt)
 	if (this->getPosition().x > 1000)
 	{
 		x = -1.f;
-		std::cout << x << std::endl;
 	}
 	if (this->getPosition().x < 200.f)
 	{
@@ -92,7 +91,6 @@ void Rat::updatePositon(const float & dt)
 	if (this->getPosition().y > 1000)
 	{
 		y = -1.f;
-		std::cout << x << std::endl;
 	}
 	if (this->getPosition().y < 200.f)
 	{
